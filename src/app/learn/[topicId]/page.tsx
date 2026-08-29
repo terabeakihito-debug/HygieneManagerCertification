@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TopicDiagram } from "@/components/learn/TopicDiagram";
+import { TopicMedia } from "@/components/learn/TopicMedia";
 import {
   LEARN_SECTION_LABEL,
   LEARN_TOPICS,
@@ -43,12 +43,7 @@ export default async function LearnTopicPage({ params }: LearnTopicPageProps) {
         <h1 className="mt-1 text-2xl font-bold">{topic.title}</h1>
       </header>
 
-      <figure className="overflow-visible rounded-lg border border-gray-200 bg-white">
-        <TopicDiagram topicId={topic.id} />
-        <figcaption className="border-t border-gray-100 px-3 py-2 text-xs text-gray-500">
-          試験対策用の模式図です。縮尺や細部は簡略化しています。
-        </figcaption>
-      </figure>
+      <TopicMedia topic={topic} />
 
       <article className="flex flex-col gap-4 text-sm leading-7 text-gray-800">
         {paragraphs.map((paragraph) => (

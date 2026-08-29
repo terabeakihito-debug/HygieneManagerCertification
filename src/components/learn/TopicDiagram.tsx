@@ -19,10 +19,10 @@ import { SpecialCheckupDiagram } from "@/components/learn/diagrams/SpecialChecku
 import { ThermoregulationDiagram } from "@/components/learn/diagrams/ThermoregulationDiagram";
 import { WBGTDiagram } from "@/components/learn/diagrams/WBGTDiagram";
 import { WorkEnvironmentMeasurementDiagram } from "@/components/learn/diagrams/WorkEnvironmentMeasurementDiagram";
-import type { LearnTopicId } from "@/lib/data/learn-content";
+import type { DiagramLearnTopicId } from "@/lib/data/learn-content";
 
 type TopicDiagramProps = {
-  topicId: LearnTopicId;
+  topicId: DiagramLearnTopicId;
 };
 
 export function TopicDiagram({ topicId }: TopicDiagramProps) {

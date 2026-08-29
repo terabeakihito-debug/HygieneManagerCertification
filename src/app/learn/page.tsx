@@ -22,7 +22,7 @@ export default function LearnIndexPage() {
       </div>
 
       <p className="text-sm text-gray-600">
-        問題演習の前に、労働生理と労働衛生の基本を図解で確認できます。
+        問題演習の前に、労働生理・労働衛生の図解と、関係法令の一覧表で基本を確認できます。
       </p>
 
       {LEARN_SECTIONS.map((section) => (
