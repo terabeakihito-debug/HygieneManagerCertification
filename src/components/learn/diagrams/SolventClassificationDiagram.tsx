@@ -3,10 +3,9 @@ export function SolventClassificationDiagram() {
     <svg
       viewBox="0 0 720 400"
       role="img"
-      aria-labelledby="solvent-diagram-title"
+      aria-label="有機溶剤等の分類と体内への影響経路"
       className="h-auto w-full overflow-visible"
     >
-      <title id="solvent-diagram-title">有機溶剤等の分類と体内への影響経路</title>
       <rect width="720" height="400" fill="#f9fafb" />
 
       <text x="168" y="28" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">

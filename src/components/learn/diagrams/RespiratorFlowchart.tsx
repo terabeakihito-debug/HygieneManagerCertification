@@ -57,10 +57,9 @@ export function RespiratorFlowchart() {
     <svg
       viewBox="0 0 720 420"
       role="img"
-      aria-labelledby="respirator-diagram-title"
+      aria-label="呼吸用保護具の使い分けフローチャート"
       className="h-auto w-full overflow-visible"
     >
-      <title id="respirator-diagram-title">呼吸用保護具の使い分けフローチャート</title>
       <rect width="720" height="420" fill="#f9fafb" />
 
       <Node

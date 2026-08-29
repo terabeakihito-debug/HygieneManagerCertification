@@ -69,10 +69,9 @@ export function NervousSystemDiagram() {
     <svg
       viewBox="0 0 720 440"
       role="img"
-      aria-labelledby="nerve-diagram-title"
+      aria-label="中枢神経系と末梢神経系のツリー構造"
       className="h-auto w-full overflow-visible"
     >
-      <title id="nerve-diagram-title">中枢神経系と末梢神経系のツリー構造</title>
       <rect width="720" height="440" fill="#f9fafb" />
 
       <Box x={24} y={188} width={100} height={44} label="神経系" accent />

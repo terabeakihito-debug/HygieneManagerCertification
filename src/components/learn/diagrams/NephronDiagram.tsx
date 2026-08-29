@@ -1,13 +1,12 @@
 export function NephronDiagram() {
   return (
     <svg
-      viewBox="0 0 720 400"
+      viewBox="0 0 720 420"
       role="img"
-      aria-labelledby="nephron-diagram-title"
+      aria-label="ネフロンの模式図と原尿が尿になる流れ"
       className="h-auto w-full overflow-visible"
     >
-      <title id="nephron-diagram-title">ネフロンの模式図と原尿が尿になる流れ</title>
-      <rect width="720" height="400" fill="#f9fafb" />
+      <rect width="720" height="420" fill="#f9fafb" />
 
       <text x="160" y="28" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
         ネフロン（模式）
@@ -34,15 +33,15 @@ export function NephronDiagram() {
         strokeWidth="4"
         strokeLinecap="round"
       />
-      <text x="206" y="158" fill="#0f766e" fontSize="12" fontFamily="system-ui, sans-serif">
+      <text x="214" y="148" fill="#0f766e" fontSize="12" fontFamily="system-ui, sans-serif">
         尿細管
       </text>
-      <text x="86" y="250" fill="#6b7280" fontSize="11" fontFamily="system-ui, sans-serif">
+      <text x="48" y="250" fill="#6b7280" fontSize="11" fontFamily="system-ui, sans-serif">
         （再吸収が行われる）
       </text>
 
-      <rect x="214" y="258" width="22" height="88" rx="6" fill="#fff" stroke="#374151" />
-      <text x="225" y="364" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      <rect x="248" y="258" width="22" height="72" rx="6" fill="#fff" stroke="#374151" />
+      <text x="318" y="300" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
         集合管 → 尿
       </text>
 
@@ -79,7 +78,7 @@ export function NephronDiagram() {
         尿として排出
       </text>
 
-      <text x="360" y="388" textAnchor="middle" fill="#6b7280" fontSize="11" fontFamily="system-ui, sans-serif">
+      <text x="360" y="400" textAnchor="middle" fill="#6b7280" fontSize="11" fontFamily="system-ui, sans-serif">
         蛋白質は通常ほとんどろ過されない。水分や電解質の多くは再吸収される
       </text>
 

@@ -3,10 +3,9 @@ export function HeartCirculationDiagram() {
     <svg
       viewBox="0 0 720 460"
       role="img"
-      aria-labelledby="heart-diagram-title"
+      aria-label="心臓の四つの部屋と体循環・肺循環"
       className="h-auto w-full overflow-visible"
     >
-      <title id="heart-diagram-title">心臓の四つの部屋と体循環・肺循環</title>
       <rect width="720" height="460" fill="#f9fafb" />
 
       <rect x="300" y="28" width="120" height="44" rx="8" fill="#ccfbf1" stroke="#0f766e" />

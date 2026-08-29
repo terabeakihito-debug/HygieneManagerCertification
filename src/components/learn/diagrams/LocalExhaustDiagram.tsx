@@ -29,10 +29,9 @@ export function LocalExhaustDiagram() {
     <svg
       viewBox="0 0 720 400"
       role="img"
-      aria-labelledby="exhaust-diagram-title"
+      aria-label="局所排気装置の構成とフードの種類"
       className="h-auto w-full overflow-visible"
     >
-      <title id="exhaust-diagram-title">局所排気装置の構成とフードの種類</title>
       <rect width="720" height="400" fill="#f9fafb" />
 
       <text x="360" y="28" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
