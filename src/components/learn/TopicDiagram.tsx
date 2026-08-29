@@ -1,8 +1,11 @@
+import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
 import { BloodCompositionDiagram } from "@/components/learn/diagrams/BloodCompositionDiagram";
 import { DigestiveSystemDiagram } from "@/components/learn/diagrams/DigestiveSystemDiagram";
 import { DustLungDiagram } from "@/components/learn/diagrams/DustLungDiagram";
 import { FoodPoisoningDiagram } from "@/components/learn/diagrams/FoodPoisoningDiagram";
 import { HeartCirculationDiagram } from "@/components/learn/diagrams/HeartCirculationDiagram";
+import { HormoneEndocrineDiagram } from "@/components/learn/diagrams/HormoneEndocrineDiagram";
+import { ImmuneSystemDiagram } from "@/components/learn/diagrams/ImmuneSystemDiagram";
 import { LiftingPostureDiagram } from "@/components/learn/diagrams/LiftingPostureDiagram";
 import { LocalExhaustDiagram } from "@/components/learn/diagrams/LocalExhaustDiagram";
 import { MuscleTypesDiagram } from "@/components/learn/diagrams/MuscleTypesDiagram";
@@ -40,6 +43,12 @@ export function TopicDiagram({ topicId }: TopicDiagramProps) {
       return <ThermoregulationDiagram />;
     case "sensory-organs":
       return <SensoryOrganDiagram />;
+    case "hormone-endocrine":
+      return <HormoneEndocrineDiagram />;
+    case "immune-system":
+      return <ImmuneSystemDiagram />;
+    case "aging-changes":
+      return <AgingChangesDiagram />;
     case "local-exhaust":
       return <LocalExhaustDiagram />;
     case "organic-solvents":
