@@ -116,6 +116,13 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
         </div>
       </div>
 
+      <p className="text-sm text-gray-500">
+        先に学習コンテンツを読みたい方は
+        <Link href="/learn" className="ml-1 underline">
+          こちら
+        </Link>
+      </p>
+
       <fieldset>
         <legend className="mb-2 text-sm font-medium">資格区分</legend>
         <div className="flex flex-wrap gap-2">

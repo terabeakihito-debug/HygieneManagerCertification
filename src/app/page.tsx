@@ -14,6 +14,9 @@ export default function HomePage() {
         <Link href="/login" className="underline">
           ログイン
         </Link>
+        <Link href="/learn" className="underline">
+          学習コンテンツ
+        </Link>
         <Link href="/practice" className="underline">
           問題演習
         </Link>

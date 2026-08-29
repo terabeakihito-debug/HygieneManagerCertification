@@ -24,6 +24,12 @@ export default async function MyPage() {
         <p className="mt-1 font-medium">{user.email}</p>
       </div>
       <Link
+        href="/learn"
+        className="rounded border border-gray-300 bg-white px-4 py-2 text-center"
+      >
+        学習コンテンツを読む
+      </Link>
+      <Link
         href="/practice"
         className="rounded bg-gray-900 px-4 py-2 text-center text-white"
       >
