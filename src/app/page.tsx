@@ -26,6 +26,9 @@ export default function HomePage() {
         <Link href="/mock-exams" className="underline">
           模試
         </Link>
+        <Link href="/calendar" className="underline">
+          カレンダー
+        </Link>
       </p>
       <p className="text-sm text-gray-400">
         セットアップ手順は README.md を参照してください。

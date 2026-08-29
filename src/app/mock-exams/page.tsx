@@ -42,6 +42,9 @@ export default async function MockExamsPage() {
           <Link href="/mock-exams/history" className="underline">
             履歴
           </Link>
+          <Link href="/calendar" className="underline">
+            カレンダー
+          </Link>
           <Link href="/mypage" className="underline">
             マイページ
           </Link>

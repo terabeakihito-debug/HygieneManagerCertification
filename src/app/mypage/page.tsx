@@ -41,6 +41,9 @@ export default async function MyPage() {
       <Link href="/mock-exams/history" className="text-center text-sm underline">
         模試結果の履歴
       </Link>
+      <Link href="/calendar" className="text-center text-sm underline">
+        学習カレンダーを見る
+      </Link>
       <LogoutButton />
     </main>
   );

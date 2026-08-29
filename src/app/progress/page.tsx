@@ -67,6 +67,9 @@ export default async function ProgressPage({ searchParams }: ProgressPageProps) 
           <Link href="/mock-exams" className="underline">
             模試
           </Link>
+          <Link href="/calendar" className="underline">
+            カレンダー
+          </Link>
           <Link href="/mypage" className="underline">
             マイページ
           </Link>

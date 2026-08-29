@@ -111,3 +111,11 @@ export interface StudyLog {
   study_date: string;
   questions_answered: number;
 }
+
+export interface UserSettings {
+  user_id: string;
+  target_exam_type_id: string | null;
+  exam_date: string | null;
+  created_at: string;
+  updated_at: string;
+}

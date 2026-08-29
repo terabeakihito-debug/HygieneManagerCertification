@@ -1,4 +1,5 @@
 import { syncReviewList } from "@/lib/actions/review-list";
+import { incrementTodayStudyLog } from "@/lib/data/calendar";
 import { createClient } from "@/lib/supabase/server";
 
 export async function recordAnswer(input: {
@@ -81,6 +82,11 @@ export async function recordAnswer(input: {
     if (createError) {
       return "進捗の更新に失敗しました";
     }
+  }
+
+  const studyError = await incrementTodayStudyLog(input.userId);
+  if (studyError) {
+    return studyError;
   }
 
   return syncReviewList({
