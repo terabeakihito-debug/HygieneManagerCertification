@@ -35,6 +35,12 @@ export default async function MyPage() {
       <Link href="/review" className="text-center text-sm underline">
         復習リストを見る{reviewCount > 0 ? ` (${reviewCount})` : ""}
       </Link>
+      <Link href="/mock-exams" className="text-center text-sm underline">
+        模試に挑戦する
+      </Link>
+      <Link href="/mock-exams/history" className="text-center text-sm underline">
+        模試結果の履歴
+      </Link>
       <LogoutButton />
     </main>
   );

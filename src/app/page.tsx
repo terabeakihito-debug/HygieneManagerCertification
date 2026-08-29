@@ -23,6 +23,9 @@ export default function HomePage() {
         <Link href="/review" className="underline">
           復習
         </Link>
+        <Link href="/mock-exams" className="underline">
+          模試
+        </Link>
       </p>
       <p className="text-sm text-gray-400">
         セットアップ手順は README.md を参照してください。

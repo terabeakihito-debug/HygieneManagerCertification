@@ -24,6 +24,9 @@ export default async function ReviewPage() {
           <Link href="/practice" className="underline">
             問題演習
           </Link>
+          <Link href="/mock-exams" className="underline">
+            模試
+          </Link>
           <Link href="/mypage" className="underline">
             マイページ
           </Link>
