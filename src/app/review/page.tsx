@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
 import { ReviewListItem } from "@/components/review/ReviewListItem";
+import { getRecommendedProductsForCategories } from "@/lib/data/recommendations";
 import { getUnresolvedReviewItems } from "@/lib/data/review";
 import { createClient } from "@/lib/supabase/server";
 
@@ -15,6 +17,13 @@ export default async function ReviewPage() {
   }
 
   const items = await getUnresolvedReviewItems(user.id);
+  const reviewCategoryIds = items
+    .map((item) => item.categoryId)
+    .filter((id): id is string => id !== null);
+  const recommendedProducts =
+    items.length > 0
+      ? await getRecommendedProductsForCategories(reviewCategoryIds, 2)
+      : [];
 
   return (
     <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-8">
@@ -61,6 +70,10 @@ export default async function ReviewPage() {
               reviewCount={item.reviewCount}
             />
           ))}
+          <ProductRecommendation
+            products={recommendedProducts}
+            heading="復習の参考に"
+          />
         </div>
       )}
     </main>

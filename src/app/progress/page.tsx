@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { CategoryProgressCard } from "@/components/progress/CategoryProgressCard";
 import { OverallSummary } from "@/components/progress/OverallSummary";
+import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
 import {
   MIN_ANSWERS_FOR_WEAK_JUDGMENT,
   WEAK_ACCURACY_THRESHOLD,
@@ -10,6 +11,7 @@ import {
   sortCategoryRows,
   type ProgressSort,
 } from "@/lib/data/progress";
+import { getRecommendedProductsForUser } from "@/lib/data/recommendations";
 import { createClient } from "@/lib/supabase/server";
 
 type ProgressPageProps = {
@@ -49,7 +51,10 @@ export default async function ProgressPage({ searchParams }: ProgressPageProps) 
   }
 
   const sort = parseProgressSort(params.sort);
-  const dashboard = await getProgressDashboard(user.id);
+  const [dashboard, recommendedProducts] = await Promise.all([
+    getProgressDashboard(user.id),
+    getRecommendedProductsForUser(user.id),
+  ]);
   const categories = sortCategoryRows(dashboard.categories, sort);
   const weakPercent = Math.round(WEAK_ACCURACY_THRESHOLD * 100);
 
@@ -128,6 +133,11 @@ export default async function ProgressPage({ searchParams }: ProgressPageProps) 
           </div>
         )}
       </section>
+
+      <ProductRecommendation
+        products={recommendedProducts}
+        heading="苦手分野の学習に役立つかもしれません"
+      />
     </main>
   );
 }

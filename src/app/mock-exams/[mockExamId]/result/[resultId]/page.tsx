@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
+import { getRecommendedProductsForUser } from "@/lib/data/recommendations";
 import { createClient } from "@/lib/supabase/server";
 
 type ResultPageProps = {
@@ -60,6 +62,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
     ((categoryRows ?? []) as CategoryRow[]).map((row) => [row.id, row.name])
   );
   const weakPercent = Math.round(WEAK_ACCURACY_THRESHOLD * 100);
+  const recommendedProducts = await getRecommendedProductsForUser(user.id);
 
   return (
     <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-8">
@@ -110,6 +113,11 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
           </ul>
         )}
       </section>
+
+      <ProductRecommendation
+        products={recommendedProducts}
+        heading="苦手分野の学習に役立つかもしれません"
+      />
 
       <div className="flex flex-col gap-3">
         <Link

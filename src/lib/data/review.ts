@@ -5,6 +5,7 @@ export type UnresolvedReviewItem = {
   id: string;
   questionId: string;
   questionPreview: string;
+  categoryId: string | null;
   categoryName: string;
   addedAt: string;
   reviewCount: number;
@@ -19,7 +20,7 @@ type ReviewListQueryRow = {
   question_id: string;
   questions: QuestionJoin<{
     question_text: string;
-    categories: { name: string } | { name: string }[] | null;
+    categories: { id: string; name: string } | { id: string; name: string }[] | null;
   }>;
 };
 
@@ -41,13 +42,17 @@ function previewText(text: string): string {
   return text.length > 60 ? `${text.slice(0, 60)}…` : text;
 }
 
-function categoryNameFromJoin(
-  joined: { name: string } | { name: string }[] | null | undefined
-): string {
+function categoryFromJoin(
+  joined: { id: string; name: string } | { id: string; name: string }[] | null | undefined
+): { id: string | null; name: string } {
   if (!joined) {
-    return "分野未設定";
+    return { id: null, name: "分野未設定" };
   }
-  return Array.isArray(joined) ? (joined[0]?.name ?? "分野未設定") : joined.name;
+  const row = Array.isArray(joined) ? joined[0] : joined;
+  if (!row) {
+    return { id: null, name: "分野未設定" };
+  }
+  return { id: row.id, name: row.name };
 }
 
 function questionFromJoin<T>(joined: QuestionJoin<T>): T | null {
@@ -89,7 +94,7 @@ export async function getUnresolvedReviewItems(
   const { data, error } = await supabase
     .from("review_list")
     .select(
-      "id, added_at, review_count, question_id, questions(question_text, categories(name))"
+      "id, added_at, review_count, question_id, questions(question_text, categories(id, name))"
     )
     .eq("user_id", userId)
     .eq("resolved", false)
@@ -105,11 +110,13 @@ export async function getUnresolvedReviewItems(
       if (!question) {
         return null;
       }
+      const category = categoryFromJoin(question.categories);
       return {
         id: row.id,
         questionId: row.question_id,
         questionPreview: previewText(question.question_text),
-        categoryName: categoryNameFromJoin(question.categories),
+        categoryId: category.id,
+        categoryName: category.name,
         addedAt: row.added_at,
         reviewCount: row.review_count,
       };
