@@ -103,3 +103,14 @@ export function whenTurnstileReady(): Promise<TurnstileApi> {
   }
   return getPendingLoad().promise;
 }
+
+export function debugAnonymousTurnstileSiteKey(): void {
+  const value = process.env.NEXT_PUBLIC_TURNSTILE_ANONYMOUS_SITE_KEY;
+  const prefix =
+    value === undefined ? "(undefined)" : value === "" ? "(empty)" : value.slice(0, 6);
+
+  console.info(
+    "[turnstile-debug] NEXT_PUBLIC_TURNSTILE_ANONYMOUS_SITE_KEY prefix:",
+    prefix
+  );
+}

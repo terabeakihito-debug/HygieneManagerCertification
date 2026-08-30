@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { TurnstileScript } from "@/components/auth/TurnstileScript";
 import {
+  debugAnonymousTurnstileSiteKey,
   getTurnstileApi,
   whenTurnstileReady,
 } from "@/components/auth/turnstile";
@@ -30,6 +31,7 @@ export function TurnstileWidget({
 
   useEffect(() => {
     if (!siteKey) {
+      debugAnonymousTurnstileSiteKey();
       return;
     }
 

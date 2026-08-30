@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { TurnstileScript } from "@/components/auth/TurnstileScript";
 import {
+  debugAnonymousTurnstileSiteKey,
   getTurnstileApi,
   whenTurnstileReady,
 } from "@/components/auth/turnstile";
@@ -22,7 +23,7 @@ export function InvisibleTurnstile({
   const onVerifyRef = useRef(onVerify);
   const onExpireRef = useRef(onExpire);
   const onErrorRef = useRef(onError);
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_ANONYMOUS_SITE_KEY ?? "";
 
   onVerifyRef.current = onVerify;
   onExpireRef.current = onExpire;
@@ -30,6 +31,7 @@ export function InvisibleTurnstile({
 
   useEffect(() => {
     if (!siteKey) {
+      debugAnonymousTurnstileSiteKey();
       onErrorRef.current?.();
       return;
     }
