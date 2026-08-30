@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { TurnstileScript } from "@/components/auth/TurnstileScript";
 import {
-  getTurnstile,
-  loadTurnstileScript,
+  getTurnstileApi,
+  whenTurnstileReady,
 } from "@/components/auth/turnstile";
 
 type InvisibleTurnstileProps = {
@@ -30,51 +31,41 @@ export function InvisibleTurnstile({
   useEffect(() => {
     if (!siteKey) {
       onErrorRef.current?.();
-    }
-  }, [siteKey]);
-
-  useEffect(() => {
-    if (!siteKey || !containerRef.current) {
       return;
     }
 
     let cancelled = false;
     let widgetId: string | null = null;
 
-    loadTurnstileScript()
-      .then(() => {
-        const turnstile = getTurnstile();
-        if (cancelled || !turnstile || !containerRef.current) {
+    void whenTurnstileReady()
+      .then((turnstile) => {
+        if (cancelled || !containerRef.current || widgetId) {
           return;
         }
 
-        turnstile.ready(() => {
-          if (cancelled || !containerRef.current || widgetId) {
-            return;
-          }
-
-          widgetId = turnstile.render(containerRef.current, {
-            sitekey: siteKey,
-            appearance: "interaction-only",
-            callback: (token) => {
-              onVerifyRef.current(token);
-            },
-            "expired-callback": () => {
-              onExpireRef.current?.();
-            },
-            "error-callback": () => {
-              onErrorRef.current?.();
-            },
-          });
+        widgetId = turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          appearance: "interaction-only",
+          callback: (token) => {
+            onVerifyRef.current(token);
+          },
+          "expired-callback": () => {
+            onExpireRef.current?.();
+          },
+          "error-callback": () => {
+            onErrorRef.current?.();
+          },
         });
       })
       .catch(() => {
-        onErrorRef.current?.();
+        if (!cancelled) {
+          onErrorRef.current?.();
+        }
       });
 
     return () => {
       cancelled = true;
-      const turnstile = getTurnstile();
+      const turnstile = getTurnstileApi();
       if (widgetId && turnstile) {
         turnstile.remove(widgetId);
       }
@@ -89,5 +80,10 @@ export function InvisibleTurnstile({
     );
   }
 
-  return <div ref={containerRef} />;
+  return (
+    <>
+      <TurnstileScript />
+      <div ref={containerRef} />
+    </>
+  );
 }

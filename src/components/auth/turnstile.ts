@@ -1,6 +1,8 @@
 export const TURNSTILE_SCRIPT_SRC =
   "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 
+export const TURNSTILE_SCRIPT_ID = "cloudflare-turnstile";
+
 export type TurnstileRenderOptions = {
   sitekey: string;
   callback: (token: string) => void;
@@ -25,47 +27,79 @@ declare global {
   }
 }
 
-let scriptLoad: Promise<void> | null = null;
+type PendingLoad = {
+  promise: Promise<TurnstileApi>;
+  resolve: (api: TurnstileApi) => void;
+  reject: (error: Error) => void;
+};
 
-export function getTurnstile(): TurnstileApi | undefined {
-  return window.turnstile;
+let pendingLoad: PendingLoad | null = null;
+
+export function getTurnstileApi(): TurnstileApi | undefined {
+  const candidate = window.turnstile;
+  if (
+    candidate &&
+    typeof candidate.render === "function" &&
+    typeof candidate.remove === "function"
+  ) {
+    return candidate;
+  }
+  return undefined;
 }
 
-export function loadTurnstileScript(): Promise<void> {
-  if (getTurnstile()) {
-    return Promise.resolve();
-  }
-  if (scriptLoad) {
-    return scriptLoad;
+function getPendingLoad(): PendingLoad {
+  if (pendingLoad) {
+    return pendingLoad;
   }
 
-  scriptLoad = new Promise((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[src="${TURNSTILE_SCRIPT_SRC}"]`
-    );
+  const box: {
+    promise?: Promise<TurnstileApi>;
+    resolve?: (api: TurnstileApi) => void;
+    reject?: (error: Error) => void;
+  } = {};
 
-    if (existing) {
-      existing.addEventListener("load", () => resolve(), { once: true });
-      existing.addEventListener(
-        "error",
-        () => reject(new Error("Turnstile script failed")),
-        { once: true }
-      );
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = TURNSTILE_SCRIPT_SRC;
-    script.async = true;
-    script.defer = true;
-    script.addEventListener("load", () => resolve(), { once: true });
-    script.addEventListener(
-      "error",
-      () => reject(new Error("Turnstile script failed")),
-      { once: true }
-    );
-    document.head.appendChild(script);
+  box.promise = new Promise<TurnstileApi>((resolve, reject) => {
+    box.resolve = resolve;
+    box.reject = reject;
   });
 
-  return scriptLoad;
+  if (!box.promise || !box.resolve || !box.reject) {
+    throw new Error("Failed to create Turnstile load promise");
+  }
+
+  pendingLoad = {
+    promise: box.promise,
+    resolve: box.resolve,
+    reject: box.reject,
+  };
+  return pendingLoad;
+}
+
+export function markTurnstileScriptLoaded(): void {
+  const api = getTurnstileApi();
+  if (api) {
+    getPendingLoad().resolve(api);
+    return;
+  }
+
+  window.setTimeout(() => {
+    const retryApi = getTurnstileApi();
+    if (retryApi) {
+      getPendingLoad().resolve(retryApi);
+    }
+  }, 0);
+}
+
+export function markTurnstileScriptFailed(): void {
+  const pending = pendingLoad;
+  pendingLoad = null;
+  pending?.reject(new Error("Turnstile script failed"));
+}
+
+export function whenTurnstileReady(): Promise<TurnstileApi> {
+  const api = getTurnstileApi();
+  if (api) {
+    return Promise.resolve(api);
+  }
+  return getPendingLoad().promise;
 }

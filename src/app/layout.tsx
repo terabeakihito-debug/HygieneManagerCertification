@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-50 text-gray-900">
         <AnonymousAuthProvider>
           {children}

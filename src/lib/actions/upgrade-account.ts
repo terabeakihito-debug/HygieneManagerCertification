@@ -6,7 +6,7 @@ import {
   toAuthErrorMessage,
   validateCredentials,
   type AuthState,
-} from "@/lib/actions/auth";
+} from "@/lib/actions/validation";
 import { isAnonymousUser } from "@/lib/auth/anonymous";
 import { createClient } from "@/lib/supabase/server";
 

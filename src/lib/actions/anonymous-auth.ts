@@ -1,6 +1,6 @@
 "use server";
 
-import { toAuthErrorMessage } from "@/lib/actions/auth";
+import { toAuthErrorMessage } from "@/lib/actions/validation";
 import { createClient } from "@/lib/supabase/server";
 
 export type AnonymousAuthResult =

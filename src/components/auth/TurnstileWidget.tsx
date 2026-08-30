@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { TurnstileScript } from "@/components/auth/TurnstileScript";
 import {
-  getTurnstile,
-  loadTurnstileScript,
+  getTurnstileApi,
+  whenTurnstileReady,
 } from "@/components/auth/turnstile";
 
 type TurnstileWidgetProps = {
@@ -28,46 +29,41 @@ export function TurnstileWidget({
   onErrorRef.current = onError;
 
   useEffect(() => {
-    if (!siteKey || !containerRef.current) {
+    if (!siteKey) {
       return;
     }
 
     let cancelled = false;
     let widgetId: string | null = null;
 
-    loadTurnstileScript()
-      .then(() => {
-        const turnstile = getTurnstile();
-        if (cancelled || !turnstile || !containerRef.current) {
+    void whenTurnstileReady()
+      .then((turnstile) => {
+        if (cancelled || !containerRef.current || widgetId) {
           return;
         }
 
-        turnstile.ready(() => {
-          if (cancelled || !containerRef.current || widgetId) {
-            return;
-          }
-
-          widgetId = turnstile.render(containerRef.current, {
-            sitekey: siteKey,
-            callback: (token) => {
-              onVerifyRef.current(token);
-            },
-            "expired-callback": () => {
-              onExpireRef.current?.();
-            },
-            "error-callback": () => {
-              onErrorRef.current?.();
-            },
-          });
+        widgetId = turnstile.render(containerRef.current, {
+          sitekey: siteKey,
+          callback: (token) => {
+            onVerifyRef.current(token);
+          },
+          "expired-callback": () => {
+            onExpireRef.current?.();
+          },
+          "error-callback": () => {
+            onErrorRef.current?.();
+          },
         });
       })
       .catch(() => {
-        onErrorRef.current?.();
+        if (!cancelled) {
+          onErrorRef.current?.();
+        }
       });
 
     return () => {
       cancelled = true;
-      const turnstile = getTurnstile();
+      const turnstile = getTurnstileApi();
       if (widgetId && turnstile) {
         turnstile.remove(widgetId);
       }
@@ -82,5 +78,10 @@ export function TurnstileWidget({
     );
   }
 
-  return <div ref={containerRef} className="flex justify-center" />;
+  return (
+    <>
+      <TurnstileScript />
+      <div ref={containerRef} className="flex justify-center" />
+    </>
+  );
 }
