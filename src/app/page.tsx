@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { CrossMark } from "@/components/ui/CrossMark";
 
+const EXAM_ORG_HREF = "https://www.exam.or.jp/";
+
 export default function HomePage() {
   return (
     <>
@@ -39,6 +41,88 @@ export default function HomePage() {
       </section>
 
       <main className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-16 sm:py-20">
+        <section id="about" className="flex flex-col gap-6 text-sm leading-7 text-ink">
+          <h2 className="text-2xl font-bold">衛生管理者とは</h2>
+          <p>
+            衛生管理者は、労働安全衛生法に基づく国家資格です。事業場における労働者の健康障害の防止、衛生に関する教育の実施、健康診断の実施等、職場の衛生に関する技術的事項を管理する役割を担います。
+          </p>
+
+          <div className="flex flex-col gap-3 border-t border-hairline pt-6">
+            <h3 className="text-lg font-bold">なぜ必要とされる資格か</h3>
+            <p>
+              労働安全衛生法では、常時50人以上の労働者を使用する事業場に、衛生管理者の選任が義務付けられています。労働者数の規模に応じて、必要な衛生管理者の人数も定められています。職場の安全と健康を守る専門知識を持つ人材として、多くの業種で必要とされる資格です。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-hairline pt-6">
+            <h3 className="text-lg font-bold">第一種と第二種の違い</h3>
+            <p>
+              衛生管理者には第一種と第二種があり、対応できる業種の範囲が異なります。
+            </p>
+            <ul className="flex flex-col gap-3">
+              <li className="border-l-2 border-hairline pl-3">
+                <strong className="font-display font-bold">第二種衛生管理者</strong>
+                : 有害業務を含まない業種(情報通信業、金融業、小売業等)で衛生管理者として選任できます。
+              </li>
+              <li className="border-l-2 border-hairline pl-3">
+                <strong className="font-display font-bold">第一種衛生管理者</strong>
+                : 有害業務を含む全ての業種(製造業、建設業等)で衛生管理者として選任できます。第二種の対象業種も含みます。
+              </li>
+            </ul>
+            <p>
+              多くの業種に対応できる第一種の方が、活躍の場が広い資格といえます。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-hairline pt-6">
+            <h3 className="text-lg font-bold">試験の実施団体</h3>
+            <p>
+              衛生管理者試験は、厚生労働大臣が指定する試験機関である公益財団法人
+              安全衛生技術試験協会が実施しています。試験は全国の安全衛生技術センター等で、定期的に実施されています。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-hairline pt-6">
+            <h3 className="text-lg font-bold">試験科目</h3>
+            <p>
+              試験は「関係法令」「労働衛生」「労働生理」の3科目で構成されます。第一種は、これらに加えて有害業務に関する内容が出題範囲に含まれます。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-hairline pt-6">
+            <h3 className="text-lg font-bold">受験資格</h3>
+            <p>
+              衛生管理者試験を受験するには、学歴に応じた一定の実務経験等の受験資格を満たす必要があります。受験資格の詳細は、受験する方の学歴・職歴によって異なるため、必ず安全衛生技術試験協会の
+              <a
+                href={EXAM_ORG_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-safety underline"
+              >
+                公式サイト
+              </a>
+              で最新の情報をご確認ください。
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-3 border-t border-hairline pt-6">
+            <h3 className="text-lg font-bold">最新情報について</h3>
+            <p>
+              試験日程、受験手数料、受験資格の詳細、試験会場等は変更される場合があります。正確な最新情報は、必ず公益財団法人
+              安全衛生技術試験協会の公式サイト(
+              <a
+                href={EXAM_ORG_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-safety underline"
+              >
+                https://www.exam.or.jp/
+              </a>
+              )でご確認ください。
+            </p>
+          </div>
+        </section>
+
         <section className="flex flex-col gap-4">
         <p className="font-mono text-[11px] tracking-[0.18em] text-amber">GET STARTED</p>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -77,6 +161,9 @@ export default function HomePage() {
         </div>
 
         <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-graphite">
+          <Link href="#about" className="underline">
+            衛生管理者とは
+          </Link>
           <Link href="/login" className="underline">
             ログイン
           </Link>

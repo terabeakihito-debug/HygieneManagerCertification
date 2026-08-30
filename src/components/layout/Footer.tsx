@@ -6,6 +6,10 @@ export function Footer() {
       <p>
         © 2026 衛生管理者試験対策
         {" · "}
+        <Link href="/#about" className="underline">
+          衛生管理者とは
+        </Link>
+        {" · "}
         <Link href="/privacy" className="underline">
           プライバシーポリシー
         </Link>
