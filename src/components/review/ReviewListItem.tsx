@@ -23,17 +23,17 @@ export function ReviewListItem({
   reviewCount,
 }: ReviewListItemProps) {
   return (
-    <article className="rounded-lg border border-gray-200 bg-white p-4">
-      <p className="text-sm text-gray-500">{categoryName}</p>
+    <article className="card-surface p-4">
+      <p className="text-sm text-graphite">{categoryName}</p>
       <p className="mt-1 font-medium leading-relaxed">{questionPreview}</p>
-      <dl className="mt-3 grid grid-cols-1 gap-1 text-sm text-gray-600 sm:grid-cols-2">
+      <dl className="mt-3 grid grid-cols-1 gap-1 text-sm text-graphite sm:grid-cols-2">
         <div>
-          <dt className="inline text-gray-500">最後に間違えた日時：</dt>
-          <dd className="inline">{formatAddedAt(addedAt)}</dd>
+          <dt className="inline">最後に間違えた日時：</dt>
+          <dd className="inline font-mono">{formatAddedAt(addedAt)}</dd>
         </div>
         <div>
-          <dt className="inline text-gray-500">復習回数：</dt>
-          <dd className="inline">{reviewCount}回</dd>
+          <dt className="inline">復習回数：</dt>
+          <dd className="inline font-mono">{reviewCount}回</dd>
         </div>
       </dl>
     </article>

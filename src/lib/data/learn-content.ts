@@ -578,6 +578,34 @@ export function getLearnTopicsBySection(section: LearnSection): LearnTopic[] {
   return LEARN_TOPICS.filter((topic) => topic.section === section);
 }
 
+export function getDiagramFigureNumber(topicId: DiagramLearnTopicId): number {
+  return DIAGRAM_TOPIC_IDS.indexOf(topicId) + 1;
+}
+
+export function getTablePlateNumber(
+  topicId: TableLearnTopicId,
+  tableIndex: number
+): number {
+  let offset = 0;
+  for (const topic of LEARN_TOPICS) {
+    if (topic.contentType !== "table") {
+      continue;
+    }
+    if (topic.id === topicId) {
+      return offset + tableIndex + 1;
+    }
+    offset += topic.tables.length;
+  }
+  return tableIndex + 1;
+}
+
+export function getSectionTopicNumber(topic: LearnTopic): number {
+  return (
+    getLearnTopicsBySection(topic.section).findIndex((item) => item.id === topic.id) +
+    1
+  );
+}
+
 export async function getPracticeHrefForCategory(
   categoryName: string
 ): Promise<string> {

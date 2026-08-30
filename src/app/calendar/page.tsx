@@ -57,13 +57,13 @@ export default async function CalendarPage({ searchParams }: CalendarPageProps) 
         </Link>
       </div>
 
-      <section className="rounded-lg border border-gray-200 bg-white p-4">
-        <p className="text-sm text-gray-500">学習継続日数</p>
+      <section className="card-surface p-4">
+        <p className="text-sm text-graphite">学習継続日数</p>
         <p className="mt-1 text-3xl font-bold">{dashboard.streak.days}日</p>
         {dashboard.streak.studiedToday ? (
-          <p className="mt-2 text-sm text-gray-600">今日も学習しています。</p>
+          <p className="mt-2 text-sm text-graphite">今日も学習しています。</p>
         ) : (
-          <p className="mt-2 text-sm text-gray-600">
+          <p className="mt-2 text-sm text-graphite">
             今日学習すればストリークが続きます
           </p>
         )}
@@ -71,16 +71,16 @@ export default async function CalendarPage({ searchParams }: CalendarPageProps) 
 
       {message ? (
         <p
-          className={`rounded-lg px-4 py-3 text-sm ${
+          className={`rounded-sm px-4 py-3 text-sm ${
             dashboard.pace.kind === "past"
-              ? "border border-red-300 bg-red-50 text-red-900"
-              : "border border-gray-200 bg-white text-gray-800"
+              ? "border border-stamp text-stamp"
+              : "card-surface"
           }`}
         >
           {message}
         </p>
       ) : (
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-graphite">
           試験区分と試験日を設定すると、逆算した学習ペースの目安を表示します。
         </p>
       )}
@@ -92,7 +92,7 @@ export default async function CalendarPage({ searchParams }: CalendarPageProps) 
         days={dashboard.days}
       />
 
-      <section className="rounded-lg border border-gray-200 bg-white p-4">
+      <section className="card-surface p-4">
         <h2 className="mb-4 text-lg font-semibold">試験日の設定</h2>
         <ExamDateForm
           examTypes={examTypes}

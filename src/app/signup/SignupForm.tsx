@@ -22,7 +22,7 @@ export function SignupForm() {
   return (
     <form action={formAction} className="flex flex-col gap-4">
       {state.error ? (
-        <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+        <p className="rounded-sm border border-stamp px-3 py-2 text-sm text-stamp" role="alert">
           {state.error}
         </p>
       ) : null}
@@ -34,7 +34,7 @@ export function SignupForm() {
           name="email"
           autoComplete="email"
           required
-          className="rounded border border-gray-300 px-3 py-2 font-normal"
+          className="field-input"
         />
       </label>
 
@@ -46,7 +46,7 @@ export function SignupForm() {
           autoComplete="new-password"
           required
           minLength={8}
-          className="rounded border border-gray-300 px-3 py-2 font-normal"
+          className="field-input"
         />
       </label>
 
@@ -61,7 +61,7 @@ export function SignupForm() {
       <button
         type="submit"
         disabled={pending || !captchaToken}
-        className="rounded bg-gray-900 px-4 py-2 text-white disabled:opacity-60"
+        className="btn-primary"
       >
         {pending ? "送信中..." : "登録する"}
       </button>

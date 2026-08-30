@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ChoiceMark } from "@/components/ui/ChoiceMark";
 import { gradeMockExamAction } from "@/lib/actions/mock-exam";
 
 export type MockExamChoice = {
@@ -102,11 +103,7 @@ export function MockExamTaker({
   }
 
   if (!question) {
-    return (
-      <p className="rounded-lg border border-gray-200 bg-white p-6 text-gray-600">
-        出題できる問題がありません。
-      </p>
-    );
+    return <p className="card-surface p-6 text-graphite">出題できる問題がありません。</p>;
   }
 
   const choices = [...question.choices].sort((a, b) => a.sort_order - b.sort_order);
@@ -115,18 +112,21 @@ export function MockExamTaker({
   return (
     <div className="flex flex-col gap-4">
       <div
-        className={`rounded-lg px-4 py-3 text-center font-semibold ${
-          remaining <= 60 ? "bg-red-100 text-red-900" : "bg-gray-900 text-white"
+        className={`rounded-sm px-4 py-3 text-center font-display font-semibold ${
+          remaining <= 60 ? "border border-stamp bg-paper text-stamp" : "bg-ink text-paper"
         }`}
       >
-        残り時間 {formatRemaining(remaining)}
+        残り時間 <span className="font-mono">{formatRemaining(remaining)}</span>
       </div>
 
-      <article className="rounded-lg border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
-        <p className="text-sm text-gray-500">
-          {index + 1} / {questions.length}
-        </p>
-        <h2 className="mt-2 text-lg font-semibold leading-relaxed">{question.question_text}</h2>
+      <article className="card-surface p-5 sm:p-6">
+        <div className="flex items-center gap-3">
+          <span className="q-number">{String(index + 1).padStart(2, "0")}</span>
+          <p className="font-mono text-sm text-graphite">
+            {index + 1} / {questions.length}
+          </p>
+        </div>
+        <h2 className="mt-3 text-lg font-semibold leading-relaxed">{question.question_text}</h2>
 
         <ul className="mt-5 flex flex-col gap-3">
           {choices.map((choice) => (
@@ -135,25 +135,17 @@ export function MockExamTaker({
                 type="button"
                 disabled={pending}
                 onClick={() => handleSelect(choice.id)}
-                className={`w-full rounded-lg border px-4 py-3 text-left text-sm leading-relaxed ${
-                  selectedId === choice.id
-                    ? "border-gray-900 bg-gray-100"
-                    : "border-gray-300 bg-white hover:bg-gray-50"
-                }`}
+                className="flex w-full items-start gap-3 rounded-sm px-1 py-2 text-left text-sm leading-relaxed"
               >
-                {choice.choice_text}
+                <ChoiceMark state={selectedId === choice.id ? "marked" : "idle"} />
+                <span>{choice.choice_text}</span>
               </button>
             </li>
           ))}
         </ul>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <button
-            type="button"
-            disabled={pending}
-            onClick={handleSkip}
-            className="rounded border border-gray-300 px-4 py-2 text-sm"
-          >
+          <button type="button" disabled={pending} onClick={handleSkip} className="btn-secondary text-sm">
             スキップ
           </button>
           {isLast ? (
@@ -161,7 +153,7 @@ export function MockExamTaker({
               type="button"
               disabled={pending}
               onClick={() => void submitGrade()}
-              className="rounded bg-gray-900 px-4 py-2 text-sm text-white disabled:opacity-60"
+              className="btn-primary text-sm"
             >
               {pending ? "採点中..." : "採点する"}
             </button>
@@ -169,7 +161,7 @@ export function MockExamTaker({
         </div>
 
         {error ? (
-          <p className="mt-4 text-sm text-red-700" role="alert">
+          <p className="mt-4 text-sm text-stamp" role="alert">
             {error}
           </p>
         ) : null}

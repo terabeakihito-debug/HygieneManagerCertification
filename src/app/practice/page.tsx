@@ -116,7 +116,7 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
         </div>
       </div>
 
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-graphite">
         先に学習コンテンツを読みたい方は
         <Link href="/learn" className="ml-1 underline">
           こちら
@@ -132,10 +132,10 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
               <Link
                 key={option.value}
                 href={examTypeHref(option.value)}
-                className={`rounded px-3 py-2 text-sm ${
+                className={`rounded-sm px-3 py-2 text-sm ${
                   active
-                    ? "bg-gray-900 text-white"
-                    : "border border-gray-300 bg-white text-gray-800"
+                    ? "bg-safety text-paper"
+                    : "btn-secondary"
                 }`}
               >
                 {option.label}

@@ -1,64 +1,48 @@
+import { DiagramLabel, DiagramScene } from "@/components/learn/diagrams/DiagramScene";
+
 export function FoodPoisoningDiagram() {
   return (
-    <svg
-      viewBox="0 0 720 400"
-      role="img"
-      aria-label="食中毒の感染型と毒素型の分類"
-      className="h-auto w-full overflow-visible"
-    >
-      <rect width="720" height="400" fill="#f9fafb" />
-
-      <text x="192" y="28" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        感染型
-      </text>
-      <rect x="24" y="40" width="336" height="200" rx="10" fill="#fff" stroke="#374151" />
-      <text x="192" y="72" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+    <DiagramScene src="/diagrams/food-poisoning.webp" alt="食中毒の感染型と毒素型の分類">
+      <DiagramLabel x={26} y={6}>感染型</DiagramLabel>
+      <DiagramLabel x={26} y={14} size="sm" tone="graphite">
         菌そのものが体内で増える
-      </text>
-      <rect x="48" y="88" width="288" height="36" rx="6" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="192" y="111" textAnchor="middle" fill="#134e4a" fontSize="13" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={26} y={26} tone="safety-dark">
         サルモネラ菌
-      </text>
-      <rect x="48" y="132" width="288" height="36" rx="6" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="192" y="155" textAnchor="middle" fill="#134e4a" fontSize="13" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={26} y={36} tone="safety-dark">
         腸炎ビブリオ菌
-      </text>
-      <rect x="48" y="176" width="288" height="36" rx="6" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="192" y="199" textAnchor="middle" fill="#134e4a" fontSize="13" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={26} y={46} tone="safety-dark">
         カンピロバクター
-      </text>
+      </DiagramLabel>
 
-      <text x="528" y="28" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        毒素型
-      </text>
-      <rect x="384" y="40" width="312" height="200" rx="10" fill="#fff" stroke="#374151" />
-      <text x="540" y="72" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={74} y={6}>毒素型</DiagramLabel>
+      <DiagramLabel x={74} y={14} size="sm" tone="graphite">
         食物中の毒素を摂取する
-      </text>
-      <rect x="408" y="88" width="264" height="36" rx="6" fill="#e5e7eb" stroke="#6b7280" />
-      <text x="540" y="111" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={74} y={26} tone="amber">
         黄色ブドウ球菌
-      </text>
-      <rect x="408" y="132" width="264" height="36" rx="6" fill="#e5e7eb" stroke="#6b7280" />
-      <text x="540" y="155" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={74} y={36} tone="stamp">
         ボツリヌス菌
-      </text>
-      <text x="540" y="204" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={74} y={50} size="sm" tone="graphite">
         ブドウ球菌毒素は熱に強い
-      </text>
+      </DiagramLabel>
 
-      <text x="360" y="272" textAnchor="middle" fill="#374151" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={50} y={70} size="sm" tone="graphite" width={88}>
         カンピロバクターを毒素型に入れるのは誤り
-      </text>
-      <text x="360" y="300" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={78} size="sm" tone="graphite" width={88}>
         ヒスタミンは加熱しても分解されにくい
-      </text>
-      <text x="360" y="328" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={86} size="sm" tone="graphite" width={88}>
         ノロウイルス：十分な加熱、または塩素系消毒
-      </text>
-      <text x="360" y="360" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={94} size="sm" tone="graphite" width={88}>
         手洗い、温度管理、二次汚染の防止が共通の予防
-      </text>
-    </svg>
+      </DiagramLabel>
+    </DiagramScene>
   );
 }

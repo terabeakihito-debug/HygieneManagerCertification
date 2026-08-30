@@ -82,7 +82,7 @@ export default async function ProgressPage({ searchParams }: ProgressPageProps) 
       </div>
 
       {dashboard.weakCount > 0 ? (
-        <p className="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-900">
+        <p className="card-surface border-stamp px-4 py-3 text-sm text-stamp">
           苦手分野が{dashboard.weakCount}件あります（正答率{weakPercent}%未満）
         </p>
       ) : null}
@@ -104,10 +104,10 @@ export default async function ProgressPage({ searchParams }: ProgressPageProps) 
                 <Link
                   key={option.value}
                   href={sortHref(option.value)}
-                  className={`rounded px-3 py-1 ${
+                  className={`rounded-sm px-3 py-1 ${
                     active
-                      ? "bg-gray-900 text-white"
-                      : "border border-gray-300 bg-white text-gray-800"
+                      ? "bg-safety text-paper"
+                      : "btn-secondary px-3 py-1"
                   }`}
                 >
                   {option.label}
@@ -117,12 +117,12 @@ export default async function ProgressPage({ searchParams }: ProgressPageProps) 
           </div>
         </div>
 
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-graphite">
           回答数が{MIN_ANSWERS_FOR_WEAK_JUDGMENT}問未満の分野は、正答率が安定しないため苦手分野の判定から除外しています。
         </p>
 
         {categories.length === 0 ? (
-          <p className="rounded-lg border border-gray-200 bg-white p-6 text-gray-600">
+          <p className="card-surface p-6 text-graphite">
             分野データがありません。
           </p>
         ) : (

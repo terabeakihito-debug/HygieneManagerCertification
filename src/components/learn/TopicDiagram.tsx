@@ -19,13 +19,18 @@ import { SpecialCheckupDiagram } from "@/components/learn/diagrams/SpecialChecku
 import { ThermoregulationDiagram } from "@/components/learn/diagrams/ThermoregulationDiagram";
 import { WBGTDiagram } from "@/components/learn/diagrams/WBGTDiagram";
 import { WorkEnvironmentMeasurementDiagram } from "@/components/learn/diagrams/WorkEnvironmentMeasurementDiagram";
-import type { DiagramLearnTopicId } from "@/lib/data/learn-content";
+import { PlateFrame } from "@/components/learn/PlateFrame";
+import {
+  getDiagramFigureNumber,
+  getLearnTopic,
+  type DiagramLearnTopicId,
+} from "@/lib/data/learn-content";
 
 type TopicDiagramProps = {
   topicId: DiagramLearnTopicId;
 };
 
-export function TopicDiagram({ topicId }: TopicDiagramProps) {
+function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
   switch (topicId) {
     case "heart-circulation":
       return <HeartCirculationDiagram />;
@@ -74,4 +79,20 @@ export function TopicDiagram({ topicId }: TopicDiagramProps) {
       return _never;
     }
   }
+}
+
+export function TopicDiagram({ topicId }: TopicDiagramProps) {
+  const topic = getLearnTopic(topicId);
+
+  return (
+    <PlateFrame
+      kind="FIG"
+      number={getDiagramFigureNumber(topicId)}
+      caption={topic?.title ?? ""}
+      footnote="試験対策用の模式図です。縮尺や細部は簡略化しています。"
+      isFrequent={false}
+    >
+      <DiagramBody topicId={topicId} />
+    </PlateFrame>
+  );
 }

@@ -76,7 +76,7 @@ export function InvisibleTurnstile({
 
   if (!siteKey) {
     return (
-      <p className="text-sm text-red-700" role="alert">
+      <p className="text-sm text-stamp" role="alert">
         CAPTCHAの設定がありません。管理者にお問い合わせください。
       </p>
     );

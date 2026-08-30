@@ -48,19 +48,19 @@ export default async function ReviewPage() {
       {items.length > 0 ? (
         <Link
           href="/review/practice"
-          className="rounded bg-gray-900 px-4 py-3 text-center text-white"
+          className="btn-primary"
         >
           復習を始める
         </Link>
       ) : null}
 
       {items.length === 0 ? (
-        <p className="rounded-lg border border-gray-200 bg-white p-6 text-gray-700">
+        <p className="card-surface p-6 text-ink">
           復習が必要な問題はありません
         </p>
       ) : (
         <div className="flex flex-col gap-3">
-          <p className="text-sm text-gray-600">{items.length}件の復習が必要です</p>
+          <p className="text-sm text-graphite">{items.length}件の復習が必要です</p>
           {items.map((item) => (
             <ReviewListItem
               key={item.id}

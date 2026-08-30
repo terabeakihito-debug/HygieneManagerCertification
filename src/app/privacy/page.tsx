@@ -12,7 +12,7 @@ export default async function PrivacyPage() {
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">
       <article
-        className="prose prose-gray max-w-none prose-headings:scroll-mt-8 prose-a:text-teal-800"
+        className="prose max-w-none prose-headings:font-display prose-headings:text-ink prose-a:text-safety prose-p:text-ink"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </main>

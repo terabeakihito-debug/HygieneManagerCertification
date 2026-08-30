@@ -21,14 +21,14 @@ export default function LearnIndexPage() {
         </div>
       </div>
 
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-graphite">
         問題演習の前に、労働生理・労働衛生の図解と、関係法令の一覧表で基本を確認できます。
       </p>
 
       {LEARN_SECTIONS.map((section) => (
         <section key={section} className="flex flex-col gap-3">
           <h2 className="text-lg font-semibold">{LEARN_SECTION_LABEL[section]}</h2>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {getLearnTopicsBySection(section).map((topic) => (
               <TopicCard key={topic.id} topic={topic} />
             ))}

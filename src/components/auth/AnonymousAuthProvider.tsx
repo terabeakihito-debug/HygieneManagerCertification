@@ -135,13 +135,13 @@ export function AnonymousAuthProvider({
         </div>
       ) : null}
       {challengeMode === "visible" ? (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white px-4 py-4 shadow-lg">
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-hairline bg-paper px-4 py-4">
           <div className="mx-auto flex max-w-md flex-col gap-3">
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-ink">
               自動確認に失敗しました。チェックを完了するとゲスト利用を開始します。
             </p>
             {status.kind === "error" ? (
-              <p className="text-sm text-red-700" role="alert">
+              <p className="text-sm text-stamp" role="alert">
                 {status.message}
               </p>
             ) : null}

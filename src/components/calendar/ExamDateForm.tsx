@@ -32,7 +32,7 @@ export function ExamDateForm({
   return (
     <form action={formAction} className="flex flex-col gap-4">
       {state.error ? (
-        <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
+        <p className="rounded-sm border border-stamp px-3 py-2 text-sm text-stamp" role="alert">
           {state.error}
         </p>
       ) : null}
@@ -42,7 +42,7 @@ export function ExamDateForm({
         <select
           name="target_exam_type_id"
           defaultValue={targetExamTypeId ?? ""}
-          className="rounded border border-gray-300 bg-white px-3 py-2 font-normal"
+          className="field-input"
         >
           <option value="">未設定</option>
           {examTypes.map((examType) => (
@@ -59,14 +59,14 @@ export function ExamDateForm({
           type="date"
           name="exam_date"
           defaultValue={examDate ?? ""}
-          className="rounded border border-gray-300 px-3 py-2 font-normal"
+          className="field-input"
         />
       </label>
 
       <button
         type="submit"
         disabled={pending}
-        className="rounded bg-gray-900 px-4 py-2 text-white disabled:opacity-60"
+        className="btn-primary"
       >
         {pending ? "保存中..." : "設定を保存"}
       </button>

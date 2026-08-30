@@ -1,94 +1,65 @@
-function Stage({
-  x,
-  y,
-  label,
-}: {
-  x: number;
-  y: number;
-  label: string;
-}) {
-  return (
-    <g>
-      <rect x={x} y={y} width="108" height="40" rx="8" fill="#fff" stroke="#374151" />
-      <text
-        x={x + 54}
-        y={y + 25}
-        textAnchor="middle"
-        fill="#111827"
-        fontSize="13"
-        fontFamily="system-ui, sans-serif"
-      >
-        {label}
-      </text>
-    </g>
-  );
-}
+import { DiagramArrows, DiagramLabel, DiagramScene } from "@/components/learn/diagrams/DiagramScene";
 
 export function LocalExhaustDiagram() {
   return (
-    <svg
-      viewBox="0 0 720 400"
-      role="img"
-      aria-label="局所排気装置の構成とフードの種類"
-      className="h-auto w-full overflow-visible"
-    >
-      <rect width="720" height="400" fill="#f9fafb" />
+    <DiagramScene src="/diagrams/local-exhaust.webp" alt="局所排気装置の構成とフードの種類">
+      <DiagramArrows viewBox="0 0 720 400">
+        <defs>
+          <marker id="exhaust-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0 0 L8 4 L0 8 Z" fill="#1F6E45" />
+          </marker>
+        </defs>
+        <path d="M118 86 H168" fill="none" stroke="#1F6E45" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
+        <path d="M236 86 H286" fill="none" stroke="#1F6E45" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
+        <path d="M380 86 H430" fill="none" stroke="#1F6E45" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
+        <path d="M520 86 H570" fill="none" stroke="#1F6E45" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
+      </DiagramArrows>
 
-      <text x="360" y="28" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        発生源から排気口までの流れ
-      </text>
-
-      <Stage x={16} y={48} label="発生源" />
-      <Stage x={156} y={48} label="フード" />
-      <Stage x={296} y={48} label="ダクト" />
-      <Stage x={436} y={48} label="排風機" />
-      <Stage x={576} y={48} label="排気口" />
-
-      <path d="M124 68 H152" fill="none" stroke="#0f766e" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
-      <path d="M264 68 H292" fill="none" stroke="#0f766e" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
-      <path d="M404 68 H432" fill="none" stroke="#0f766e" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
-      <path d="M544 68 H572" fill="none" stroke="#0f766e" strokeWidth="2" markerEnd="url(#exhaust-arrow)" />
-
-      <text x="360" y="118" textAnchor="middle" fill="#6b7280" fontSize="11" fontFamily="system-ui, sans-serif">
-        必要に応じてダクトと排風機の間に除じん・排ガス処理装置を置く
-      </text>
-
-      <text x="186" y="156" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        囲い式フード
-      </text>
-      <rect x="48" y="172" width="276" height="180" rx="10" fill="#fff" stroke="#d1d5db" />
-      <rect x="88" y="200" width="196" height="110" rx="6" fill="#f3f4f6" stroke="#374151" />
-      <rect x="124" y="228" width="48" height="36" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="148" y="251" textAnchor="middle" fill="#134e4a" fontSize="11" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={50} y={5}>発生源から排気口までの流れ</DiagramLabel>
+      <DiagramLabel x={12} y={28} size="sm">
         発生源
-      </text>
-      <path d="M196 246 H260" stroke="#0f766e" strokeWidth="3" markerEnd="url(#exhaust-arrow)" />
-      <text x="186" y="332" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
-        発生源を覆い、少ない風量でも捕集しやすい
-      </text>
-
-      <text x="534" y="156" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        外付け式フード
-      </text>
-      <rect x="396" y="172" width="276" height="180" rx="10" fill="#fff" stroke="#d1d5db" />
-      <rect x="428" y="236" width="48" height="36" fill="#e5e7eb" stroke="#6b7280" />
-      <text x="452" y="259" textAnchor="middle" fill="#374151" fontSize="11" fontFamily="system-ui, sans-serif">
-        発生源
-      </text>
-      <rect x="560" y="220" width="72" height="68" rx="6" fill="#f3f4f6" stroke="#374151" />
-      <text x="596" y="258" textAnchor="middle" fill="#111827" fontSize="11" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={28} y={18} size="sm">
         フード
-      </text>
-      <path d="M476 254 H560" stroke="#0f766e" strokeWidth="3" markerEnd="url(#exhaust-arrow)" />
-      <text x="534" y="332" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
-        発生源の外から吸い込む。近づけることが大切
-      </text>
+      </DiagramLabel>
+      <DiagramLabel x={48} y={14} size="sm">
+        ダクト
+      </DiagramLabel>
+      <DiagramLabel x={68} y={36} size="sm">
+        排風機
+      </DiagramLabel>
+      <DiagramLabel x={88} y={22} size="sm">
+        排気口
+      </DiagramLabel>
+      <DiagramLabel x={50} y={48} size="sm" tone="graphite">
+        必要に応じてダクトと排風機の間に除じん・排ガス処理装置を置く
+      </DiagramLabel>
 
-      <defs>
-        <marker id="exhaust-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-          <path d="M0 0 L8 4 L0 8 Z" fill="#0f766e" />
-        </marker>
-      </defs>
-    </svg>
+      <DiagramLabel x={24} y={58}>囲い式フード</DiagramLabel>
+      <DiagramLabel x={24} y={66} size="sm">
+        発生源
+      </DiagramLabel>
+      <DiagramLabel x={24} y={74} size="sm" tone="graphite">
+        発生源を覆い、少ない風量でも捕集しやすい
+      </DiagramLabel>
+
+      <DiagramLabel x={76} y={58}>外付け式フード</DiagramLabel>
+      <DiagramLabel x={68} y={66} size="sm">
+        発生源
+      </DiagramLabel>
+      <DiagramLabel x={84} y={66} size="sm">
+        フード
+      </DiagramLabel>
+      <DiagramLabel x={76} y={74} size="sm" tone="graphite">
+        発生源の外から吸い込む。近づけることが大切
+      </DiagramLabel>
+
+      <DiagramLabel x={38} y={90} size="sm" tone="safety">
+        捕集する気流
+      </DiagramLabel>
+      <DiagramLabel x={62} y={90} size="sm" tone="stamp">
+        ● 重要部
+      </DiagramLabel>
+    </DiagramScene>
   );
 }

@@ -1,38 +1,36 @@
+import { PlateFrame } from "@/components/learn/PlateFrame";
 import { LEARN_LAW_NOTE } from "@/lib/data/learn-content";
 
 type InfoTableProps = {
+  plateNumber: number;
   caption: string;
   headers: string[];
   rows: string[][];
 };
 
-export function InfoTable({ caption, headers, rows }: InfoTableProps) {
+function looksNumeric(value: string): boolean {
+  return /[0-9０-９]/.test(value);
+}
+
+export function InfoTable({ plateNumber, caption, headers, rows }: InfoTableProps) {
   return (
-    <figure className="overflow-hidden rounded-lg border border-gray-200 bg-white">
-      <figcaption className="border-b border-gray-100 px-3 py-2 text-sm font-medium text-gray-800">
-        {caption}
-      </figcaption>
+    <PlateFrame kind="TABLE" number={plateNumber} caption={caption} footnote={LEARN_LAW_NOTE}>
       <div className="overflow-x-auto">
-        <table className="min-w-full text-left text-sm">
+        <table className="plate-table">
           <thead>
-            <tr className="bg-teal-50">
+            <tr>
               {headers.map((header) => (
-                <th
-                  key={header}
-                  className="whitespace-nowrap px-3 py-2 font-medium text-teal-900"
-                >
-                  {header}
-                </th>
+                <th key={header}>{header}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.join("\t")} className="border-t border-gray-100">
+              <tr key={row.join("\t")}>
                 {row.map((cell, index) => (
                   <td
                     key={`${row[0]}-${index}`}
-                    className="whitespace-nowrap px-3 py-2 text-gray-800"
+                    className={looksNumeric(cell) ? "font-mono" : undefined}
                   >
                     {cell}
                   </td>
@@ -42,9 +40,6 @@ export function InfoTable({ caption, headers, rows }: InfoTableProps) {
           </tbody>
         </table>
       </div>
-      <p className="border-t border-gray-100 px-3 py-2 text-xs text-gray-500">
-        {LEARN_LAW_NOTE}
-      </p>
-    </figure>
+    </PlateFrame>
   );
 }

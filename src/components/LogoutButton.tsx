@@ -11,14 +11,14 @@ export function LogoutButton() {
   return (
     <form action={formAction} className="flex flex-col items-start gap-2">
       {state.error ? (
-        <p className="text-sm text-red-700" role="alert">
+        <p className="text-sm text-stamp" role="alert">
           {state.error}
         </p>
       ) : null}
       <button
         type="submit"
         disabled={pending}
-        className="rounded border border-gray-300 bg-white px-4 py-2 text-sm disabled:opacity-60"
+        className="btn-secondary text-sm"
       >
         {pending ? "ログアウト中..." : "ログアウト"}
       </button>

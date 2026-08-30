@@ -1,111 +1,82 @@
+import { DiagramLabel, DiagramScene } from "@/components/learn/diagrams/DiagramScene";
+
 export function HormoneEndocrineDiagram() {
   return (
-    <svg
-      viewBox="0 0 720 400"
-      role="img"
-      aria-label="主な内分泌器官とホルモン、はたらきの対応"
-      className="h-auto w-full overflow-visible"
-    >
-      <rect width="720" height="400" fill="#f9fafb" />
-
-      <text x="360" y="26" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        器官・ホルモン・はたらき
-      </text>
-
-      <rect x="24" y="40" width="160" height="32" rx="6" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="104" y="61" textAnchor="middle" fill="#134e4a" fontSize="12" fontFamily="system-ui, sans-serif">
+    <DiagramScene src="/diagrams/hormone-endocrine.webp" alt="主な内分泌器官とホルモン、はたらきの対応">
+      <DiagramLabel x={50} y={5}>器官・ホルモン・はたらき</DiagramLabel>
+      <DiagramLabel x={16} y={14} size="sm" tone="safety-dark">
         器官
-      </text>
-      <rect x="192" y="40" width="220" height="32" rx="6" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="302" y="61" textAnchor="middle" fill="#134e4a" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={42} y={14} size="sm" tone="safety-dark">
         ホルモン
-      </text>
-      <rect x="420" y="40" width="276" height="32" rx="6" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="558" y="61" textAnchor="middle" fill="#134e4a" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={78} y={14} size="sm" tone="safety-dark">
         はたらき
-      </text>
+      </DiagramLabel>
 
-      <rect x="24" y="80" width="160" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="104" y="105" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={16} y={26} size="sm">
         副腎皮質
-      </text>
-      <rect x="192" y="80" width="220" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="302" y="105" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={42} y={26} size="sm">
         コルチゾール
-      </text>
-      <rect x="420" y="80" width="276" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="558" y="105" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={78} y={26} size="sm">
         血糖を上げる
-      </text>
+      </DiagramLabel>
 
-      <rect x="24" y="128" width="160" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="104" y="153" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={16} y={38} size="sm">
         副腎皮質
-      </text>
-      <rect x="192" y="128" width="220" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="302" y="153" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={42} y={38} size="sm">
         アルドステロン
-      </text>
-      <rect x="420" y="128" width="276" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="558" y="153" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={78} y={38} size="sm">
         塩類バランス
-      </text>
+      </DiagramLabel>
 
-      <rect x="24" y="176" width="160" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="104" y="201" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={16} y={50} size="sm">
         膵臓
-      </text>
-      <rect x="192" y="176" width="220" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="302" y="201" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={42} y={50} size="sm">
         インスリン
-      </text>
-      <rect x="420" y="176" width="276" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="558" y="201" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={78} y={50} size="sm">
         血糖を下げる
-      </text>
+      </DiagramLabel>
 
-      <rect x="24" y="224" width="160" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="104" y="249" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={16} y={62} size="sm">
         膵臓
-      </text>
-      <rect x="192" y="224" width="220" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="302" y="249" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={42} y={62} size="sm">
         グルカゴン
-      </text>
-      <rect x="420" y="224" width="276" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="558" y="249" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={78} y={62} size="sm">
         血糖を上げる
-      </text>
+      </DiagramLabel>
 
-      <rect x="24" y="272" width="160" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="104" y="297" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={16} y={74} size="sm">
         甲状腺
-      </text>
-      <rect x="192" y="272" width="220" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="302" y="297" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={42} y={74} size="sm">
         チロキシン
-      </text>
-      <rect x="420" y="272" width="276" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="558" y="297" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={78} y={74} size="sm">
         代謝を促進
-      </text>
+      </DiagramLabel>
 
-      <rect x="24" y="320" width="160" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="104" y="345" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={16} y={86} size="sm">
         副甲状腺
-      </text>
-      <rect x="192" y="320" width="220" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="302" y="345" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={42} y={86} size="sm">
         パラソルモン
-      </text>
-      <rect x="420" y="320" width="276" height="40" rx="6" fill="#fff" stroke="#374151" />
-      <text x="558" y="345" textAnchor="middle" fill="#111827" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={78} y={86} size="sm">
         血中カルシウムを上げる
-      </text>
+      </DiagramLabel>
 
-      <text x="360" y="384" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={50} y={96} size="sm" tone="graphite" width={88}>
         副腎髄質のアドレナリンも血糖を上げるが、皮質とは別
-      </text>
-    </svg>
+      </DiagramLabel>
+    </DiagramScene>
   );
 }

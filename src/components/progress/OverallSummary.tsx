@@ -12,9 +12,9 @@ type OverallSummaryProps = {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4">
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className="mt-1 text-2xl font-bold">{value}</p>
+    <div className="card-surface p-4">
+      <p className="text-sm text-graphite">{label}</p>
+      <p className="mt-1 font-display text-2xl font-bold">{value}</p>
     </div>
   );
 }
@@ -35,13 +35,10 @@ export function OverallSummary({
       </div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {examTypeSummaries.map((summary) => (
-          <div
-            key={summary.code}
-            className="rounded-lg border border-gray-200 bg-white p-4"
-          >
-            <p className="text-sm text-gray-500">{summary.name}</p>
-            <p className="mt-1 text-xl font-bold">{formatAccuracy(summary.accuracy)}</p>
-            <p className="mt-1 text-xs text-gray-500">
+          <div key={summary.code} className="card-surface p-4">
+            <p className="text-sm text-graphite">{summary.name}</p>
+            <p className="mt-1 font-display text-xl font-bold">{formatAccuracy(summary.accuracy)}</p>
+            <p className="mt-1 font-mono text-xs text-graphite">
               {summary.totalCorrect} / {summary.totalAnswered} 問
             </p>
           </div>

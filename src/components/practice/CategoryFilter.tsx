@@ -35,7 +35,7 @@ export function CategoryFilter({
       <select
         value={selectedCategoryId ?? ""}
         onChange={handleChange}
-        className="rounded border border-gray-300 bg-white px-3 py-2 font-normal"
+        className="field-input"
       >
         <option value="">すべての分野</option>
         {categories.map((category) => (

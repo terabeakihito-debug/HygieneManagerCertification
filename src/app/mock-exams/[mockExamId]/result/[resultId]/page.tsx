@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
+import { StampBadge } from "@/components/ui/StampBadge";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
 import { getRecommendedProductsForUser } from "@/lib/data/recommendations";
 import { createClient } from "@/lib/supabase/server";
@@ -64,6 +65,8 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
   );
   const weakPercent = Math.round(WEAK_ACCURACY_THRESHOLD * 100);
   const recommendedProducts = await getRecommendedProductsForUser(user.id);
+  const overallRate = questionTotal > 0 ? result.score / questionTotal : 0;
+  const passed = overallRate >= 0.6;
 
   return (
     <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-8">
@@ -74,18 +77,25 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
         </Link>
       </div>
 
-      <section className="rounded-lg border border-gray-200 bg-white p-6 text-center">
-        <p className="text-sm text-gray-500">{mockExam.name}</p>
-        <p className="mt-2 text-4xl font-bold">
-          {result.score} / {questionTotal}
+      <section className="card-surface relative p-6 text-center">
+        {passed ? (
+          <div className="absolute right-4 top-4">
+            <StampBadge label="合格圏" />
+          </div>
+        ) : null}
+        <p className="text-sm text-graphite">{mockExam.name}</p>
+        <p className="mt-2 font-display text-4xl font-bold">
+          <span className="font-mono">{result.score}</span>
+          {" / "}
+          <span className="font-mono">{questionTotal}</span>
         </p>
-        <p className="mt-1 text-sm text-gray-600">正答数 / 出題数</p>
+        <p className="mt-1 text-sm text-graphite">正答数 / 出題数</p>
       </section>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-lg font-semibold">分野別正答率</h2>
         {categoryIds.length === 0 ? (
-          <p className="text-sm text-gray-600">分野別のデータがありません。</p>
+          <p className="text-sm text-graphite">分野別のデータがありません。</p>
         ) : (
           <ul className="flex flex-col gap-2">
             {categoryIds.map((categoryId) => {
@@ -94,17 +104,18 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
               return (
                 <li
                   key={categoryId}
-                  className={`rounded-lg border p-4 ${
-                    weak
-                      ? "border-red-300 bg-red-50"
-                      : "border-gray-200 bg-white"
-                  }`}
+                  className={`card-surface relative p-4 ${weak ? "border-stamp" : ""}`}
                 >
-                  <div className="flex items-center justify-between gap-3">
+                  {rate >= 80 ? (
+                    <div className="absolute right-3 top-3">
+                      <StampBadge label="達成" />
+                    </div>
+                  ) : null}
+                  <div className="flex items-center justify-between gap-3 pr-16">
                     <p className="font-medium">
                       {categoryNames.get(categoryId) ?? "不明な分野"}
                     </p>
-                    <p className={`font-semibold ${weak ? "text-red-800" : ""}`}>
+                    <p className={`font-mono font-semibold ${weak ? "text-stamp" : ""}`}>
                       {rate}%
                     </p>
                   </div>
@@ -123,7 +134,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
       <div className="flex flex-col gap-3">
         <Link
           href={`/mock-exams/${mockExamId}/start`}
-          className="rounded bg-gray-900 px-4 py-2 text-center text-white"
+          className="btn-primary"
         >
           もう一度この模試を受ける
         </Link>

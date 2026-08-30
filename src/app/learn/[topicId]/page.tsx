@@ -39,22 +39,22 @@ export default async function LearnTopicPage({ params }: LearnTopicPageProps) {
       </div>
 
       <header>
-        <p className="text-sm text-gray-500">{LEARN_SECTION_LABEL[topic.section]}</p>
+        <p className="text-sm text-graphite">{LEARN_SECTION_LABEL[topic.section]}</p>
         <h1 className="mt-1 text-2xl font-bold">{topic.title}</h1>
       </header>
 
       <TopicMedia topic={topic} />
 
-      <article className="flex flex-col gap-4 text-sm leading-7 text-gray-800">
+      <article className="flex flex-col gap-4 text-sm leading-7 text-ink">
         {paragraphs.map((paragraph) => (
           <p key={paragraph.slice(0, 24)}>{paragraph}</p>
         ))}
       </article>
 
-      <div className="border-t border-gray-200 pt-4">
+      <div className="border-t border-hairline pt-4">
         <Link
           href={practiceHref}
-          className="inline-block rounded bg-gray-900 px-4 py-2 text-center text-white"
+          className="inline-block btn-primary"
         >
           この分野の問題を演習する
         </Link>

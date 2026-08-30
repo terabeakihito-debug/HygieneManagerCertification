@@ -64,7 +64,7 @@ export default async function MockExamHistoryPage() {
       </div>
 
       {rows.length === 0 ? (
-        <p className="rounded-lg border border-gray-200 bg-white p-6 text-gray-600">
+        <p className="card-surface p-6 text-graphite">
           まだ模試の受験履歴がありません。
         </p>
       ) : (
@@ -75,10 +75,10 @@ export default async function MockExamHistoryPage() {
               <li key={row.id}>
                 <Link
                   href={`/mock-exams/${row.mock_exam_id}/result/${row.id}`}
-                  className="block rounded-lg border border-gray-200 bg-white p-4 hover:bg-gray-50"
+                  className="block card-surface p-4 "
                 >
                   <p className="font-semibold">{exam.name}</p>
-                  <p className="mt-1 text-sm text-gray-600">{formatTakenAt(row.taken_at)}</p>
+                  <p className="mt-1 text-sm text-graphite">{formatTakenAt(row.taken_at)}</p>
                   <p className="mt-2 text-sm">
                     スコア {row.score} / {exam.question_count}
                   </p>

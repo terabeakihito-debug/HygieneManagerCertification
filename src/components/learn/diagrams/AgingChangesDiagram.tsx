@@ -1,95 +1,68 @@
+import { DiagramLabel, DiagramScene } from "@/components/learn/diagrams/DiagramScene";
+
 export function AgingChangesDiagram() {
   return (
-    <svg
-      viewBox="0 0 720 400"
-      role="img"
-      aria-label="加齢に伴って変化しやすい機能の一覧"
-      className="h-auto w-full overflow-visible"
-    >
-      <rect width="720" height="400" fill="#f9fafb" />
-
-      <text x="360" y="26" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        加齢で変化しやすい機能
-      </text>
-
-      <rect x="24" y="44" width="216" height="88" rx="8" fill="#fff" stroke="#374151" />
-      <text x="132" y="76" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        視力
-      </text>
-      <text x="132" y="100" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+    <DiagramScene src="/diagrams/aging-changes.webp" alt="加齢に伴って変化しやすい機能の一覧">
+      <DiagramLabel x={50} y={5}>加齢で変化しやすい機能</DiagramLabel>
+      <DiagramLabel x={16} y={16}>視力</DiagramLabel>
+      <DiagramLabel x={16} y={22} size="sm" tone="graphite">
         動体視力の低下
-      </text>
-      <text x="132" y="118" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={16} y={28} size="sm" tone="graphite">
         暗順応の遅れ
-      </text>
-
-      <rect x="252" y="44" width="216" height="88" rx="8" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="360" y="76" textAnchor="middle" fill="#134e4a" fontSize="13" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={16} tone="safety-dark">
         聴力
-      </text>
-      <text x="360" y="100" textAnchor="middle" fill="#0f766e" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={22} size="sm" tone="safety">
         老人性難聴
-      </text>
-      <text x="360" y="118" textAnchor="middle" fill="#0f766e" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={28} size="sm" tone="safety">
         高い音から聞こえにくい
-      </text>
-
-      <rect x="480" y="44" width="216" height="88" rx="8" fill="#fff" stroke="#374151" />
-      <text x="588" y="76" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        平衡感覚
-      </text>
-      <text x="588" y="100" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={84} y={16}>平衡感覚</DiagramLabel>
+      <DiagramLabel x={84} y={22} size="sm" tone="graphite">
         つまずき・転倒
-      </text>
-      <text x="588" y="118" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={84} y={28} size="sm" tone="graphite">
         につながりやすい
-      </text>
-
-      <rect x="24" y="148" width="216" height="88" rx="8" fill="#ccfbf1" stroke="#0f766e" />
-      <text x="132" y="180" textAnchor="middle" fill="#134e4a" fontSize="13" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={16} y={44} tone="safety-dark">
         体温調節
-      </text>
-      <text x="132" y="204" textAnchor="middle" fill="#0f766e" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={16} y={50} size="sm" tone="safety">
         暑さ寒さへの遅れ
-      </text>
-      <text x="132" y="222" textAnchor="middle" fill="#0f766e" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={16} y={56} size="sm" tone="safety">
         熱中症リスク
-      </text>
-
-      <rect x="252" y="148" width="216" height="88" rx="8" fill="#fff" stroke="#374151" />
-      <text x="360" y="180" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        骨密度
-      </text>
-      <text x="360" y="204" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={44}>骨密度</DiagramLabel>
+      <DiagramLabel x={50} y={50} size="sm" tone="graphite">
         低下すると
-      </text>
-      <text x="360" y="222" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={56} size="sm" tone="graphite">
         骨折しやすくなる
-      </text>
-
-      <rect x="480" y="148" width="216" height="88" rx="8" fill="#fff" stroke="#374151" />
-      <text x="588" y="180" textAnchor="middle" fill="#111827" fontSize="13" fontFamily="system-ui, sans-serif">
-        筋力
-      </text>
-      <text x="588" y="204" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={84} y={44}>筋力</DiagramLabel>
+      <DiagramLabel x={84} y={50} size="sm" tone="graphite">
         重量物や段差で
-      </text>
-      <text x="588" y="222" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={84} y={56} size="sm" tone="graphite">
         負担が増えやすい
-      </text>
+      </DiagramLabel>
 
-      <text x="360" y="272" textAnchor="middle" fill="#374151" fontSize="12" fontFamily="system-ui, sans-serif">
+      <DiagramLabel x={50} y={74} size="sm" tone="graphite" width={88}>
         進み方には個人差がある。年齢だけで能力を決めつけない
-      </text>
-      <text x="360" y="300" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={81} size="sm" tone="graphite" width={88}>
         低い音から先に聞こえなくなる、というのは逆
-      </text>
-      <text x="360" y="328" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={88} size="sm" tone="graphite" width={88}>
         照明、音量、休憩、転倒防止など、環境と作業の見直しが中心
-      </text>
-      <text x="360" y="360" textAnchor="middle" fill="#6b7280" fontSize="12" fontFamily="system-ui, sans-serif">
+      </DiagramLabel>
+      <DiagramLabel x={50} y={95} size="sm" tone="graphite" width={88}>
         高齢者は一般に高い照度を必要とするが、まぶしさも感じやすい
-      </text>
-    </svg>
+      </DiagramLabel>
+    </DiagramScene>
   );
 }

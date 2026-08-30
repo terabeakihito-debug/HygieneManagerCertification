@@ -13,21 +13,21 @@ const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
 function cellClassName(day: CalendarDay): string {
   if (day.isExamDate) {
-    return "border-red-400 bg-red-50 text-red-900";
+    return "border-stamp text-stamp";
   }
   if (day.questionsAnswered >= 10) {
-    return "border-green-700 bg-green-500 text-white";
+    return "border-safety bg-safety text-paper";
   }
   if (day.questionsAnswered >= 5) {
-    return "border-green-600 bg-green-300 text-green-950";
+    return "border-safety bg-safety/30 text-safety-dark";
   }
   if (day.questionsAnswered >= 1) {
-    return "border-green-300 bg-green-100 text-green-900";
+    return "border-safety/40 bg-safety/10 text-safety-dark";
   }
   if (day.isToday) {
-    return "border-gray-900 bg-white";
+    return "border-ink bg-paper";
   }
-  return "border-gray-200 bg-white text-gray-700";
+  return "border-hairline bg-paper text-ink";
 }
 
 function monthHref(year: number, month: number): string {
@@ -49,7 +49,7 @@ export function MonthCalendar({
       <div className="flex items-center justify-between">
         <Link
           href={monthHref(previous.year, previous.month)}
-          className="rounded border border-gray-300 px-3 py-1 text-sm"
+          className="btn-secondary px-3 py-1 text-sm"
         >
           前月
         </Link>
@@ -58,13 +58,13 @@ export function MonthCalendar({
         </h2>
         <Link
           href={monthHref(next.year, next.month)}
-          className="rounded border border-gray-300 px-3 py-1 text-sm"
+          className="btn-secondary px-3 py-1 text-sm"
         >
           翌月
         </Link>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center text-xs text-gray-500">
+      <div className="grid grid-cols-7 gap-1 text-center text-xs text-graphite">
         {WEEKDAYS.map((label) => (
           <div key={label} className="py-1">
             {label}

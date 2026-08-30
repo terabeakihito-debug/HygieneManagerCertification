@@ -28,31 +28,31 @@ export function ProductRecommendation({
   }
 
   return (
-    <section className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-      <p className="inline-block rounded border border-gray-400 bg-white px-2 py-0.5 text-xs font-semibold tracking-wide text-gray-800">
+    <section className="card-surface p-4">
+      <p className="inline-block rounded-sm border border-ink px-2 py-0.5 text-xs font-semibold tracking-wide">
         広告
       </p>
       {heading ? (
-        <h2 className="mt-2 text-sm font-medium text-gray-700">{heading}</h2>
+        <h2 className="mt-2 text-sm font-medium text-ink">{heading}</h2>
       ) : null}
-      <p className="mt-1 text-sm text-gray-600">学習の参考にどうぞ</p>
+      <p className="mt-1 text-sm text-graphite">学習の参考にどうぞ</p>
       <ul className="mt-3 flex flex-col gap-2">
         {products.map((product) => (
           <li
             key={product.id}
-            className="flex flex-col gap-2 rounded border border-gray-200 bg-white px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-2 rounded-sm border border-hairline px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
           >
             <div className="flex flex-col gap-1">
-              <span className="w-fit rounded bg-gray-100 px-1.5 py-0.5 text-xs text-gray-600">
+              <span className="w-fit rounded-sm border border-hairline px-1.5 py-0.5 font-mono text-xs text-graphite">
                 {aspLabel(product.asp)}
               </span>
-              <p className="text-sm text-gray-800">{product.name}</p>
+              <p className="text-sm text-ink">{product.name}</p>
             </div>
             <a
               href={product.affiliate_url}
               target="_blank"
               rel="noopener noreferrer nofollow sponsored"
-              className="shrink-0 rounded border border-gray-400 px-3 py-1.5 text-center text-sm text-gray-700"
+              className="btn-secondary shrink-0 px-3 py-1.5 text-sm"
             >
               商品を見る
             </a>
