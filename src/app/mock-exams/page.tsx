@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { createClient } from "@/lib/supabase/server";
 
 type MockExamRow = {
@@ -24,7 +24,7 @@ export default async function MockExamsPage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const { data } = await supabase

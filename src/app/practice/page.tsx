@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { CategoryFilter } from "@/components/practice/CategoryFilter";
 import {
   examTypeIdsForFilter,
@@ -46,7 +46,7 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const examType = parsePracticeExamType(params.exam_type);

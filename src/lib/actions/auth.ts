@@ -7,7 +7,7 @@ export type AuthState = {
   error: string | null;
 };
 
-function toAuthErrorMessage(message: string): string {
+export function toAuthErrorMessage(message: string): string {
   const lower = message.toLowerCase();
 
   if (lower.includes("invalid login credentials")) {
@@ -31,11 +31,24 @@ function toAuthErrorMessage(message: string): string {
   if (lower.includes("rate limit") || lower.includes("security purposes")) {
     return "リクエストが多すぎます。しばらく待ってから再度お試しください";
   }
+  if (lower.includes("captcha")) {
+    return "ロボット確認に失敗しました。もう一度お試しください";
+  }
 
   return "処理に失敗しました。時間をおいて再度お試しください";
 }
 
-function validateCredentials(formData: FormData): { email: string; password: string } | AuthState {
+export function readCaptchaToken(formData: FormData): string | AuthState {
+  const captchaToken = String(formData.get("captchaToken") ?? "").trim();
+
+  if (!captchaToken) {
+    return { error: "ロボットでないことを確認してください" };
+  }
+
+  return captchaToken;
+}
+
+export function validateCredentials(formData: FormData): { email: string; password: string } | AuthState {
   const email = String(formData.get("email") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
@@ -61,14 +74,20 @@ export async function signUpAction(
     return credentials;
   }
 
+  const captchaToken = readCaptchaToken(formData);
+  if (typeof captchaToken !== "string") {
+    return captchaToken;
+  }
+
   const supabase = await createClient();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   const { error } = await supabase.auth.signUp({
     email: credentials.email,
     password: credentials.password,
-    options: siteUrl
-      ? { emailRedirectTo: `${siteUrl}/auth/confirm` }
-      : undefined,
+    options: {
+      captchaToken,
+      ...(siteUrl ? { emailRedirectTo: `${siteUrl}/auth/confirm` } : {}),
+    },
   });
 
   if (error) {
@@ -87,10 +106,16 @@ export async function loginAction(
     return credentials;
   }
 
+  const captchaToken = readCaptchaToken(formData);
+  if (typeof captchaToken !== "string") {
+    return captchaToken;
+  }
+
   const supabase = await createClient();
   const { error } = await supabase.auth.signInWithPassword({
     email: credentials.email,
     password: credentials.password,
+    options: { captchaToken },
   });
 
   if (error) {

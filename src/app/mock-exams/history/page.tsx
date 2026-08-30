@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { createClient } from "@/lib/supabase/server";
 
 type HistoryRow = {
@@ -38,7 +38,7 @@ export default async function MockExamHistoryPage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const { data } = await supabase

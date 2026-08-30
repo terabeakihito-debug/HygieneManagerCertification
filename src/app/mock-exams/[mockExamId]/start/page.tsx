@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { createClient } from "@/lib/supabase/server";
 
 type StartPageProps = {
@@ -24,7 +25,7 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const { data: mockExam } = await supabase

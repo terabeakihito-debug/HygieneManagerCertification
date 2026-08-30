@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { ExamDateForm } from "@/components/calendar/ExamDateForm";
 import { MonthCalendar } from "@/components/calendar/MonthCalendar";
 import { getCalendarDashboard, type PaceInfo } from "@/lib/data/calendar";
@@ -35,7 +35,7 @@ export default async function CalendarPage({ searchParams }: CalendarPageProps) 
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const { year, month } = parseCalendarMonth(params.year, params.month);

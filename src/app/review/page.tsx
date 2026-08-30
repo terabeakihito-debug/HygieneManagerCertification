@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
 import { ReviewListItem } from "@/components/review/ReviewListItem";
 import { getRecommendedProductsForCategories } from "@/lib/data/recommendations";
@@ -13,7 +13,7 @@ export default async function ReviewPage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const items = await getUnresolvedReviewItems(user.id);

@@ -1,12 +1,23 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { TurnstileWidget } from "@/components/auth/TurnstileWidget";
 import { signUpAction, type AuthState } from "@/lib/actions/auth";
 
 const initialState: AuthState = { error: null };
 
 export function SignupForm() {
   const [state, formAction, pending] = useActionState(signUpAction, initialState);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [widgetKey, setWidgetKey] = useState(0);
+
+  useEffect(() => {
+    if (!state.error) {
+      return;
+    }
+    setCaptchaToken("");
+    setWidgetKey((current) => current + 1);
+  }, [state.error]);
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
@@ -39,9 +50,17 @@ export function SignupForm() {
         />
       </label>
 
+      <input type="hidden" name="captchaToken" value={captchaToken} />
+      <TurnstileWidget
+        key={widgetKey}
+        onVerify={setCaptchaToken}
+        onExpire={() => setCaptchaToken("")}
+        onError={() => setCaptchaToken("")}
+      />
+
       <button
         type="submit"
-        disabled={pending}
+        disabled={pending || !captchaToken}
         className="rounded bg-gray-900 px-4 py-2 text-white disabled:opacity-60"
       >
         {pending ? "送信中..." : "登録する"}

@@ -8,7 +8,14 @@ export default function SignupPage() {
       <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
         <SignupForm />
       </div>
-      <p className="mt-4 text-center text-sm text-gray-600">
+      <p className="mt-4 text-center text-xs text-gray-500">
+        登録することで
+        <Link href="/privacy" className="underline">
+          プライバシーポリシー
+        </Link>
+        に同意したものとみなされます
+      </p>
+      <p className="mt-3 text-center text-sm text-gray-600">
         アカウントをお持ちの方は{" "}
         <Link href="/login" className="underline">
           ログイン

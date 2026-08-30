@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { LogoutButton } from "@/components/LogoutButton";
+import { isAnonymousUser } from "@/lib/auth/anonymous";
 import { getUnresolvedReviewCount } from "@/lib/data/review";
 import { createClient } from "@/lib/supabase/server";
 
@@ -11,18 +12,33 @@ export default async function MyPage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const reviewCount = await getUnresolvedReviewCount(user.id);
+  const guest = isAnonymousUser(user);
 
   return (
     <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-6 px-4 py-16">
       <h1 className="text-2xl font-bold">マイページ</h1>
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
-        <p className="text-sm text-gray-500">ログイン中のメールアドレス</p>
-        <p className="mt-1 font-medium">{user.email}</p>
-      </div>
+      {guest ? (
+        <div className="rounded-lg border border-teal-200 bg-teal-50 p-6">
+          <p className="text-sm text-teal-900">
+            ゲストとして利用中です。メールアドレスを登録すると、他の端末からもこのデータにアクセスできるようになります
+          </p>
+          <Link
+            href="/upgrade-account"
+            className="mt-4 inline-block rounded bg-gray-900 px-4 py-2 text-center text-white"
+          >
+            メールアドレスを登録する
+          </Link>
+        </div>
+      ) : (
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+          <p className="text-sm text-gray-500">ログイン中のメールアドレス</p>
+          <p className="mt-1 font-medium">{user.email}</p>
+        </div>
+      )}
       <Link
         href="/learn"
         className="rounded border border-gray-300 bg-white px-4 py-2 text-center"

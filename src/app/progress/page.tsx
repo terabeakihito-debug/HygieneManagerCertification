@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { CategoryProgressCard } from "@/components/progress/CategoryProgressCard";
 import { OverallSummary } from "@/components/progress/OverallSummary";
 import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
@@ -47,7 +47,7 @@ export default async function ProgressPage({ searchParams }: ProgressPageProps) 
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const sort = parseProgressSort(params.sort);

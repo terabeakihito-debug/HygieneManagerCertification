@@ -2,23 +2,18 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { TurnstileWidget } from "@/components/auth/TurnstileWidget";
-import { loginAction, type AuthState } from "@/lib/actions/auth";
+import { type AuthState } from "@/lib/actions/auth";
+import { upgradeAccountAction } from "@/lib/actions/upgrade-account";
 
 const initialState: AuthState = { error: null };
 
-type LoginFormProps = {
-  confirmFailed: boolean;
-};
-
-export function LoginForm({ confirmFailed }: LoginFormProps) {
-  const [state, formAction, pending] = useActionState(loginAction, initialState);
+export function UpgradeAccountForm() {
+  const [state, formAction, pending] = useActionState(
+    upgradeAccountAction,
+    initialState
+  );
   const [captchaToken, setCaptchaToken] = useState("");
   const [widgetKey, setWidgetKey] = useState(0);
-  const error =
-    state.error ??
-    (confirmFailed
-      ? "メール確認に失敗しました。リンクの有効期限が切れている可能性があります。"
-      : null);
 
   useEffect(() => {
     if (!state.error) {
@@ -30,9 +25,9 @@ export function LoginForm({ confirmFailed }: LoginFormProps) {
 
   return (
     <form action={formAction} className="flex flex-col gap-4">
-      {error ? (
+      {state.error ? (
         <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
-          {error}
+          {state.error}
         </p>
       ) : null}
 
@@ -48,11 +43,11 @@ export function LoginForm({ confirmFailed }: LoginFormProps) {
       </label>
 
       <label className="flex flex-col gap-1 text-sm font-medium">
-        パスワード
+        パスワード（8文字以上）
         <input
           type="password"
           name="password"
-          autoComplete="current-password"
+          autoComplete="new-password"
           required
           minLength={8}
           className="rounded border border-gray-300 px-3 py-2 font-normal"
@@ -72,7 +67,7 @@ export function LoginForm({ confirmFailed }: LoginFormProps) {
         disabled={pending || !captchaToken}
         className="rounded bg-gray-900 px-4 py-2 text-white disabled:opacity-60"
       >
-        {pending ? "ログイン中..." : "ログイン"}
+        {pending ? "送信中..." : "メールアドレスを登録する"}
       </button>
     </form>
   );

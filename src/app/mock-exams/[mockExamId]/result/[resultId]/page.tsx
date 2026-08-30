@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
 import { getRecommendedProductsForUser } from "@/lib/data/recommendations";
@@ -22,7 +23,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const { data: result } = await supabase

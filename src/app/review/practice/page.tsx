@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { QuestionCard } from "@/components/practice/QuestionCard";
 import { getUnresolvedReviewQuestions } from "@/lib/data/review";
 import { createClient } from "@/lib/supabase/server";
@@ -11,7 +11,7 @@ export default async function ReviewPracticePage() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   const questions = await getUnresolvedReviewQuestions(user.id);

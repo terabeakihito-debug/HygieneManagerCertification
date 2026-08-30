@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import {
   MockExamTaker,
   type MockExamQuestion,
@@ -33,7 +34,7 @@ export default async function MockExamTakePage({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    return <AnonymousSessionGate />;
   }
 
   if (ids === undefined) {

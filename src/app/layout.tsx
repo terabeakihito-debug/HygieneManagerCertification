@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { AnonymousAuthProvider } from "@/components/auth/AnonymousAuthProvider";
+import { Footer } from "@/components/layout/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +16,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="min-h-screen bg-gray-50 text-gray-900">
-        {children}
+        <AnonymousAuthProvider>
+          {children}
+          <Footer />
+        </AnonymousAuthProvider>
       </body>
     </html>
   );
