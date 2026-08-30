@@ -3,6 +3,16 @@ import { CrossMark } from "@/components/ui/CrossMark";
 
 const EXAM_ORG_HREF = "https://www.exam.or.jp/";
 
+const HERO_LINKS = [
+  { href: "#about", label: "衛生管理者とは" },
+  { href: "/progress", label: "進捗" },
+  { href: "/review", label: "復習" },
+  { href: "/mock-exams", label: "模試" },
+  { href: "/calendar", label: "カレンダー" },
+  { href: "/login", label: "ログイン" },
+  { href: "/signup", label: "新規登録" },
+] as const;
+
 export default function HomePage() {
   return (
     <>
@@ -16,7 +26,7 @@ export default function HomePage() {
             <CrossMark size={28} />
             EXAMSTUDYCOACH
           </span>
-          <span className="eh-nav">MENU</span>
+          <span className="eh-nav">SERVICES</span>
         </div>
 
         <div className="eh-mid">
@@ -28,12 +38,51 @@ export default function HomePage() {
           </h1>
         </div>
 
+        <div className="eh-cards">
+          <Link href="/learn" className="id-card text-ink no-underline">
+            <div className="id-card-no text-graphite" style={{ color: "#4B4F49" }}>
+              NO. 01
+            </div>
+            <h2 className="id-card-title">学習コンテンツ</h2>
+            <div className="id-card-rule" />
+            <p className="id-card-sub">図解と関係法令で、出題の急所を先に押さえる</p>
+            <span className="id-card-mark">
+              <CrossMark size={18} />
+            </span>
+          </Link>
+          <Link href="/practice" className="id-card text-ink no-underline">
+            <div className="id-card-no text-graphite" style={{ color: "#4B4F49" }}>
+              NO. 02
+            </div>
+            <h2 className="id-card-title">問題演習</h2>
+            <div className="id-card-rule" />
+            <p className="id-card-sub">マークシート形式で、分野を選んで解く</p>
+            <span className="id-card-mark">
+              <CrossMark size={18} />
+            </span>
+          </Link>
+        </div>
+
         <div className="eh-bottom">
-          <p className="eh-desc">
-            第一種・第二種衛生管理者試験の
-            <br />
-            合格を目指す学習・演習サービス。
-          </p>
+          <div className="eh-bottom-copy">
+            <p className="eh-desc">
+              第一種・第二種衛生管理者試験の
+              <br />
+              合格を目指す学習・演習サービス。
+            </p>
+            <nav className="eh-links" aria-label="主要ページ">
+              {HERO_LINKS.map((link, index) => (
+                <span key={link.href}>
+                  {index > 0 ? (
+                    <span className="eh-links-sep" aria-hidden>
+                      /
+                    </span>
+                  ) : null}
+                  <Link href={link.href}>{link.label}</Link>
+                </span>
+              ))}
+            </nav>
+          </div>
           <Link href="/practice" className="eh-cta">
             問題演習をはじめる →
           </Link>
@@ -41,7 +90,7 @@ export default function HomePage() {
       </section>
 
       <main className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-16 sm:py-20">
-        <section id="about" className="flex flex-col gap-6 text-sm leading-7 text-ink">
+        <section id="about" className="flex scroll-mt-6 flex-col gap-6 text-sm leading-7 text-ink">
           <h2 className="text-2xl font-bold">衛生管理者とは</h2>
           <p>
             衛生管理者は、労働安全衛生法に基づく国家資格です。事業場における労働者の健康障害の防止、衛生に関する教育の実施、健康診断の実施等、職場の衛生に関する技術的事項を管理する役割を担います。
@@ -121,34 +170,6 @@ export default function HomePage() {
               )でご確認ください。
             </p>
           </div>
-        </section>
-
-        <section className="flex flex-col gap-4">
-        <p className="font-mono text-[11px] tracking-[0.18em] text-amber">GET STARTED</p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Link href="/learn" className="id-card text-ink no-underline">
-            <div className="id-card-no text-graphite" style={{ color: "#4B4F49" }}>
-              NO. 01
-            </div>
-            <h2 className="id-card-title">学習コンテンツ</h2>
-            <div className="id-card-rule" />
-            <p className="id-card-sub">図解と関係法令で、出題の急所を先に押さえる</p>
-            <span className="id-card-mark">
-              <CrossMark size={18} />
-            </span>
-          </Link>
-          <Link href="/practice" className="id-card text-ink no-underline">
-            <div className="id-card-no text-graphite" style={{ color: "#4B4F49" }}>
-              NO. 02
-            </div>
-            <h2 className="id-card-title">問題演習</h2>
-            <div className="id-card-rule" />
-            <p className="id-card-sub">マークシート形式で、分野を選んで解く</p>
-            <span className="id-card-mark">
-              <CrossMark size={18} />
-            </span>
-          </Link>
-        </div>
         </section>
 
         <div className="flex flex-col gap-3 sm:flex-row">
