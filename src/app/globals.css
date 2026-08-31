@@ -24,7 +24,21 @@
   }
 
   .card-surface {
-    @apply rounded-sm border border-graphite bg-[#fffef8];
+    @apply rounded-sm border border-graphite bg-paper;
+  }
+
+  .weak-banner {
+    animation: weak-banner-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .progress-row {
+    border-bottom: 1px solid #d8d6cb;
+    transition: border-color 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .progress-row:hover,
+  .progress-row:focus-within {
+    border-bottom-color: #1f6e45;
   }
 
   .field-input {
@@ -564,4 +578,26 @@ a.id-card:active {
 
 a.id-card .id-card-no {
   color: #4b4f49;
+}
+
+@keyframes weak-banner-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .weak-banner {
+    animation: none;
+  }
+
+  .progress-row {
+    transition: none;
+  }
 }

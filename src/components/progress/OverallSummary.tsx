@@ -10,15 +10,6 @@ type OverallSummaryProps = {
   examTypeSummaries: ExamTypeSummary[];
 };
 
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="card-surface p-4">
-      <p className="text-sm text-graphite">{label}</p>
-      <p className="mt-1 font-display text-2xl font-bold">{value}</p>
-    </div>
-  );
-}
-
 export function OverallSummary({
   totalAnswered,
   totalCorrect,
@@ -26,24 +17,45 @@ export function OverallSummary({
   examTypeSummaries,
 }: OverallSummaryProps) {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-8">
       <h2 className="text-lg font-semibold">全体サマリー</h2>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        <Stat label="累計回答数" value={String(totalAnswered)} />
-        <Stat label="累計正答数" value={String(totalCorrect)} />
-        <Stat label="全体正答率" value={formatAccuracy(overallAccuracy)} />
-      </div>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-        {examTypeSummaries.map((summary) => (
-          <div key={summary.code} className="card-surface p-4">
-            <p className="text-sm text-graphite">{summary.name}</p>
-            <p className="mt-1 font-display text-xl font-bold">{formatAccuracy(summary.accuracy)}</p>
-            <p className="mt-1 font-mono text-xs text-graphite">
-              {summary.totalCorrect} / {summary.totalAnswered} 問
-            </p>
+
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p className="text-sm text-graphite">全体正答率</p>
+          <p className="mt-2 font-mono text-[48px] font-medium leading-none tabular-nums sm:text-[64px]">
+            {formatAccuracy(overallAccuracy)}
+          </p>
+        </div>
+        <dl className="flex flex-col gap-4">
+          <div>
+            <dt className="text-sm text-graphite">累計回答数</dt>
+            <dd className="mt-1 font-mono text-xl tabular-nums">{totalAnswered}</dd>
           </div>
-        ))}
+          <div>
+            <dt className="text-sm text-graphite">累計正答数</dt>
+            <dd className="mt-1 font-mono text-xl tabular-nums">{totalCorrect}</dd>
+          </div>
+        </dl>
       </div>
+
+      {examTypeSummaries.length > 0 ? (
+        <div>
+          {examTypeSummaries.map((summary) => (
+            <div
+              key={summary.code}
+              className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-t border-hairline py-3 first:border-t-0"
+            >
+              <p className="text-sm">{summary.name}</p>
+              <p className="font-mono text-sm tabular-nums text-graphite">
+                {formatAccuracy(summary.accuracy)}
+                <span className="mx-2 text-hairline">/</span>
+                {summary.totalCorrect} / {summary.totalAnswered} 問
+              </p>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </section>
   );
 }

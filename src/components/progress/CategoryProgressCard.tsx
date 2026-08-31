@@ -12,26 +12,31 @@ type CategoryProgressCardProps = {
 
 const ACHIEVED_ACCURACY = 0.8;
 
-function statusBadge(status: CategoryProgressStatus) {
+function rowTone(status: CategoryProgressStatus): string {
   switch (status) {
     case "untouched":
-      return (
-        <span className="rounded-sm border border-hairline px-2 py-0.5 text-xs font-medium text-graphite">
-          未着手
-        </span>
-      );
+      return "text-ink/40";
     case "insufficient":
-      return (
-        <span className="rounded-sm border border-hairline px-2 py-0.5 text-xs font-medium text-graphite">
-          データ不足
-        </span>
-      );
+      return "text-graphite";
     case "weak":
-      return (
-        <span className="rounded-sm border border-stamp px-2 py-0.5 text-xs font-medium text-stamp">
-          苦手分野
-        </span>
-      );
+      return "text-stamp";
+    case "ok":
+      return "text-ink";
+    default: {
+      const _never: never = status;
+      return _never;
+    }
+  }
+}
+
+function statusNote(status: CategoryProgressStatus) {
+  switch (status) {
+    case "untouched":
+      return null;
+    case "insufficient":
+      return <p className="mt-1 text-xs text-graphite">データ不足</p>;
+    case "weak":
+      return <p className="mt-1 text-xs text-stamp">苦手分野</p>;
     case "ok":
       return null;
     default: {
@@ -41,58 +46,40 @@ function statusBadge(status: CategoryProgressStatus) {
   }
 }
 
-function cardClassName(status: CategoryProgressStatus) {
-  switch (status) {
-    case "weak":
-      return "card-surface relative border-stamp p-4";
-    case "untouched":
-    case "insufficient":
-    case "ok":
-      return "card-surface relative p-4";
-    default: {
-      const _never: never = status;
-      return _never;
-    }
-  }
-}
-
 export function CategoryProgressCard({ row }: CategoryProgressCardProps) {
-  const badge = statusBadge(row.status);
   const achieved = row.accuracy !== null && row.accuracy >= ACHIEVED_ACCURACY;
 
   return (
-    <article className={cardClassName(row.status)}>
-      {achieved ? (
-        <div className="absolute right-3 top-3">
-          <StampBadge label="達成" />
-        </div>
-      ) : null}
-      <div className="flex flex-wrap items-start justify-between gap-2 pr-16">
-        <div>
-          <h3 className="font-semibold">{row.categoryName}</h3>
-          <p className="mt-0.5 text-sm text-graphite">{row.examTypeName}</p>
-        </div>
-        {badge}
-      </div>
-      <dl className="mt-3 grid grid-cols-3 gap-2 text-sm">
-        <div>
-          <dt className="text-graphite">回答数</dt>
-          <dd className="font-mono font-medium">{row.totalAnswered}</dd>
-        </div>
-        <div>
-          <dt className="text-graphite">正答数</dt>
-          <dd className="font-mono font-medium">{row.totalCorrect}</dd>
-        </div>
-        <div>
-          <dt className="text-graphite">正答率</dt>
-          <dd className="font-mono font-medium">{formatAccuracy(row.accuracy)}</dd>
-        </div>
-      </dl>
-      {row.status === "weak" ? (
-        <Link href={`/practice?category_id=${row.categoryId}`} className="btn-primary mt-4 text-sm">
-          この分野を演習する
-        </Link>
-      ) : null}
-    </article>
+    <tr className={`progress-row ${rowTone(row.status)}`}>
+      <td className="relative py-3 pl-3 pr-16">
+        {row.status === "weak" ? (
+          <span
+            aria-hidden
+            className="absolute bottom-0 left-0 top-0 w-1 bg-stamp"
+          />
+        ) : null}
+        {achieved ? (
+          <div className="absolute right-0 top-1">
+            <StampBadge label="達成" />
+          </div>
+        ) : null}
+        <p className="font-medium">{row.categoryName}</p>
+        {statusNote(row.status)}
+        {row.status === "weak" ? (
+          <Link
+            href={`/practice?category_id=${row.categoryId}`}
+            className="mt-2 inline-block text-xs underline"
+          >
+            この分野を演習する
+          </Link>
+        ) : null}
+      </td>
+      <td className="py-3 text-right font-mono tabular-nums">
+        {row.totalAnswered}
+      </td>
+      <td className="py-3 text-right font-mono tabular-nums">
+        {formatAccuracy(row.accuracy)}
+      </td>
+    </tr>
   );
 }
