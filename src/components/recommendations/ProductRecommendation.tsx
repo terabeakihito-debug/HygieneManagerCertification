@@ -28,8 +28,8 @@ export function ProductRecommendation({
   }
 
   return (
-    <section className="card-surface p-4">
-      <p className="inline-block rounded-sm border border-ink px-2 py-0.5 text-xs font-semibold tracking-wide">
+    <section className="border-t border-hairline pt-6">
+      <p className="inline-block border border-ink px-2 py-0.5 text-xs font-semibold tracking-wide">
         広告
       </p>
       {heading ? (
