@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TopicMedia } from "@/components/learn/TopicMedia";
@@ -7,6 +8,7 @@ import {
   getLearnTopic,
   getPracticeHrefForCategory,
 } from "@/lib/data/learn-content";
+import { topicDescription } from "@/lib/seo";
 
 type LearnTopicPageProps = {
   params: Promise<{ topicId: string }>;
@@ -14,6 +16,25 @@ type LearnTopicPageProps = {
 
 export function generateStaticParams() {
   return LEARN_TOPICS.map((topic) => ({ topicId: topic.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: LearnTopicPageProps): Promise<Metadata> {
+  const { topicId } = await params;
+  const topic = getLearnTopic(topicId);
+
+  if (!topic) {
+    return { title: "学習コンテンツ" };
+  }
+
+  return {
+    title: topic.title,
+    description: topicDescription(topic.body),
+    alternates: {
+      canonical: `/learn/${topic.id}`,
+    },
+  };
 }
 
 export default async function LearnTopicPage({ params }: LearnTopicPageProps) {

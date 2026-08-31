@@ -4,6 +4,9 @@ import { getPrivacyPolicyHtml } from "@/lib/privacy-policy";
 export const metadata: Metadata = {
   title: "プライバシーポリシー",
   description: "衛生管理者試験対策サービスのプライバシーポリシーです。",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default async function PrivacyPage() {

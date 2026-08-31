@@ -1,5 +1,30 @@
 import Link from "next/link";
 import { CrossMark } from "@/components/ui/CrossMark";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+};
+
+const courseJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  name: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  url: SITE_URL,
+  inLanguage: "ja",
+  about: ["第一種衛生管理者", "第二種衛生管理者"],
+  educationalLevel: "第一種衛生管理者, 第二種衛生管理者",
+  provider: {
+    "@type": "Organization",
+    name: "ExamStudyCoach",
+    url: SITE_URL,
+  },
+  isAccessibleForFree: true,
+};
 
 const EXAM_ORG_HREF = "https://www.exam.or.jp/";
 
@@ -55,6 +80,14 @@ const HERO_LINKS = [
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseJsonLd) }}
+      />
       <section className="editorial-hero">
         <div className="eh-bgnum" aria-hidden>
           01

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { TopicCard } from "@/components/learn/TopicCard";
 import {
@@ -5,6 +6,15 @@ import {
   LEARN_SECTIONS,
   getLearnTopicsBySection,
 } from "@/lib/data/learn-content";
+
+export const metadata: Metadata = {
+  title: "学習コンテンツ一覧",
+  description:
+    "労働生理・労働衛生・関係法令の図解と表で、試験に出やすいポイントを効率よく学習できます。",
+  alternates: {
+    canonical: "/learn",
+  },
+};
 
 export default function LearnIndexPage() {
   return (

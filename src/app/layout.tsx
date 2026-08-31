@@ -3,6 +3,7 @@ import { JetBrains_Mono, Noto_Sans_JP, Zen_Kaku_Gothic_New } from "next/font/goo
 import { AnonymousAuthProvider } from "@/components/auth/AnonymousAuthProvider";
 import { Footer } from "@/components/layout/Footer";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({
@@ -27,8 +28,43 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "衛生管理者試験対策",
-  description: "第一種・第二種衛生管理者試験の学習・演習サービス",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "衛生管理者試験対策｜第一種・第二種の過去問演習と模試",
+    template: `%s｜${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: [
+    "衛生管理者",
+    "衛生管理者試験",
+    "第一種衛生管理者",
+    "第二種衛生管理者",
+    "衛生管理者 過去問",
+    "衛生管理者 独学",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    siteName: SITE_NAME,
+    title: "衛生管理者試験対策｜第一種・第二種の過去問演習と模試",
+    description: SITE_DESCRIPTION,
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "衛生管理者試験対策｜第一種・第二種の過去問演習と模試",
+    description: SITE_DESCRIPTION,
+  },
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
