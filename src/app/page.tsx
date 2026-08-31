@@ -239,6 +239,33 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section id="for-you" className="flex scroll-mt-6 flex-col gap-6">
+          <div>
+            <p className="font-mono text-[11px] tracking-[0.18em] text-amber">FOR YOU</p>
+            <h2 className="mt-2 text-2xl font-bold">こんな方におすすめです</h2>
+          </div>
+          <ul className="flex flex-col gap-3">
+            {[
+              "初めて衛生管理者試験に挑戦する方",
+              "過去に不合格となり、再受験を目指す方",
+              "忙しい仕事の合間に、効率よく学習したい方",
+              "独学での勉強に不安を感じている方",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-3 text-sm leading-7">
+                <CrossMark size={16} className="mt-1 shrink-0" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="border-t border-hairline pt-6 text-lg leading-8">
+            合格までの道のりを、私たちが最後まで支えます。
+            <br />
+            <span className="text-safety">
+              あなたの努力が実を結ぶよう、心から応援しています。
+            </span>
+          </p>
+        </section>
+
         <div className="flex flex-col gap-3 sm:flex-row">
           <Link href="/practice" className="btn-primary">
             問題演習をはじめる
