@@ -3,6 +3,45 @@ import { CrossMark } from "@/components/ui/CrossMark";
 
 const EXAM_ORG_HREF = "https://www.exam.or.jp/";
 
+const FEATURES = [
+  {
+    no: "01",
+    title: "問題演習",
+    href: "/practice",
+    body: "過去問と独自問題を合わせた実践的な問題を、マークシート形式で演習できます。資格区分・分野で絞り込んで、効率よく学習できます。",
+  },
+  {
+    no: "02",
+    title: "学習コンテンツ",
+    href: "/learn",
+    body: "図解と表で要点を整理した読み物コンテンツです。問題を解く前に、分野ごとの基礎知識を効率よくインプットできます。",
+  },
+  {
+    no: "03",
+    title: "模試",
+    href: "/mock-exams",
+    body: "本番同様の形式・制限時間で実力を試せます。合格ラインとの比較や、分野別の弱点も確認できます。",
+  },
+  {
+    no: "04",
+    title: "進捗管理",
+    href: "/progress",
+    body: "分野別の正答率を一覧で確認できます。苦手分野を自動的に検出し、重点的に復習すべき箇所が一目でわかります。",
+  },
+  {
+    no: "05",
+    title: "復習リスト",
+    href: "/review",
+    body: "間違えた問題は自動的に復習リストに追加されます。解けるようになるまで、繰り返し演習できます。",
+  },
+  {
+    no: "06",
+    title: "学習カレンダー",
+    href: "/calendar",
+    body: "毎日の学習実績を記録し、継続日数を可視化します。試験日を設定すれば、残り日数からの逆算スケジュールも確認できます。",
+  },
+] as const;
+
 const HERO_LINKS = [
   { href: "#about", label: "衛生管理者とは" },
   { href: "/progress", label: "進捗" },
@@ -90,6 +129,34 @@ export default function HomePage() {
       </section>
 
       <main className="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-16 sm:py-20">
+        <section id="features" className="flex scroll-mt-6 flex-col gap-5">
+          <div>
+            <p className="font-mono text-[11px] tracking-[0.18em] text-amber">FEATURES</p>
+            <h2 className="mt-2 text-2xl font-bold">できること</h2>
+          </div>
+          <ul>
+            {FEATURES.map((feature) => (
+              <li key={feature.no}>
+                <Link
+                  href={feature.href}
+                  className="progress-row flex items-start gap-4 py-4 text-ink no-underline"
+                >
+                  <span className="w-8 shrink-0 font-mono text-xs tabular-nums text-graphite">
+                    {feature.no}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-display text-base font-bold">{feature.title}</h3>
+                    <p className="mt-1 text-sm leading-7 text-graphite">{feature.body}</p>
+                  </div>
+                  <span className="shrink-0 font-mono text-sm text-graphite" aria-hidden>
+                    →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section id="about" className="flex scroll-mt-6 flex-col gap-6 text-sm leading-7 text-ink">
           <h2 className="text-2xl font-bold">衛生管理者とは</h2>
           <p>
