@@ -5,6 +5,7 @@ import {
   MockExamTaker,
   type MockExamQuestion,
 } from "@/components/mock-exam/MockExamTaker";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 type TakePageProps = {
@@ -47,6 +48,7 @@ export default async function MockExamTakePage({
     .from("mock_exams")
     .select("id, name, time_limit_minutes")
     .eq("id", mockExamId)
+    .eq("exam_id", currentExam.id)
     .maybeSingle();
 
   if (!mockExam) {
@@ -56,6 +58,7 @@ export default async function MockExamTakePage({
   const { data: questionRows } = await supabase
     .from("questions")
     .select("id, question_text, choices(id, choice_text, sort_order)")
+    .eq("exam_id", currentExam.id)
     .in("id", questionIds);
 
   const byId = new Map(((questionRows ?? []) as QuestionRow[]).map((row) => [row.id, row]));

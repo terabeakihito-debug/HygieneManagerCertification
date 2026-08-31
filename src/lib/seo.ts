@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { currentExam } from "@/config/exams";
 
-export const SITE_URL = "https://hygiene.examstudycoach.com";
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://hygiene.examstudycoach.com";
 
-export const SITE_NAME = "衛生管理者試験対策";
+export const SITE_NAME = currentExam.siteName;
 
-export const SITE_DESCRIPTION =
-  "第一種・第二種衛生管理者試験の合格を目指す学習サービス。公表過去問と解説、マークシート形式の問題演習、模試、進捗管理、学習カレンダーを無料で利用できます。会員登録なしでもすぐに始められます。";
+export const SITE_DESCRIPTION = currentExam.seo.description;
 
 export const noIndexRobots = {
   index: false,

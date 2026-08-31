@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 type HistoryRow = {
@@ -45,6 +46,7 @@ export default async function MockExamHistoryPage() {
     .from("mock_exam_results")
     .select("id, score, taken_at, mock_exam_id, mock_exams(name, question_count)")
     .eq("user_id", user.id)
+    .eq("exam_id", currentExam.id)
     .order("taken_at", { ascending: false });
 
   const rows = (data ?? []) as HistoryRow[];

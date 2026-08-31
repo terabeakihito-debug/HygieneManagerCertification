@@ -3,6 +3,7 @@ import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { ExamDateForm } from "@/components/calendar/ExamDateForm";
 import { MonthCalendar } from "@/components/calendar/MonthCalendar";
 import { getCalendarDashboard, type PaceInfo } from "@/lib/data/calendar";
+import { currentExam, licenseCategoryCodes } from "@/config/exams";
 import { parseCalendarMonth } from "@/lib/jst-date";
 import { createClient } from "@/lib/supabase/server";
 
@@ -43,7 +44,8 @@ export default async function CalendarPage({ searchParams }: CalendarPageProps) 
   const { data: examTypeRows } = await supabase
     .from("exam_types")
     .select("id, code, name")
-    .in("code", ["type1", "type2"]);
+    .eq("exam_id", currentExam.id)
+    .in("code", licenseCategoryCodes());
 
   const examTypes = (examTypeRows ?? []) as { id: string; name: string }[];
   const message = paceMessage(dashboard.pace);

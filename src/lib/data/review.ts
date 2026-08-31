@@ -1,3 +1,4 @@
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 import type { PracticeQuestion } from "@/components/practice/QuestionCard";
 
@@ -79,6 +80,7 @@ export async function getUnresolvedReviewCount(userId: string): Promise<number> 
     .from("review_list")
     .select("id", { count: "exact", head: true })
     .eq("user_id", userId)
+    .eq("exam_id", currentExam.id)
     .eq("resolved", false);
 
   if (error) {
@@ -97,6 +99,7 @@ export async function getUnresolvedReviewItems(
       "id, added_at, review_count, question_id, questions(question_text, categories(id, name))"
     )
     .eq("user_id", userId)
+    .eq("exam_id", currentExam.id)
     .eq("resolved", false)
     .order("added_at", { ascending: false });
 
@@ -134,6 +137,7 @@ export async function getUnresolvedReviewQuestions(
       "question_id, questions(id, question_text, explanation, choices(id, choice_text, is_correct, sort_order))"
     )
     .eq("user_id", userId)
+    .eq("exam_id", currentExam.id)
     .eq("resolved", false);
 
   if (error) {

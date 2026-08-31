@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import type { Category } from "@/types/database";
-import type { PracticeExamType } from "./exam-type";
+import { defaultPracticeFilter, type PracticeExamType } from "./exam-type";
 
 type CategoryFilterProps = {
   examType: PracticeExamType;
@@ -19,7 +19,7 @@ export function CategoryFilter({
 
   function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
     const params = new URLSearchParams();
-    if (examType !== "all") {
+    if (examType !== defaultPracticeFilter()) {
       params.set("exam_type", examType);
     }
     if (event.target.value) {

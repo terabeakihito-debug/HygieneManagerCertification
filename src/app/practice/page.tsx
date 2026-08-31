@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { CategoryFilter } from "@/components/practice/CategoryFilter";
 import {
+  defaultPracticeFilter,
   examTypeIdsForFilter,
   parsePracticeExamType,
   type PracticeExamType,
@@ -10,18 +11,13 @@ import {
   QuestionCard,
   type PracticeQuestion,
 } from "@/components/practice/QuestionCard";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 import type { Category, ExamType } from "@/types/database";
 
 type PracticePageProps = {
   searchParams: Promise<{ exam_type?: string; category_id?: string }>;
 };
-
-const EXAM_TYPE_OPTIONS: { value: PracticeExamType; label: string }[] = [
-  { value: "type1", label: "第一種" },
-  { value: "type2", label: "第二種" },
-  { value: "all", label: "両方(共通含む)" },
-];
 
 function shuffle<T>(items: T[]): T[] {
   const next = [...items];
@@ -35,7 +31,9 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 function examTypeHref(examType: PracticeExamType): string {
-  return examType === "all" ? "/practice" : `/practice?exam_type=${examType}`;
+  return examType === defaultPracticeFilter()
+    ? "/practice"
+    : `/practice?exam_type=${examType}`;
 }
 
 export default async function PracticePage({ searchParams }: PracticePageProps) {
@@ -52,8 +50,12 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
   const examType = parsePracticeExamType(params.exam_type);
 
   const [examTypesResult, categoriesResult] = await Promise.all([
-    supabase.from("exam_types").select("id, code, name"),
-    supabase.from("categories").select("id, exam_type_id, name, sort_order").order("sort_order"),
+    supabase.from("exam_types").select("id, code, name").eq("exam_id", currentExam.id),
+    supabase
+      .from("categories")
+      .select("id, exam_id, exam_type_id, name, sort_order")
+      .eq("exam_id", currentExam.id)
+      .order("sort_order"),
   ]);
 
   const examTypes = (examTypesResult.data ?? []) as Pick<ExamType, "id" | "code" | "name">[];
@@ -71,9 +73,10 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
     .from("questions")
     .select(
       "id, exam_type_id, category_id, question_text, explanation, choices(id, choice_text, is_correct, sort_order)"
-    );
+    )
+    .eq("exam_id", currentExam.id);
 
-  if (examType !== "all") {
+  if (allowedExamTypeIds.length > 0) {
     questionsQuery = questionsQuery.in("exam_type_id", allowedExamTypeIds);
   }
   if (selectedCategoryId) {
@@ -126,7 +129,7 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
       <fieldset>
         <legend className="mb-2 text-sm font-medium">資格区分</legend>
         <div className="flex flex-wrap gap-2">
-          {EXAM_TYPE_OPTIONS.map((option) => {
+          {currentExam.practiceFilters.map((option) => {
             const active = option.value === examType;
             return (
               <Link
@@ -154,6 +157,11 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
       <QuestionCard
         key={`${examType}-${selectedCategoryId ?? "all"}`}
         questions={questions}
+        emptyMessage={
+          !selectedCategoryId && examType === defaultPracticeFilter()
+            ? "この試験の問題はまだ登録されていません。"
+            : "該当する問題がありません。区分や分野を変えてみてください。"
+        }
       />
     </main>
   );

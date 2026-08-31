@@ -1,3 +1,4 @@
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 export async function syncReviewList(input: {
@@ -10,6 +11,7 @@ export async function syncReviewList(input: {
     .from("review_list")
     .select("id, resolved, review_count")
     .eq("user_id", input.userId)
+    .eq("exam_id", currentExam.id)
     .eq("question_id", input.questionId)
     .maybeSingle();
 
@@ -49,6 +51,7 @@ export async function syncReviewList(input: {
 
   const { error: insertError } = await supabase.from("review_list").insert({
     user_id: input.userId,
+    exam_id: currentExam.id,
     question_id: input.questionId,
     resolved: false,
     review_count: 0,

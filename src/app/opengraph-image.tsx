@@ -1,11 +1,12 @@
 import { ImageResponse } from "next/og";
+import { currentExam } from "@/config/exams";
 
-export const alt = "衛生管理者試験対策｜第一種・第二種の過去問演習と模試";
+export const alt = currentExam.seo.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const TITLE = "衛生管理者試験対策";
-const SUB = "第一種・第二種対応｜過去問演習・模試・学習コンテンツ";
+const TITLE = currentExam.siteName;
+const SUB = currentExam.seo.ogSub;
 const FONT_URL =
   "https://github.com/google/fonts/raw/main/ofl/zenkakugothicnew/ZenKakuGothicNew-Black.ttf";
 

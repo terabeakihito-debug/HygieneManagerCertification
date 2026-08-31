@@ -1,3 +1,4 @@
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 export const LEARN_SECTIONS = ["physiology", "hygiene", "law"] as const;
@@ -613,6 +614,7 @@ export async function getPracticeHrefForCategory(
   const { data } = await supabase
     .from("categories")
     .select("id")
+    .eq("exam_id", currentExam.id)
     .eq("name", categoryName)
     .maybeSingle();
 

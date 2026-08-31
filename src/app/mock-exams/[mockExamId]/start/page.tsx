@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 type StartPageProps = {
@@ -32,6 +33,7 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
     .from("mock_exams")
     .select("id, exam_type_id, question_count")
     .eq("id", mockExamId)
+    .eq("exam_id", currentExam.id)
     .maybeSingle();
 
   if (!mockExam) {
@@ -41,6 +43,7 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
   const { data: questionRows } = await supabase
     .from("questions")
     .select("id")
+    .eq("exam_id", currentExam.id)
     .eq("exam_type_id", mockExam.exam_type_id);
 
   const selected = shuffle(questionRows ?? []).slice(0, mockExam.question_count);

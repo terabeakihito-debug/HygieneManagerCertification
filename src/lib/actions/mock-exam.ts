@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { recordAnswer } from "@/lib/actions/record-answer";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 export type MockExamAnswer = {
@@ -41,6 +42,7 @@ export async function gradeMockExamAction(input: {
     .from("mock_exams")
     .select("id")
     .eq("id", input.mockExamId)
+    .eq("exam_id", currentExam.id)
     .maybeSingle();
 
   if (mockExamError || !mockExam) {
@@ -50,6 +52,7 @@ export async function gradeMockExamAction(input: {
   const { data: questionRows, error: questionsError } = await supabase
     .from("questions")
     .select("id, category_id, choices(id, is_correct)")
+    .eq("exam_id", currentExam.id)
     .in("id", questionIds);
 
   if (questionsError || !questionRows) {
@@ -104,6 +107,7 @@ export async function gradeMockExamAction(input: {
     .from("mock_exam_results")
     .insert({
       user_id: user.id,
+      exam_id: currentExam.id,
       mock_exam_id: input.mockExamId,
       score,
       category_breakdown: categoryBreakdown,

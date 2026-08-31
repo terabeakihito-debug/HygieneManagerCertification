@@ -1,3 +1,4 @@
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 import type { ExamTypeCode } from "@/types/database";
 
@@ -90,22 +91,11 @@ export function classifyCategoryProgress(
   return "ok";
 }
 
-function isExamTypeCode(value: string): value is ExamTypeCode {
-  switch (value) {
-    case "type1":
-    case "type2":
-    case "common":
-      return true;
-    default:
-      return false;
-  }
-}
-
 function examTypeFromJoin(
   joined: CategoryQueryRow["exam_types"]
 ): { code: ExamTypeCode; name: string } | null {
   const row = Array.isArray(joined) ? joined[0] : joined;
-  if (!row || !isExamTypeCode(row.code)) {
+  if (!row?.code) {
     return null;
   }
   return { code: row.code, name: row.name };
@@ -155,12 +145,14 @@ export async function getProgressDashboard(userId: string): Promise<ProgressDash
     supabase
       .from("categories")
       .select("id, name, sort_order, exam_types(code, name)")
+      .eq("exam_id", currentExam.id)
       .order("sort_order"),
     supabase
       .from("user_progress")
       .select("category_id, total_answered, total_correct")
-      .eq("user_id", userId),
-    supabase.from("exam_types").select("code, name"),
+      .eq("user_id", userId)
+      .eq("exam_id", currentExam.id),
+    supabase.from("exam_types").select("code, name").eq("exam_id", currentExam.id),
   ]);
 
   const progressByCategory = new Map(
@@ -206,7 +198,7 @@ export async function getProgressDashboard(userId: string): Promise<ProgressDash
     code: string;
     name: string;
   }[])
-    .filter((row): row is { code: ExamTypeCode; name: string } => isExamTypeCode(row.code))
+    .filter((row): row is { code: ExamTypeCode; name: string } => Boolean(row.code))
     .map((examType) => {
       const rows = categories.filter((row) => row.examTypeCode === examType.code);
       const totalAnswered = rows.reduce((sum, row) => sum + row.totalAnswered, 0);

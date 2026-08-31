@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 type MockExamRow = {
@@ -30,6 +31,7 @@ export default async function MockExamsPage() {
   const { data } = await supabase
     .from("mock_exams")
     .select("id, name, time_limit_minutes, question_count, exam_types(name)")
+    .eq("exam_id", currentExam.id)
     .order("name");
 
   const exams = (data ?? []) as MockExamRow[];

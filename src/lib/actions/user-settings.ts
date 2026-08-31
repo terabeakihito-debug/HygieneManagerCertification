@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { currentExam, licenseCategoryCodes } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 export type UserSettingsState = {
@@ -28,9 +29,10 @@ export async function saveUserSettingsAction(
       .from("exam_types")
       .select("id, code")
       .eq("id", examTypeId)
+      .eq("exam_id", currentExam.id)
       .maybeSingle();
 
-    if (!examType || (examType.code !== "type1" && examType.code !== "type2")) {
+    if (!examType || !licenseCategoryCodes().includes(examType.code)) {
       return { error: "試験区分を選び直してください" };
     }
   }
@@ -42,11 +44,12 @@ export async function saveUserSettingsAction(
   const { error } = await supabase.from("user_settings").upsert(
     {
       user_id: user.id,
+      exam_id: currentExam.id,
       target_exam_type_id: examTypeId || null,
       exam_date: examDate || null,
       updated_at: new Date().toISOString(),
     },
-    { onConflict: "user_id" }
+    { onConflict: "user_id,exam_id" }
   );
 
   if (error) {

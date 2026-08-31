@@ -1,3 +1,4 @@
+import { currentExam } from "@/config/exams";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
 import {
   addCalendarDays,
@@ -55,6 +56,7 @@ export async function incrementTodayStudyLog(userId: string): Promise<string | n
     .from("study_logs")
     .select("id, questions_answered")
     .eq("user_id", userId)
+    .eq("exam_id", currentExam.id)
     .eq("study_date", studyDate)
     .maybeSingle();
 
@@ -67,13 +69,15 @@ export async function incrementTodayStudyLog(userId: string): Promise<string | n
       .from("study_logs")
       .update({ questions_answered: existing.questions_answered + 1 })
       .eq("id", existing.id)
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .eq("exam_id", currentExam.id);
 
     return updateError ? "学習記録の更新に失敗しました" : null;
   }
 
   const { error: insertError } = await supabase.from("study_logs").insert({
     user_id: userId,
+    exam_id: currentExam.id,
     study_date: studyDate,
     questions_answered: 1,
   });
@@ -107,13 +111,15 @@ export async function getCalendarDashboard(
       .from("study_logs")
       .select("study_date, questions_answered")
       .eq("user_id", userId)
+      .eq("exam_id", currentExam.id)
       .order("study_date", { ascending: false }),
     supabase
       .from("user_settings")
-      .select("user_id, target_exam_type_id, exam_date, created_at, updated_at")
+      .select("user_id, exam_id, target_exam_type_id, exam_date, created_at, updated_at")
       .eq("user_id", userId)
+      .eq("exam_id", currentExam.id)
       .maybeSingle(),
-    supabase.from("exam_types").select("id, code"),
+    supabase.from("exam_types").select("id, code").eq("exam_id", currentExam.id),
   ]);
 
   const logs = (logsResult.data ?? []) as StudyLogRow[];
@@ -196,23 +202,34 @@ async function estimateRemainingQuestions(
   examTypes: { id: string; code: string }[]
 ): Promise<number> {
   const supabase = await createClient();
-  const commonId = examTypes.find((row) => row.code === "common")?.id;
+  const sharedCode = currentExam.sharedCategoryCode;
+  const commonId = sharedCode
+    ? examTypes.find((row) => row.code === sharedCode)?.id
+    : undefined;
   const examTypeIds = targetExamTypeId
     ? [targetExamTypeId, ...(commonId && commonId !== targetExamTypeId ? [commonId] : [])]
     : examTypes.map((row) => row.id);
 
-  let questionsQuery = supabase.from("questions").select("id, category_id");
+  let questionsQuery = supabase
+    .from("questions")
+    .select("id, category_id")
+    .eq("exam_id", currentExam.id);
   if (examTypeIds.length > 0) {
     questionsQuery = questionsQuery.in("exam_type_id", examTypeIds);
   }
 
   const [questionsResult, answersResult, progressResult] = await Promise.all([
     questionsQuery,
-    supabase.from("user_answers").select("question_id").eq("user_id", userId),
+    supabase
+      .from("user_answers")
+      .select("question_id")
+      .eq("user_id", userId)
+      .eq("exam_id", currentExam.id),
     supabase
       .from("user_progress")
       .select("category_id, total_answered, total_correct")
-      .eq("user_id", userId),
+      .eq("user_id", userId)
+      .eq("exam_id", currentExam.id),
   ]);
 
   const questions = (questionsResult.data ?? []) as { id: string; category_id: string }[];

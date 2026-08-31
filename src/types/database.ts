@@ -4,19 +4,38 @@
  * 詳細な設計意図は docs/問題データ設計書.md を参照。
  */
 
-export type ExamTypeCode = "type1" | "type2" | "common";
+export type ExamTypeCode = string;
 export type SourceType = "past_exam" | "original";
 export type AspType = "amazon" | "rakuten";
 export type ProductType = "book" | "course" | "goods";
 
+export interface Exam {
+  id: string;
+  name: string;
+  organization: string | null;
+  has_practical_exam: boolean;
+  is_active: boolean;
+  created_at: string;
+}
+
+export interface ExamCategory {
+  id: string;
+  exam_id: string;
+  code: string;
+  label: string;
+  display_order: number;
+}
+
 export interface ExamType {
   id: string;
+  exam_id: string;
   code: ExamTypeCode;
   name: string;
 }
 
 export interface Category {
   id: string;
+  exam_id: string;
   exam_type_id: string;
   name: string;
   sort_order: number;
@@ -24,6 +43,7 @@ export interface Category {
 
 export interface Question {
   id: string;
+  exam_id: string;
   exam_type_id: string;
   category_id: string;
   question_text: string;
@@ -45,6 +65,7 @@ export interface Choice {
 
 export interface Product {
   id: string;
+  exam_id: string;
   name: string;
   asp: AspType;
   affiliate_url: string;
@@ -64,6 +85,7 @@ export interface CategoryProduct {
 export interface UserProgress {
   id: string;
   user_id: string;
+  exam_id: string;
   category_id: string;
   total_answered: number;
   total_correct: number;
@@ -73,6 +95,7 @@ export interface UserProgress {
 export interface UserAnswer {
   id: string;
   user_id: string;
+  exam_id: string;
   question_id: string;
   selected_choice_id: string;
   is_correct: boolean;
@@ -82,6 +105,7 @@ export interface UserAnswer {
 export interface ReviewListItem {
   id: string;
   user_id: string;
+  exam_id: string;
   question_id: string;
   added_at: string;
   resolved: boolean;
@@ -90,6 +114,7 @@ export interface ReviewListItem {
 
 export interface MockExam {
   id: string;
+  exam_id: string;
   exam_type_id: string;
   name: string;
   time_limit_minutes: number;
@@ -99,6 +124,7 @@ export interface MockExam {
 export interface MockExamResult {
   id: string;
   user_id: string;
+  exam_id: string;
   mock_exam_id: string;
   score: number;
   category_breakdown: Record<string, number>;
@@ -108,12 +134,14 @@ export interface MockExamResult {
 export interface StudyLog {
   id: string;
   user_id: string;
+  exam_id: string;
   study_date: string;
   questions_answered: number;
 }
 
 export interface UserSettings {
   user_id: string;
+  exam_id: string;
   target_exam_type_id: string | null;
   exam_date: string | null;
   created_at: string;

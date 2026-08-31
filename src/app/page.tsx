@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { CrossMark } from "@/components/ui/CrossMark";
+import { currentExam } from "@/config/exams";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+
+const categoryLabels = currentExam.categories.map((category) => category.label);
 
 const websiteJsonLd = {
   "@context": "https://schema.org",
@@ -16,8 +19,8 @@ const courseJsonLd = {
   description: SITE_DESCRIPTION,
   url: SITE_URL,
   inLanguage: "ja",
-  about: ["第一種衛生管理者", "第二種衛生管理者"],
-  educationalLevel: "第一種衛生管理者, 第二種衛生管理者",
+  about: categoryLabels,
+  educationalLevel: categoryLabels.join(", "),
   provider: {
     "@type": "Organization",
     name: "ExamStudyCoach",
@@ -68,7 +71,7 @@ const FEATURES = [
 ] as const;
 
 const HERO_LINKS = [
-  { href: "#about", label: "衛生管理者とは" },
+  { href: "#about", label: currentExam.aboutNavLabel },
   { href: "/progress", label: "進捗" },
   { href: "/review", label: "復習" },
   { href: "/mock-exams", label: "模試" },
@@ -104,9 +107,9 @@ export default function HomePage() {
         <div className="eh-mid">
           <div className="eh-eyebrow">CERTIFICATION EXAM PREP — 2026</div>
           <h1 className="eh-title">
-            衛生管理者
+            {currentExam.seo.heroLines[0]}
             <br />
-            試験対策
+            {currentExam.seo.heroLines[1]}
           </h1>
         </div>
 
@@ -191,7 +194,7 @@ export default function HomePage() {
         </section>
 
         <section id="about" className="flex scroll-mt-6 flex-col gap-6 text-sm leading-7 text-ink">
-          <h2 className="text-2xl font-bold">衛生管理者とは</h2>
+          <h2 className="text-2xl font-bold">{currentExam.aboutNavLabel}</h2>
           <p>
             衛生管理者は、労働安全衛生法に基づく国家資格です。事業場における労働者の健康障害の防止、衛生に関する教育の実施、健康診断の実施等、職場の衛生に関する技術的事項を管理する役割を担います。
           </p>
@@ -279,7 +282,7 @@ export default function HomePage() {
           </div>
           <ul className="flex flex-col gap-3">
             {[
-              "初めて衛生管理者試験に挑戦する方",
+              `初めて${currentExam.displayName}試験に挑戦する方`,
               "過去に不合格となり、再受験を目指す方",
               "忙しい仕事の合間に、効率よく学習したい方",
               "独学での勉強に不安を感じている方",
@@ -310,7 +313,7 @@ export default function HomePage() {
 
         <nav className="flex flex-wrap gap-x-4 gap-y-2 text-sm text-graphite">
           <Link href="#about" className="underline">
-            衛生管理者とは
+            {currentExam.aboutNavLabel}
           </Link>
           <Link href="/login" className="underline">
             ログイン

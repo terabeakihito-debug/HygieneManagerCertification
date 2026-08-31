@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { getPrivacyPolicyHtml } from "@/lib/privacy-policy";
+import { SITE_NAME } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "プライバシーポリシー",
-  description: "衛生管理者試験対策サービスのプライバシーポリシーです。",
+  description: `${SITE_NAME}サービスのプライバシーポリシーです。`,
   alternates: {
     canonical: "/privacy",
   },

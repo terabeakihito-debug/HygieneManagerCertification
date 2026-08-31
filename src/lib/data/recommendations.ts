@@ -2,6 +2,7 @@ import {
   MIN_ANSWERS_FOR_WEAK_JUDGMENT,
   WEAK_ACCURACY_THRESHOLD,
 } from "@/lib/data/progress";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 import type { AspType } from "@/types/database";
 
@@ -70,6 +71,7 @@ async function fetchActiveProductsForCategories(
     .from("products")
     .select("id, name, asp, affiliate_url, is_active, priority")
     .in("id", productIds)
+    .eq("exam_id", currentExam.id)
     .eq("is_active", true)
     .order("priority", { ascending: true });
 
@@ -96,7 +98,8 @@ export async function getRecommendedProductsForUser(
   const { data, error } = await supabase
     .from("user_progress")
     .select("category_id, total_answered, total_correct")
-    .eq("user_id", userId);
+    .eq("user_id", userId)
+    .eq("exam_id", currentExam.id);
 
   if (error) {
     return [];

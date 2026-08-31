@@ -5,6 +5,7 @@ import { ProductRecommendation } from "@/components/recommendations/ProductRecom
 import { StampBadge } from "@/components/ui/StampBadge";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
 import { getRecommendedProductsForUser } from "@/lib/data/recommendations";
+import { currentExam } from "@/config/exams";
 import { createClient } from "@/lib/supabase/server";
 
 type ResultPageProps = {
@@ -62,6 +63,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
     .from("mock_exam_results")
     .select("id, user_id, mock_exam_id, score, category_breakdown, taken_at")
     .eq("id", resultId)
+    .eq("exam_id", currentExam.id)
     .maybeSingle();
 
   if (!result || result.user_id !== user.id || result.mock_exam_id !== mockExamId) {
@@ -72,6 +74,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
     .from("mock_exams")
     .select("id, name, question_count, exam_type_id")
     .eq("id", mockExamId)
+    .eq("exam_id", currentExam.id)
     .maybeSingle();
 
   if (!mockExam) {
@@ -81,6 +84,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
   const { count: availableCount } = await supabase
     .from("questions")
     .select("id", { count: "exact", head: true })
+    .eq("exam_id", currentExam.id)
     .eq("exam_type_id", mockExam.exam_type_id);
 
   const questionTotal = Math.min(mockExam.question_count, availableCount ?? mockExam.question_count);
@@ -88,7 +92,11 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
   const categoryIds = Object.keys(breakdown);
 
   const { data: categoryRows } = categoryIds.length
-    ? await supabase.from("categories").select("id, name").in("id", categoryIds)
+    ? await supabase
+        .from("categories")
+        .select("id, name")
+        .eq("exam_id", currentExam.id)
+        .in("id", categoryIds)
     : { data: [] };
 
   const categoryNames = new Map(

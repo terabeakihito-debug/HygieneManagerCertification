@@ -3,6 +3,7 @@ import { JetBrains_Mono, Noto_Sans_JP, Zen_Kaku_Gothic_New } from "next/font/goo
 import { AnonymousAuthProvider } from "@/components/auth/AnonymousAuthProvider";
 import { Footer } from "@/components/layout/Footer";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { currentExam } from "@/config/exams";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 
@@ -30,18 +31,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "衛生管理者試験対策｜第一種・第二種の過去問演習と模試",
+    default: currentExam.seo.title,
     template: `%s｜${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    "衛生管理者",
-    "衛生管理者試験",
-    "第一種衛生管理者",
-    "第二種衛生管理者",
-    "衛生管理者 過去問",
-    "衛生管理者 独学",
-  ],
+  keywords: [...currentExam.seo.keywords],
   alternates: {
     canonical: "/",
   },
@@ -53,13 +47,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ja_JP",
     siteName: SITE_NAME,
-    title: "衛生管理者試験対策｜第一種・第二種の過去問演習と模試",
+    title: currentExam.seo.title,
     description: SITE_DESCRIPTION,
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "衛生管理者試験対策｜第一種・第二種の過去問演習と模試",
+    title: currentExam.seo.title,
     description: SITE_DESCRIPTION,
   },
   icons: {

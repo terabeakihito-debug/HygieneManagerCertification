@@ -1,4 +1,5 @@
 import { syncReviewList } from "@/lib/actions/review-list";
+import { currentExam } from "@/config/exams";
 import { incrementTodayStudyLog } from "@/lib/data/calendar";
 import { createClient } from "@/lib/supabase/server";
 
@@ -17,8 +18,9 @@ export async function recordAnswer(input: {
       .maybeSingle(),
     supabase
       .from("questions")
-      .select("id, category_id")
+      .select("id, category_id, exam_id")
       .eq("id", input.questionId)
+      .eq("exam_id", currentExam.id)
       .maybeSingle(),
   ]);
 
@@ -37,6 +39,7 @@ export async function recordAnswer(input: {
 
   const { error: insertError } = await supabase.from("user_answers").insert({
     user_id: input.userId,
+    exam_id: currentExam.id,
     question_id: question.id,
     selected_choice_id: choice.id,
     is_correct: choice.is_correct,
@@ -50,6 +53,7 @@ export async function recordAnswer(input: {
     .from("user_progress")
     .select("id, total_answered, total_correct")
     .eq("user_id", input.userId)
+    .eq("exam_id", currentExam.id)
     .eq("category_id", question.category_id)
     .maybeSingle();
 
@@ -66,7 +70,8 @@ export async function recordAnswer(input: {
         updated_at: new Date().toISOString(),
       })
       .eq("id", progress.id)
-      .eq("user_id", input.userId);
+      .eq("user_id", input.userId)
+      .eq("exam_id", currentExam.id);
 
     if (updateError) {
       return "進捗の更新に失敗しました";
@@ -74,6 +79,7 @@ export async function recordAnswer(input: {
   } else {
     const { error: createError } = await supabase.from("user_progress").insert({
       user_id: input.userId,
+      exam_id: currentExam.id,
       category_id: question.category_id,
       total_answered: 1,
       total_correct: choice.is_correct ? 1 : 0,

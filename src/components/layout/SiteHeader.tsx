@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { currentExam } from "@/config/exams";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -14,7 +15,7 @@ export function SiteHeader() {
     <header className="border-b-4 border-safety bg-ink text-paper">
       <div className="mx-auto flex max-w-2xl items-baseline justify-between gap-4 px-4 py-3">
         <Link href="/" className="font-display text-base font-bold tracking-tight text-paper sm:text-lg">
-          衛生管理者試験対策
+          {currentExam.siteName}
         </Link>
         <Link href="/mypage" className="text-sm text-paper/80 underline">
           マイページ

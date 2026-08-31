@@ -1,27 +1,27 @@
-import type { ExamType, ExamTypeCode } from "@/types/database";
+import { currentExam } from "@/config/exams";
+import type { ExamType } from "@/types/database";
 
-export type PracticeExamType = "type1" | "type2" | "all";
+export type PracticeExamType = (typeof currentExam.practiceFilters)[number]["value"];
 
 export function parsePracticeExamType(value: string | undefined): PracticeExamType {
-  if (value === "type1" || value === "type2" || value === "all") {
-    return value;
+  const match = currentExam.practiceFilters.find((filter) => filter.value === value);
+  if (match) {
+    return match.value;
   }
-  return "all";
+  const fallback = currentExam.practiceFilters[currentExam.practiceFilters.length - 1];
+  if (!fallback) {
+    throw new Error("currentExam.practiceFilters is empty");
+  }
+  return fallback.value;
 }
 
-export function examTypeCodesForFilter(filter: PracticeExamType): ExamTypeCode[] {
-  switch (filter) {
-    case "type1":
-      return ["type1", "common"];
-    case "type2":
-      return ["type2", "common"];
-    case "all":
-      return ["type1", "type2", "common"];
-    default: {
-      const _never: never = filter;
-      return _never;
-    }
-  }
+export function defaultPracticeFilter(): PracticeExamType {
+  return parsePracticeExamType(undefined);
+}
+
+export function examTypeCodesForFilter(filter: PracticeExamType): string[] {
+  const found = currentExam.practiceFilters.find((item) => item.value === filter);
+  return found ? [...found.codes] : [];
 }
 
 export function examTypeIdsForFilter(
