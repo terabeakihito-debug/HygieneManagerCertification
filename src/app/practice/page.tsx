@@ -119,34 +119,38 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
         </div>
       </div>
 
-      <p className="text-sm text-graphite">
-        先に学習コンテンツを読みたい方は
-        <Link href="/learn" className="ml-1 underline">
-          こちら
-        </Link>
-      </p>
+      {currentExam.hasLearnContent ? (
+        <p className="text-sm text-graphite">
+          先に学習コンテンツを読みたい方は
+          <Link href="/learn" className="ml-1 underline">
+            こちら
+          </Link>
+        </p>
+      ) : null}
 
-      <fieldset>
-        <legend className="mb-2 text-sm font-medium">資格区分</legend>
-        <div className="flex flex-wrap gap-2">
-          {currentExam.practiceFilters.map((option) => {
-            const active = option.value === examType;
-            return (
-              <Link
-                key={option.value}
-                href={examTypeHref(option.value)}
-                className={`rounded-sm px-3 py-2 text-sm ${
-                  active
-                    ? "bg-safety text-paper"
-                    : "btn-secondary"
-                }`}
-              >
-                {option.label}
-              </Link>
-            );
-          })}
-        </div>
-      </fieldset>
+      {currentExam.practiceFilters.length > 1 ? (
+        <fieldset>
+          <legend className="mb-2 text-sm font-medium">資格区分</legend>
+          <div className="flex flex-wrap gap-2">
+            {currentExam.practiceFilters.map((option) => {
+              const active = option.value === examType;
+              return (
+                <Link
+                  key={option.value}
+                  href={examTypeHref(option.value)}
+                  className={`rounded-sm px-3 py-2 text-sm ${
+                    active
+                      ? "bg-safety text-paper"
+                      : "btn-secondary"
+                  }`}
+                >
+                  {option.label}
+                </Link>
+              );
+            })}
+          </div>
+        </fieldset>
+      ) : null}
 
       <CategoryFilter
         examType={examType}

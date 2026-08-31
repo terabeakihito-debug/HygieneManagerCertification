@@ -5,94 +5,6 @@ import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-const FILES = [
-  {
-    path: "data/past-exams/type1_2026-04.txt",
-    kind: "type1",
-    examLabel: "第一種衛生管理者試験",
-  },
-  {
-    path: "data/past-exams/type1_2025-10.txt",
-    kind: "type1",
-    examLabel: "第一種衛生管理者試験",
-  },
-  {
-    path: "data/past-exams/type2_2026-04.txt",
-    kind: "type2",
-    examLabel: "第二種衛生管理者試験",
-  },
-  {
-    path: "data/past-exams/type2_2025-10.txt",
-    kind: "type2",
-    examLabel: "第二種衛生管理者試験",
-  },
-];
-
-/** @type {Record<string, { examTypeCode: string; categoryName: string }>} */
-const TYPE1_HEADINGS = {
-  "関係法令（有害業務に係るもの）": {
-    examTypeCode: "type1",
-    categoryName: "関係法令(有害業務に係るもの)",
-  },
-  "労働衛生（有害業務に係るもの）": {
-    examTypeCode: "type1",
-    categoryName: "労働衛生(有害業務を含む)",
-  },
-  "関係法令（有害業務に係るもの以外のもの）": {
-    examTypeCode: "type1",
-    categoryName: "関係法令(有害業務に係るもの以外のもの)",
-  },
-  "労働衛生（有害業務に係るもの以外のもの）": {
-    examTypeCode: "type1",
-    categoryName: "労働衛生(有害業務に係るもの以外のもの)",
-  },
-  労働生理: {
-    examTypeCode: "common",
-    categoryName: "労働生理",
-  },
-};
-
-/** @type {Record<string, { examTypeCode: string; categoryName: string }>} */
-const TYPE2_HEADINGS = {
-  関係法令: {
-    examTypeCode: "type2",
-    categoryName: "関係法令(有害業務に係るものを除く)",
-  },
-  労働衛生: {
-    examTypeCode: "type2",
-    categoryName: "労働衛生(有害業務を除く)",
-  },
-  労働生理: {
-    examTypeCode: "common",
-    categoryName: "労働生理",
-  },
-};
-
-const EXISTING_CATEGORIES = [
-  { examTypeCode: "type1", name: "労働衛生(有害業務を含む)", sortOrder: 1 },
-  { examTypeCode: "type2", name: "労働衛生(有害業務を除く)", sortOrder: 1 },
-  { examTypeCode: "type1", name: "関係法令(有害業務に係るもの)", sortOrder: 2 },
-  {
-    examTypeCode: "type2",
-    name: "関係法令(有害業務に係るものを除く)",
-    sortOrder: 2,
-  },
-  { examTypeCode: "common", name: "労働生理", sortOrder: 3 },
-];
-
-const NEW_CATEGORIES = [
-  {
-    examTypeCode: "type1",
-    name: "関係法令(有害業務に係るもの以外のもの)",
-    sortOrder: 4,
-  },
-  {
-    examTypeCode: "type1",
-    name: "労働衛生(有害業務に係るもの以外のもの)",
-    sortOrder: 5,
-  },
-];
-
 const QUESTION_START = /^問\s*([０-９0-9]+)\s+(.*)$/;
 const SECTION = /^〔(.+)〕$/;
 const CHOICE = /^(○)?（([１-５])）(.*)$/;
@@ -113,28 +25,92 @@ function toAsciiDigits(value) {
   return value.replace(/[０-９]/g, (ch) => FULLWIDTH_DIGITS[ch] ?? ch);
 }
 
-function parsePublishedAt(sourceLine) {
-  const match = sourceLine.match(/(令和\d+年\d+月公表)/);
-  if (!match) {
-    throw new Error(`公表年月を抽出できません: ${sourceLine}`);
+function parseArgs(argv) {
+  const args = {
+    exam: null,
+    inputs: [],
+    kind: null,
+    output: null,
+    dumpJson: null,
+  };
+  for (let i = 0; i < argv.length; i += 1) {
+    const flag = argv[i];
+    const value = argv[i + 1];
+    if (flag === "--exam") {
+      args.exam = value;
+      i += 1;
+    } else if (flag === "--input") {
+      args.inputs.push(value);
+      i += 1;
+    } else if (flag === "--kind") {
+      args.kind = value;
+      i += 1;
+    } else if (flag === "--output") {
+      args.output = value;
+      i += 1;
+    } else if (flag === "--dump-json") {
+      args.dumpJson = value;
+      i += 1;
+    } else {
+      throw new Error(`未知の引数: ${flag}`);
+    }
+    if (flag !== undefined && (value === undefined || value.startsWith("--"))) {
+      throw new Error(`${flag} の値がありません`);
+    }
   }
-  return match[1];
+  if (!args.exam) {
+    throw new Error("--exam が必要です");
+  }
+  return args;
 }
 
-function mapHeading(kind, heading) {
-  const table = kind === "type1" ? TYPE1_HEADINGS : TYPE2_HEADINGS;
+function loadHeadingMap(examId) {
+  const mapPath = join(root, "data/heading-maps", `${examId}.json`);
+  return JSON.parse(readFileSync(mapPath, "utf8"));
+}
+
+function resolveHeading(map, kind, heading) {
+  const table = map.headings?.[kind];
+  if (!table) {
+    throw new Error(`${map.examId} の未知の kind: ${kind}`);
+  }
   const mapped = table[heading];
   if (!mapped) {
     throw new Error(`${kind} の未知の見出し: ${heading}`);
   }
+  if (typeof mapped === "string") {
+    return {
+      examTypeCode: map.defaultExamTypeCode ?? kind,
+      categoryName: mapped,
+    };
+  }
   return mapped;
 }
 
-function parseFile(relPath, kind, examLabel) {
+function parsePublishedAt(lines) {
+  for (const line of lines) {
+    const match = line.match(/(令和\d+年\d+月公表)/);
+    if (match) {
+      return match[1];
+    }
+  }
+  throw new Error("公表年月を抽出できません");
+}
+
+function shouldSkipLine(trimmed) {
+  return (
+    !trimmed ||
+    trimmed.startsWith("元URL:") ||
+    trimmed.startsWith("出典:") ||
+    trimmed.startsWith("※") ||
+    trimmed.startsWith("二ボ")
+  );
+}
+
+function parseFile(relPath, kind, examLabel, map) {
   const text = readFileSync(join(root, relPath), "utf8").replace(/\r\n/g, "\n");
   const lines = text.split("\n");
-  const sourceLine = lines[0] ?? "";
-  const publishedAt = parsePublishedAt(sourceLine);
+  const publishedAt = parsePublishedAt(lines);
 
   /** @type {Array<{
    *   number: number;
@@ -183,10 +159,10 @@ function parseFile(relPath, kind, examLabel) {
     current = null;
   };
 
-  for (const rawLine of lines.slice(1)) {
+  for (const rawLine of lines) {
     const line = rawLine.trimEnd();
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("元URL:")) {
+    if (shouldSkipLine(trimmed)) {
       continue;
     }
 
@@ -203,7 +179,7 @@ function parseFile(relPath, kind, examLabel) {
       if (!heading) {
         throw new Error(`${relPath}: 見出しの前に問題があります`);
       }
-      const mapped = mapHeading(kind, heading);
+      const mapped = resolveHeading(map, kind, heading);
       current = {
         number: Number(toAsciiDigits(questionMatch[1])),
         examTypeCode: mapped.examTypeCode,
@@ -258,19 +234,20 @@ function sqlString(value) {
   return `'${value.replaceAll("'", "''")}'`;
 }
 
-function categorySelect(examTypeCode, categoryName) {
-  return `(SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.code = ${sqlString(examTypeCode)} AND c.name = ${sqlString(categoryName)})`;
+function categorySelect(examId, examTypeCode, categoryName) {
+  return `(SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = ${sqlString(examId)} AND e.code = ${sqlString(examTypeCode)} AND c.name = ${sqlString(categoryName)})`;
 }
 
-function examTypeSelect(code) {
-  return `(SELECT id FROM exam_types WHERE code = ${sqlString(code)})`;
+function examTypeSelect(examId, code) {
+  return `(SELECT id FROM exam_types WHERE exam_id = ${sqlString(examId)} AND code = ${sqlString(code)})`;
 }
 
-function categoryInsert({ examTypeCode, name, sortOrder }) {
-  return `INSERT INTO categories (exam_type_id, name, sort_order)
-SELECT et.id, ${sqlString(name)}, ${sortOrder}
+function categoryInsert(examId, { examTypeCode, name, sortOrder }) {
+  return `INSERT INTO categories (exam_type_id, exam_id, name, sort_order)
+SELECT et.id, ${sqlString(examId)}, ${sqlString(name)}, ${sortOrder}
 FROM exam_types et
-WHERE et.code = ${sqlString(examTypeCode)}
+WHERE et.exam_id = ${sqlString(examId)}
+  AND et.code = ${sqlString(examTypeCode)}
   AND NOT EXISTS (
     SELECT 1
     FROM categories c
@@ -279,26 +256,105 @@ WHERE et.code = ${sqlString(examTypeCode)}
   );`;
 }
 
-const allQuestions = FILES.flatMap((file) =>
-  parseFile(file.path, file.kind, file.examLabel),
+function mastersSql(map) {
+  const masters = map.masters;
+  if (!masters) {
+    return [];
+  }
+  const examId = sqlString(map.examId);
+  const lines = [];
+  lines.push(
+    `INSERT INTO exams (id, name, organization, has_practical_exam)
+SELECT ${sqlString(masters.exam.id)}, ${sqlString(masters.exam.name)}, ${sqlString(masters.exam.organization)}, ${masters.exam.hasPracticalExam}
+WHERE NOT EXISTS (SELECT 1 FROM exams WHERE id = ${examId});`,
+  );
+  lines.push("");
+  for (const examType of masters.examTypes ?? []) {
+    lines.push(
+      `INSERT INTO exam_types (exam_id, code, name)
+SELECT ${examId}, ${sqlString(examType.code)}, ${sqlString(examType.name)}
+WHERE NOT EXISTS (
+  SELECT 1 FROM exam_types WHERE exam_id = ${examId} AND code = ${sqlString(examType.code)}
+);`,
+    );
+    lines.push("");
+  }
+  for (const examCategory of masters.examCategories ?? []) {
+    lines.push(
+      `INSERT INTO exam_categories (exam_id, code, label, display_order)
+SELECT ${examId}, ${sqlString(examCategory.code)}, ${sqlString(examCategory.label)}, ${examCategory.displayOrder}
+WHERE NOT EXISTS (
+  SELECT 1 FROM exam_categories WHERE exam_id = ${examId} AND code = ${sqlString(examCategory.code)}
+);`,
+    );
+    lines.push("");
+  }
+  return lines;
+}
+
+function resolveFiles(args, map) {
+  if (args.inputs.length === 0) {
+    return map.files ?? [];
+  }
+  return args.inputs.map((path) => {
+    const listed = (map.files ?? []).find((file) => file.path === path);
+    return {
+      path,
+      kind: args.kind ?? listed?.kind ?? map.defaultKind,
+      examLabel: listed?.examLabel,
+    };
+  });
+}
+
+const args = parseArgs(process.argv.slice(2));
+const map = loadHeadingMap(args.exam);
+if (map.examId !== args.exam) {
+  throw new Error(`heading map の examId が一致しません: ${map.examId}`);
+}
+
+const files = resolveFiles(args, map);
+if (files.length === 0) {
+  throw new Error("入力ファイルがありません (--input または heading map の files)");
+}
+for (const file of files) {
+  if (!file.kind) {
+    throw new Error(`${file.path}: kind が不明です (--kind を指定してください)`);
+  }
+  if (!file.examLabel) {
+    throw new Error(`${file.path}: examLabel が不明です`);
+  }
+}
+
+const allQuestions = files.flatMap((file) =>
+  parseFile(file.path, file.kind, file.examLabel, map),
 );
 
+if (args.dumpJson) {
+  writeFileSync(args.dumpJson, `${JSON.stringify(allQuestions, null, 2)}\n`, "utf8");
+  console.log(`DUMPED ${allQuestions.length} ${args.dumpJson}`);
+}
+
+if (!args.output) {
+  if (!args.dumpJson) {
+    const byFile = files.map((file) => {
+      const questions = parseFile(file.path, file.kind, file.examLabel, map);
+      return `${file.path}: ${questions.length}問`;
+    });
+    console.log(byFile.join("\n"));
+    console.log(`TOTAL_QUESTIONS ${allQuestions.length}`);
+  }
+  process.exit(0);
+}
+
 const lines = [];
-lines.push("-- 過去問(令和7年10月・令和8年4月公表)の questions / choices 投入");
+lines.push(`-- ${map.examId} 過去問 questions / choices 投入`);
 lines.push("-- 生成元: data/past-exams/*.txt");
 lines.push("-- explanation はプレースホルダー。後続で実解説を追加する。");
 lines.push("");
-lines.push("-- 既存 categories (2026-08-29 確認):");
-lines.push("--   労働衛生(有害業務を含む) / type1");
-lines.push("--   労働衛生(有害業務を除く) / type2");
-lines.push("--   関係法令(有害業務に係るもの) / type1");
-lines.push("--   関係法令(有害業務に係るものを除く) / type2");
-lines.push("--   労働生理 / common");
-lines.push("-- 不足していた第一種の非有害業務分野のみ新規追加する。");
-lines.push("");
+lines.push(...mastersSql(map));
 
-for (const category of [...EXISTING_CATEGORIES, ...NEW_CATEGORIES]) {
-  lines.push(categoryInsert(category));
+for (const category of map.seedCategories ?? []) {
+  lines.push(categoryInsert(map.examId, category));
   lines.push("");
 }
 
@@ -309,13 +365,14 @@ for (const question of allQuestions) {
   const questionId = randomUUID();
   questionCount += 1;
   lines.push(
-    `INSERT INTO questions (id, exam_type_id, category_id, question_text, explanation, source_type, source_note)`,
+    `INSERT INTO questions (id, exam_id, exam_type_id, category_id, question_text, explanation, source_type, source_note)`,
   );
   lines.push(`VALUES (`);
   lines.push(`  '${questionId}',`);
-  lines.push(`  ${examTypeSelect(question.examTypeCode)},`);
+  lines.push(`  ${sqlString(map.examId)},`);
+  lines.push(`  ${examTypeSelect(map.examId, question.examTypeCode)},`);
   lines.push(
-    `  ${categorySelect(question.examTypeCode === "common" ? "common" : question.examTypeCode, question.categoryName)},`,
+    `  ${categorySelect(map.examId, question.examTypeCode === "common" ? "common" : question.examTypeCode, question.categoryName)},`,
   );
   lines.push(`  ${dollarQuote("q", question.questionText)},`);
   lines.push(`  '(解説は今後追加予定)',`);
@@ -337,11 +394,11 @@ for (const question of allQuestions) {
   lines.push("");
 }
 
-const outPath = join(root, "supabase/migrations/0004_past_exam_questions.sql");
+const outPath = join(root, args.output);
 writeFileSync(outPath, `${lines.join("\n").trimEnd()}\n`, "utf8");
 
-const byFile = FILES.map((file) => {
-  const questions = parseFile(file.path, file.kind, file.examLabel);
+const byFile = files.map((file) => {
+  const questions = parseFile(file.path, file.kind, file.examLabel, map);
   return `${file.path}: ${questions.length}問`;
 });
 

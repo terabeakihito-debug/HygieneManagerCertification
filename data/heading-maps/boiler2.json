@@ -1,0 +1,50 @@
+{
+  "examId": "boiler2",
+  "defaultKind": "common",
+  "defaultExamTypeCode": "common",
+  "files": [
+    {
+      "path": "data/past-exams/boiler2_2025-10.txt",
+      "kind": "common",
+      "examLabel": "二級ボイラー技士試験"
+    }
+  ],
+  "headings": {
+    "common": {
+      "ボイラーの構造に関する知識": "ボイラーの構造に関する知識",
+      "ボイラーの取扱いに関する知識": "ボイラーの取扱いに関する知識",
+      "燃料及び燃焼に関する知識": "燃料及び燃焼に関する知識",
+      "関係法令": "関係法令"
+    }
+  },
+  "masters": {
+    "exam": {
+      "id": "boiler2",
+      "name": "二級ボイラー技士",
+      "organization": "公益財団法人安全衛生技術試験協会",
+      "hasPracticalExam": false
+    },
+    "examTypes": [{ "code": "common", "name": "二級ボイラー技士" }],
+    "examCategories": [
+      { "code": "common", "label": "二級ボイラー技士", "displayOrder": 1 }
+    ]
+  },
+  "seedCategories": [
+    {
+      "examTypeCode": "common",
+      "name": "ボイラーの構造に関する知識",
+      "sortOrder": 1
+    },
+    {
+      "examTypeCode": "common",
+      "name": "ボイラーの取扱いに関する知識",
+      "sortOrder": 2
+    },
+    {
+      "examTypeCode": "common",
+      "name": "燃料及び燃焼に関する知識",
+      "sortOrder": 3
+    },
+    { "examTypeCode": "common", "name": "関係法令", "sortOrder": 4 }
+  ]
+}

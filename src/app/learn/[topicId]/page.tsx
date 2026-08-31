@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TopicMedia } from "@/components/learn/TopicMedia";
+import { currentExam } from "@/config/exams";
 import {
   LEARN_SECTION_LABEL,
   LEARN_TOPICS,
@@ -15,6 +16,9 @@ type LearnTopicPageProps = {
 };
 
 export function generateStaticParams() {
+  if (!currentExam.hasLearnContent) {
+    return [];
+  }
   return LEARN_TOPICS.map((topic) => ({ topicId: topic.id }));
 }
 
@@ -38,6 +42,10 @@ export async function generateMetadata({
 }
 
 export default async function LearnTopicPage({ params }: LearnTopicPageProps) {
+  if (!currentExam.hasLearnContent) {
+    notFound();
+  }
+
   const { topicId } = await params;
   const topic = getLearnTopic(topicId);
 

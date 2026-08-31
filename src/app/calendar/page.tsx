@@ -83,7 +83,9 @@ export default async function CalendarPage({ searchParams }: CalendarPageProps) 
         </p>
       ) : (
         <p className="text-sm text-graphite">
-          試験区分と試験日を設定すると、逆算した学習ペースの目安を表示します。
+          {examTypes.length <= 1
+            ? "試験日を設定すると、逆算した学習ペースの目安を表示します。"
+            : "試験区分と試験日を設定すると、逆算した学習ペースの目安を表示します。"}
         </p>
       )}
 

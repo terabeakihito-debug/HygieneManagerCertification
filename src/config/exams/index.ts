@@ -1,7 +1,9 @@
+import { examConfig as boiler2 } from "./boiler2";
 import { examConfig as hygiene } from "./hygiene";
 
 const configs = {
   hygiene,
+  boiler2,
 } as const;
 
 type ExamId = keyof typeof configs;

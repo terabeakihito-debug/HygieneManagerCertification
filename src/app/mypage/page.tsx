@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { LogoutButton } from "@/components/LogoutButton";
+import { currentExam } from "@/config/exams";
 import { isAnonymousUser } from "@/lib/auth/anonymous";
 import { getUnresolvedReviewCount } from "@/lib/data/review";
 import { createClient } from "@/lib/supabase/server";
@@ -39,12 +40,11 @@ export default async function MyPage() {
           <p className="mt-1 font-medium">{user.email}</p>
         </div>
       )}
-      <Link
-        href="/learn"
-        className="btn-secondary"
-      >
-        学習コンテンツを読む
-      </Link>
+      {currentExam.hasLearnContent ? (
+        <Link href="/learn" className="btn-secondary">
+          学習コンテンツを読む
+        </Link>
+      ) : null}
       <Link
         href="/practice"
         className="btn-primary"

@@ -37,21 +37,29 @@ export function ExamDateForm({
         </p>
       ) : null}
 
-      <label className="flex flex-col gap-1 text-sm font-medium">
-        試験区分
-        <select
+      {examTypes.length <= 1 ? (
+        <input
+          type="hidden"
           name="target_exam_type_id"
-          defaultValue={targetExamTypeId ?? ""}
-          className="field-input"
-        >
-          <option value="">未設定</option>
-          {examTypes.map((examType) => (
-            <option key={examType.id} value={examType.id}>
-              {examType.name}
-            </option>
-          ))}
-        </select>
-      </label>
+          value={examTypes[0]?.id ?? ""}
+        />
+      ) : (
+        <label className="flex flex-col gap-1 text-sm font-medium">
+          試験区分
+          <select
+            name="target_exam_type_id"
+            defaultValue={targetExamTypeId ?? ""}
+            className="field-input"
+          >
+            <option value="">未設定</option>
+            {examTypes.map((examType) => (
+              <option key={examType.id} value={examType.id}>
+                {examType.name}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
 
       <label className="flex flex-col gap-1 text-sm font-medium">
         試験日

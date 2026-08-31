@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { TopicCard } from "@/components/learn/TopicCard";
+import { currentExam } from "@/config/exams";
 import {
   LEARN_SECTION_LABEL,
   LEARN_SECTIONS,
@@ -17,6 +18,20 @@ export const metadata: Metadata = {
 };
 
 export default function LearnIndexPage() {
+  if (!currentExam.hasLearnContent) {
+    return (
+      <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-8">
+        <h1 className="text-2xl font-bold">学習コンテンツ</h1>
+        <p className="text-sm text-graphite">
+          この試験の学習コンテンツは、まだ公開していません。問題演習から始めてください。
+        </p>
+        <Link href="/practice" className="underline">
+          問題演習へ
+        </Link>
+      </main>
+    );
+  }
+
   return (
     <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-8 px-4 py-8">
       <div className="flex items-center justify-between gap-4">

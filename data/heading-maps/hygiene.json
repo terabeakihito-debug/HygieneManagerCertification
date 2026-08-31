@@ -1,0 +1,84 @@
+{
+  "examId": "hygiene",
+  "files": [
+    {
+      "path": "data/past-exams/type1_2026-04.txt",
+      "kind": "type1",
+      "examLabel": "第一種衛生管理者試験"
+    },
+    {
+      "path": "data/past-exams/type1_2025-10.txt",
+      "kind": "type1",
+      "examLabel": "第一種衛生管理者試験"
+    },
+    {
+      "path": "data/past-exams/type2_2026-04.txt",
+      "kind": "type2",
+      "examLabel": "第二種衛生管理者試験"
+    },
+    {
+      "path": "data/past-exams/type2_2025-10.txt",
+      "kind": "type2",
+      "examLabel": "第二種衛生管理者試験"
+    }
+  ],
+  "headings": {
+    "type1": {
+      "関係法令（有害業務に係るもの）": {
+        "examTypeCode": "type1",
+        "categoryName": "関係法令(有害業務に係るもの)"
+      },
+      "労働衛生（有害業務に係るもの）": {
+        "examTypeCode": "type1",
+        "categoryName": "労働衛生(有害業務を含む)"
+      },
+      "関係法令（有害業務に係るもの以外のもの）": {
+        "examTypeCode": "type1",
+        "categoryName": "関係法令(有害業務に係るもの以外のもの)"
+      },
+      "労働衛生（有害業務に係るもの以外のもの）": {
+        "examTypeCode": "type1",
+        "categoryName": "労働衛生(有害業務に係るもの以外のもの)"
+      },
+      "労働生理": {
+        "examTypeCode": "common",
+        "categoryName": "労働生理"
+      }
+    },
+    "type2": {
+      "関係法令": {
+        "examTypeCode": "type2",
+        "categoryName": "関係法令(有害業務に係るものを除く)"
+      },
+      "労働衛生": {
+        "examTypeCode": "type2",
+        "categoryName": "労働衛生(有害業務を除く)"
+      },
+      "労働生理": {
+        "examTypeCode": "common",
+        "categoryName": "労働生理"
+      }
+    }
+  },
+  "seedCategories": [
+    { "examTypeCode": "type1", "name": "労働衛生(有害業務を含む)", "sortOrder": 1 },
+    { "examTypeCode": "type2", "name": "労働衛生(有害業務を除く)", "sortOrder": 1 },
+    { "examTypeCode": "type1", "name": "関係法令(有害業務に係るもの)", "sortOrder": 2 },
+    {
+      "examTypeCode": "type2",
+      "name": "関係法令(有害業務に係るものを除く)",
+      "sortOrder": 2
+    },
+    { "examTypeCode": "common", "name": "労働生理", "sortOrder": 3 },
+    {
+      "examTypeCode": "type1",
+      "name": "関係法令(有害業務に係るもの以外のもの)",
+      "sortOrder": 4
+    },
+    {
+      "examTypeCode": "type1",
+      "name": "労働衛生(有害業務に係るもの以外のもの)",
+      "sortOrder": 5
+    }
+  ]
+}
