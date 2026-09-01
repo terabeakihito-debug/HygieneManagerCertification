@@ -381,10 +381,10 @@ export function FireTubeBoilerDiagram() {
       <Label x="87" y="84" fill={graphite} size={11}>
         鏡板
       </Label>
-      <Label x="36" y="352" fill={graphite} size={11} anchor="start">
+      <Label x="48" y="352" fill={graphite} size={11} anchor="start">
         バーナ
       </Label>
-      <Label x="589" y="50" fill={graphite} size={11}>
+      <Label x="589" y="56" fill={graphite} size={11}>
         排気
       </Label>
       <Label x="500" y="366" fill={safety} size={12}>
@@ -407,38 +407,59 @@ export function WaterTubeOnceThroughDiagram() {
         <WaterPattern id="b2-wt-water" />
         <ArrowMarker id="b2-wt-arrow" />
       </defs>
-      <rect x="40" y="70" width="300" height="360" fill={paper} stroke={ink} strokeWidth={strokeMain} />
-      <Highlight x1={56} x2={324} y={84} />
-      <Label x="190" y="100">
+      <rect x="48" y="56" width="292" height="328" rx="8" fill={paper} stroke={ink} strokeWidth={strokeMain} />
+      <Highlight x1={64} x2={324} y={70} />
+      <Label x="194" y="86">
         水管（循環）
       </Label>
-      <rect x="90" y="120" width="200" height="40" fill={graphite} fillOpacity="0.1" stroke={ink} strokeWidth={strokePart} />
-      <Label x="190" y="146" size={12}>
+      <rect
+        x="86"
+        y="104"
+        width="216"
+        height="40"
+        fill={graphite}
+        fillOpacity="0.1"
+        stroke={ink}
+        strokeWidth={strokePart}
+      />
+      <Label x="194" y="130" size={12}>
         蒸気ドラム
       </Label>
-      <path d="M130 160 V360" stroke={graphite} strokeWidth="8" />
-      <path d="M250 160 V360" stroke={amber} strokeWidth="8" />
-      <rect x="100" y="360" width="180" height="36" fill={graphite} fillOpacity="0.16" stroke={ink} strokeWidth={strokePart} />
-      <rect x="100" y="360" width="180" height="36" fill="url(#b2-wt-water)" />
-      <Label x="190" y="384" size={12}>
+      <path d="M130 144 V268" stroke={graphite} strokeWidth="8" />
+      <path d="M258 144 V268" stroke={amber} strokeWidth="8" />
+      <rect
+        x="96"
+        y="268"
+        width="196"
+        height="44"
+        fill={graphite}
+        fillOpacity="0.16"
+        stroke={ink}
+        strokeWidth={strokePart}
+      />
+      <rect x="96" y="268" width="196" height="44" fill="url(#b2-wt-water)" />
+      <Label x="194" y="296" size={12}>
         水ドラム
       </Label>
-      <Flow d="M250 300 V188" marker="b2-wt-arrow" />
-      <rect x="380" y="70" width="300" height="360" fill={paper} stroke={ink} strokeWidth={strokeMain} />
-      <Highlight x1={396} x2={664} y={84} />
-      <Label x="530" y="100">
+      <Flow d="M258 244 V168" marker="b2-wt-arrow" />
+      <rect x="380" y="56" width="292" height="328" rx="8" fill={paper} stroke={ink} strokeWidth={strokeMain} />
+      <Highlight x1={396} x2={656} y={70} />
+      <Label x="526" y="86">
         貫流（一方通行）
       </Label>
-      <path d="M430 400 H630 V160 H470" fill="none" stroke={graphite} strokeWidth="8" />
-      <Flow d="M430 400 H620 V170" marker="b2-wt-arrow" />
-      <Label x="530" y="430" size={12} fill={graphite}>
+      <path d="M452 300 H588 V148" fill="none" stroke={graphite} strokeWidth="8" />
+      <Flow d="M452 300 H576 V162" marker="b2-wt-arrow" />
+      <Label x="460" y="284" size={12} fill={graphite} anchor="start">
         給水
       </Label>
-      <Label x="530" y="150" size={12} fill={safety}>
+      <Label x="526" y="138" size={12} fill={safety}>
         過熱蒸気
       </Label>
-      <Label x="530" y="260" size={12}>
+      <Label x="526" y="230" size={12}>
         ドラムなし
+      </Label>
+      <Label x="360" y="500" fill={graphite} size={12}>
+        水管は循環し、貫流は一方通行でドラムがない
       </Label>
     </SvgBoard>
   );
@@ -529,8 +550,8 @@ export function ManholeFittingsDiagram() {
       <Label x="465" y="220" size={11}>
         水高計
       </Label>
-      <Flow d="M640 200 V80 H560" marker="b2-mh-arrow" />
-      <Label x="600" y="70" size={12} fill={safety}>
+      <Flow d="M628 200 V96 H560" marker="b2-mh-arrow" />
+      <Label x="600" y="72" size={12} fill={safety}>
         逃がし管
       </Label>
       <circle cx="620" cy="300" r="22" fill={paper} stroke={stamp} strokeWidth={strokePart} />
@@ -766,7 +787,7 @@ export function SimpleSofteningDiagram() {
       <Label x="360" y="500">
         処理水量
       </Label>
-      <Label x="40" y="80" anchor="start" size={12}>
+      <Label x="48" y="80" anchor="start" size={12}>
         残留硬度
       </Label>
       <path d="M80 380 H360 C400 378 420 200 520 120 H640" fill="none" stroke={safety} strokeWidth={strokeMain} />
@@ -792,11 +813,11 @@ export function SimpleSofteningDiagram() {
 
 export function LiquidFuelSupplyDiagram() {
   const units = [
-    { x: 40, t: "貯蔵タンク" },
-    { x: 170, t: "サービス" },
-    { x: 300, t: "ストレーナ" },
-    { x: 430, t: "ポンプ" },
-    { x: 560, t: "ヒータ" },
+    { x: 48, t: "貯蔵タンク" },
+    { x: 162, t: "サービス" },
+    { x: 276, t: "ストレーナ" },
+    { x: 390, t: "ポンプ" },
+    { x: 504, t: "ヒータ" },
   ];
 
   return (
@@ -821,7 +842,7 @@ export function LiquidFuelSupplyDiagram() {
       ))}
       <circle cx="640" cy="360" r="28" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Flame x={640} y={354} s={0.85} />
-      <Flow d="M615 240 H640 V328" marker="b2-lf-arrow" />
+      <Flow d="M614 240 H640 V328" marker="b2-lf-arrow" />
       <Label x="640" y="410" size={12}>
         バーナ
       </Label>
@@ -831,9 +852,9 @@ export function LiquidFuelSupplyDiagram() {
 
 export function OilBurnerDiagram() {
   const kinds = [
-    { x: 50, t: "圧力噴霧", n: "油自身の圧力" },
-    { x: 260, t: "空気噴霧", n: "空気で吹き飛ばす" },
-    { x: 470, t: "蒸気噴霧", n: "蒸気で吹き飛ばす" },
+    { x: 48, t: "圧力噴霧", n: "油自身の圧力" },
+    { x: 256, t: "空気噴霧", n: "空気で吹き飛ばす" },
+    { x: 464, t: "蒸気噴霧", n: "蒸気で吹き飛ばす" },
   ];
 
   return (
@@ -889,8 +910,8 @@ export function GasCombustionDiagram() {
       <Label x="190" y="360" size={12} fill={graphite}>
         出してから混ざる
       </Label>
-      <rect x="390" y="100" width="280" height="300" fill={paper} stroke={ink} strokeWidth={strokeMain} />
-      <Highlight x1={406} x2={654} y={114} />
+      <rect x="384" y="100" width="272" height="300" fill={paper} stroke={ink} strokeWidth={strokeMain} />
+      <Highlight x1={400} x2={640} y={114} />
       <Label x="530" y="140">
         予混合
       </Label>
