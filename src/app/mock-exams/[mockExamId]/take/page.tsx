@@ -16,6 +16,7 @@ type TakePageProps = {
 type QuestionRow = {
   id: string;
   question_text: string;
+  figure_url: string | null;
   choices: {
     id: string;
     choice_text: string;
@@ -57,7 +58,7 @@ export default async function MockExamTakePage({
 
   const { data: questionRows } = await supabase
     .from("questions")
-    .select("id, question_text, choices(id, choice_text, sort_order)")
+    .select("id, question_text, figure_url, choices(id, choice_text, sort_order)")
     .eq("exam_id", currentExam.id)
     .in("id", questionIds);
 
@@ -71,6 +72,7 @@ export default async function MockExamTakePage({
       return {
         id: row.id,
         question_text: row.question_text,
+        figure_url: row.figure_url,
         choices: row.choices ?? [],
       };
     })

@@ -23,10 +23,20 @@ export function AnonymousSessionGate() {
         </main>
       );
     case "checking":
-    case "needs-fallback":
       return (
         <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-16">
           <p className="text-sm text-graphite">ゲスト利用の準備をしています…</p>
+        </main>
+      );
+    case "needs-fallback":
+      return (
+        <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-4 px-4 py-16">
+          <p className="text-sm text-graphite">
+            自動確認に時間がかかっています。下のチェックを完了するとゲスト利用を開始します。
+          </p>
+          <Link href="/login" className="text-center text-sm underline">
+            ログインする
+          </Link>
         </main>
       );
     case "error":

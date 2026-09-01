@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { InvisibleTurnstile } from "@/components/auth/InvisibleTurnstile";
@@ -45,6 +46,8 @@ export function useAnonymousAuth(): AnonymousAuthContextValue {
 
 type ChallengeMode = "idle" | "invisible" | "visible";
 
+const INVISIBLE_CHALLENGE_TIMEOUT_MS = 8000;
+
 export function AnonymousAuthProvider({
   children,
 }: {
@@ -57,14 +60,21 @@ export function AnonymousAuthProvider({
   });
   const [challengeMode, setChallengeMode] = useState<ChallengeMode>("idle");
   const [widgetKey, setWidgetKey] = useState(0);
+  const completingRef = useRef(false);
+  const fallbackStartedRef = useRef(false);
 
   const startChallenge = useCallback((mode: ChallengeMode) => {
+    completingRef.current = false;
+    if (mode === "visible") {
+      fallbackStartedRef.current = true;
+    }
     setChallengeMode(mode);
     setWidgetKey((current) => current + 1);
     setStatus(mode === "visible" ? { kind: "needs-fallback" } : { kind: "checking" });
   }, []);
 
   const retry = useCallback(() => {
+    fallbackStartedRef.current = false;
     startChallenge("invisible");
   }, [startChallenge]);
 
@@ -86,8 +96,12 @@ export function AnonymousAuthProvider({
         return;
       }
       if (user) {
+        fallbackStartedRef.current = false;
         setChallengeMode("idle");
         setStatus({ kind: "ready" });
+        return;
+      }
+      if (fallbackStartedRef.current) {
         return;
       }
       startChallenge("invisible");
@@ -99,9 +113,28 @@ export function AnonymousAuthProvider({
     };
   }, [pathname, startChallenge]);
 
+  useEffect(() => {
+    if (status.kind !== "checking") {
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      if (completingRef.current) {
+        return;
+      }
+      startChallenge("visible");
+    }, INVISIBLE_CHALLENGE_TIMEOUT_MS);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [status.kind, challengeMode, widgetKey, startChallenge]);
+
   async function completeWithToken(token: string) {
+    completingRef.current = true;
     const result = await signInAnonymouslyAction(token);
     if (!result.ok) {
+      completingRef.current = false;
       setStatus({ kind: "error", message: result.error });
       setChallengeMode("visible");
       setWidgetKey((current) => current + 1);

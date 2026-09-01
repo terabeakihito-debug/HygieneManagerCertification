@@ -3,6 +3,8 @@ export const TURNSTILE_SCRIPT_SRC =
 
 export const TURNSTILE_SCRIPT_ID = "cloudflare-turnstile";
 
+const TURNSTILE_READY_TIMEOUT_MS = 8000;
+
 export type TurnstileRenderOptions = {
   sitekey: string;
   callback: (token: string) => void;
@@ -101,7 +103,38 @@ export function whenTurnstileReady(): Promise<TurnstileApi> {
   if (api) {
     return Promise.resolve(api);
   }
-  return getPendingLoad().promise;
+
+  const pending = getPendingLoad();
+
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    const timer = window.setTimeout(() => {
+      if (settled) {
+        return;
+      }
+      settled = true;
+      reject(new Error("Turnstile script timed out"));
+    }, TURNSTILE_READY_TIMEOUT_MS);
+
+    pending.promise.then(
+      (ready) => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        window.clearTimeout(timer);
+        resolve(ready);
+      },
+      (error) => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        window.clearTimeout(timer);
+        reject(error);
+      }
+    );
+  });
 }
 
 export function debugAnonymousTurnstileSiteKey(): void {

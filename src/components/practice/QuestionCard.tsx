@@ -15,6 +15,7 @@ export type PracticeChoice = {
 export type PracticeQuestion = {
   id: string;
   question_text: string;
+  figure_url: string | null;
   explanation: string;
   choices: PracticeChoice[];
 };
@@ -152,7 +153,14 @@ export function QuestionCard({
           {index + 1} / {questions.length}
         </p>
       </div>
-      <h2 className="mt-3 text-lg font-semibold leading-relaxed">{question.question_text}</h2>
+      <h2 className="mt-3 whitespace-pre-wrap text-lg font-semibold leading-relaxed">{question.question_text}</h2>
+      {question.figure_url ? (
+        <img
+          src={question.figure_url}
+          alt="設問の図"
+          className="mt-4 w-full border border-hairline bg-paper"
+        />
+      ) : null}
 
       <ul className="mt-5 flex flex-col gap-3">
         {choices.map((choice) => (

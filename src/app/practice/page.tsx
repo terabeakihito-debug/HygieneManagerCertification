@@ -72,7 +72,7 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
   let questionsQuery = supabase
     .from("questions")
     .select(
-      "id, exam_type_id, category_id, question_text, explanation, choices(id, choice_text, is_correct, sort_order)"
+      "id, exam_type_id, category_id, question_text, figure_url, explanation, choices(id, choice_text, is_correct, sort_order)"
     )
     .eq("exam_id", currentExam.id);
 
@@ -90,6 +90,7 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
       .map((row) => ({
         id: row.id as string,
         question_text: row.question_text as string,
+        figure_url: (row.figure_url as string | null) ?? null,
         explanation: row.explanation as string,
         choices: Array.isArray(row.choices) ? row.choices : [],
       }))

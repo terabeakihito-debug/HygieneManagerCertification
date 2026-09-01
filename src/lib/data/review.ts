@@ -27,16 +27,17 @@ type ReviewListQueryRow = {
 
 type ReviewQuestionQueryRow = {
   question_id: string;
-  questions: QuestionJoin<{
-    question_text: string;
-    explanation: string | null;
-    choices: {
-      id: string;
-      choice_text: string;
-      is_correct: boolean;
-      sort_order: number;
-    }[];
-  }>;
+    questions: QuestionJoin<{
+      question_text: string;
+      figure_url: string | null;
+      explanation: string | null;
+      choices: {
+        id: string;
+        choice_text: string;
+        is_correct: boolean;
+        sort_order: number;
+      }[];
+    }>;
 };
 
 function previewText(text: string): string {
@@ -134,7 +135,7 @@ export async function getUnresolvedReviewQuestions(
   const { data, error } = await supabase
     .from("review_list")
     .select(
-      "question_id, questions(id, question_text, explanation, choices(id, choice_text, is_correct, sort_order))"
+      "question_id, questions(id, question_text, figure_url, explanation, choices(id, choice_text, is_correct, sort_order))"
     )
     .eq("user_id", userId)
     .eq("exam_id", currentExam.id)
@@ -157,6 +158,7 @@ export async function getUnresolvedReviewQuestions(
       return {
         id: row.question_id,
         question_text: question.question_text,
+        figure_url: question.figure_url ?? null,
         explanation: question.explanation ?? "",
         choices,
       };

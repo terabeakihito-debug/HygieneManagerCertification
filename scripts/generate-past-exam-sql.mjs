@@ -8,6 +8,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const QUESTION_START = /^問\s*([０-９0-9]+)\s+(.*)$/;
 const SECTION = /^〔(.+)〕$/;
 const CHOICE = /^(○)?（([１-５])）(.*)$/;
+const FIGURE = /^図:\s+(\S+)$/;
 const FULLWIDTH_DIGITS = {
   "０": "0",
   "１": "1",
@@ -103,7 +104,11 @@ function shouldSkipLine(trimmed) {
     trimmed.startsWith("元URL:") ||
     trimmed.startsWith("出典:") ||
     trimmed.startsWith("※") ||
-    trimmed.startsWith("二ボ")
+    trimmed.startsWith("二ボ") ||
+    trimmed.startsWith("クレ・デリ") ||
+    trimmed.startsWith("次の科目の免除者") ||
+    trimmed === "○" ||
+    trimmed.startsWith("（終")
   );
 }
 
@@ -117,6 +122,7 @@ function parseFile(relPath, kind, examLabel, map) {
    *   examTypeCode: string;
    *   categoryName: string;
    *   questionText: string;
+   *   figureUrl: string | null;
    *   choices: Array<{ sortOrder: number; text: string; isCorrect: boolean }>;
    *   sourceNote: string;
    * }>} */
@@ -153,6 +159,7 @@ function parseFile(relPath, kind, examLabel, map) {
       examTypeCode: current.examTypeCode,
       categoryName: current.categoryName,
       questionText: current.questionText,
+      figureUrl: current.figureUrl,
       choices: current.choices,
       sourceNote: `公益財団法人安全衛生技術試験協会 ${publishedAt} ${examLabel} 問${current.number}`,
     });
@@ -185,8 +192,18 @@ function parseFile(relPath, kind, examLabel, map) {
         examTypeCode: mapped.examTypeCode,
         categoryName: mapped.categoryName,
         questionLines: [questionMatch[2]],
+        figureUrl: null,
         choices: [],
       };
+      continue;
+    }
+
+    const figureMatch = trimmed.match(FIGURE);
+    if (figureMatch) {
+      if (!current) {
+        throw new Error(`${relPath}: 問題の外に図指定があります: ${trimmed}`);
+      }
+      current.figureUrl = figureMatch[1];
       continue;
     }
 
@@ -365,7 +382,7 @@ for (const question of allQuestions) {
   const questionId = randomUUID();
   questionCount += 1;
   lines.push(
-    `INSERT INTO questions (id, exam_id, exam_type_id, category_id, question_text, explanation, source_type, source_note)`,
+    `INSERT INTO questions (id, exam_id, exam_type_id, category_id, question_text, explanation, source_type, source_note, figure_url)`,
   );
   lines.push(`VALUES (`);
   lines.push(`  '${questionId}',`);
@@ -377,7 +394,8 @@ for (const question of allQuestions) {
   lines.push(`  ${dollarQuote("q", question.questionText)},`);
   lines.push(`  '(解説は今後追加予定)',`);
   lines.push(`  'past_exam',`);
-  lines.push(`  ${sqlString(question.sourceNote)}`);
+  lines.push(`  ${sqlString(question.sourceNote)},`);
+  lines.push(`  ${question.figureUrl ? sqlString(question.figureUrl) : "NULL"}`);
   lines.push(`);`);
   lines.push("");
 

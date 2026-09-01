@@ -50,6 +50,7 @@ export interface Question {
   explanation: string;
   source_type: SourceType;
   source_note: string | null;
+  figure_url: string | null;
   difficulty: number | null;
   created_at: string;
   updated_at: string;

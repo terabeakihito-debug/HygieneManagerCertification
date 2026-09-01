@@ -13,6 +13,11 @@
 .env.local
 .env.*.local
 
+# local PDF extract (not source of truth)
+data/raw-pdfs/
+scripts/.pdf-extract/node_modules/
+scripts/.crane-batches/
+
 # misc
 .DS_Store
 *.pem

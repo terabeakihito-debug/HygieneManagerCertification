@@ -14,6 +14,8 @@ function learnIndexDescription(): string {
       return "ボイラーの構造・取扱い・燃料及び燃焼・関係法令の図解と表で、試験に出やすいポイントを効率よく学習できます。";
     case "hygiene":
       return "労働生理・労働衛生・関係法令の図解と表で、試験に出やすいポイントを効率よく学習できます。";
+    case "crane_all":
+      return `${currentExam.displayName}の学習コンテンツです。`;
     default: {
       const _never: never = currentExam;
       return _never;
@@ -27,6 +29,8 @@ function learnIndexLead(): string {
       return "問題演習の前に、構造・取扱い・燃料及び燃焼の図解と、関係法令の一覧表で基本を確認できます。";
     case "hygiene":
       return "問題演習の前に、労働生理・労働衛生の図解と、関係法令の一覧表で基本を確認できます。";
+    case "crane_all":
+      return "この試験の学習コンテンツは、まだ公開していません。";
     default: {
       const _never: never = currentExam;
       return _never;
