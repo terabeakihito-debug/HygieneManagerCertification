@@ -550,12 +550,12 @@ export function ManholeFittingsDiagram() {
       <Label x="465" y="220" size={11}>
         水高計
       </Label>
-      <Flow d="M628 200 V96 H560" marker="b2-mh-arrow" />
-      <Label x="600" y="72" size={12} fill={safety}>
+      <Flow d="M600 118 V92 H548" marker="b2-mh-arrow" />
+      <Label x="574" y="80" size={12} fill={safety}>
         逃がし管
       </Label>
-      <circle cx="620" cy="300" r="22" fill={paper} stroke={stamp} strokeWidth={strokePart} />
-      <Label x="620" y="348" size={11} fill={stamp}>
+      <circle cx="575" cy="300" r="22" fill={paper} stroke={stamp} strokeWidth={strokePart} />
+      <Label x="575" y="348" size={11} fill={stamp}>
         逃がし弁
       </Label>
     </SvgBoard>
@@ -812,12 +812,13 @@ export function SimpleSofteningDiagram() {
 }
 
 export function LiquidFuelSupplyDiagram() {
+  const boxW = 100
   const units = [
     { x: 48, t: "貯蔵タンク" },
-    { x: 162, t: "サービス" },
-    { x: 276, t: "ストレーナ" },
-    { x: 390, t: "ポンプ" },
-    { x: 504, t: "ヒータ" },
+    { x: 180, t: "サービス" },
+    { x: 312, t: "ストレーナ" },
+    { x: 444, t: "ポンプ" },
+    { x: 576, t: "ヒータ" },
   ];
 
   return (
@@ -830,20 +831,31 @@ export function LiquidFuelSupplyDiagram() {
       </Label>
       {units.map((item, index) => (
         <g key={item.t}>
-          <rect x={item.x} y="200" width="110" height="80" fill={amber} fillOpacity="0.16" stroke={ink} strokeWidth={strokeMain} />
-          <Rim x={item.x} y={200} width={110} height={80} />
-          <Shade cx={item.x + 24} cy={268} rx={36} ry={16} />
-          <Highlight x1={item.x + 10} x2={item.x + 100} y={212} />
-          <Label x={item.x + 55} y="246" size={12}>
+          <rect
+            x={item.x}
+            y="200"
+            width={boxW}
+            height="80"
+            fill={amber}
+            fillOpacity="0.16"
+            stroke={ink}
+            strokeWidth={strokeMain}
+          />
+          <Rim x={item.x} y={200} width={boxW} height={80} />
+          <Shade cx={item.x + 24} cy={268} rx={32} ry={16} />
+          <Highlight x1={item.x + 10} x2={item.x + 90} y={212} />
+          <Label x={item.x + boxW / 2} y="246" size={12}>
             {item.t}
           </Label>
-          {index < 4 ? <Flow d={`M${item.x + 110} 240 H${item.x + 168}`} marker="b2-lf-arrow" /> : null}
+          {index < 4 ? (
+            <Flow d={`M${item.x + boxW + 8} 240 H${item.x + boxW + 24}`} marker="b2-lf-arrow" />
+          ) : null}
         </g>
       ))}
-      <circle cx="640" cy="360" r="28" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <Flame x={640} y={354} s={0.85} />
-      <Flow d="M614 240 H640 V328" marker="b2-lf-arrow" />
-      <Label x="640" y="410" size={12}>
+      <circle cx="626" cy="370" r="26" fill={paper} stroke={ink} strokeWidth={strokePart} />
+      <Flame x={626} y={364} s={0.8} />
+      <Flow d="M626 280 V340" marker="b2-lf-arrow" />
+      <Label x="626" y="416" size={12}>
         バーナ
       </Label>
     </SvgBoard>
