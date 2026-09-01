@@ -12,13 +12,13 @@ function isExamId(value: string): value is ExamId {
   return value in configs;
 }
 
-const examId = process.env.NEXT_PUBLIC_EXAM_ID ?? "hygiene";
+const examIdRaw: string = process.env.NEXT_PUBLIC_EXAM_ID ?? "hygiene";
 
-if (!isExamId(examId)) {
-  throw new Error(`Unknown NEXT_PUBLIC_EXAM_ID: ${examId}`);
+if (!isExamId(examIdRaw)) {
+  throw new Error(`Unknown NEXT_PUBLIC_EXAM_ID: ${examIdRaw}`);
 }
 
-export const currentExam = configs[examId];
+export const currentExam = configs[examIdRaw];
 
 export function licenseCategoryCodes(): string[] {
   return currentExam.categories.map((category) => category.code);

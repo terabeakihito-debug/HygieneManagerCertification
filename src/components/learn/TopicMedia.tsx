@@ -24,6 +24,8 @@ export function TopicMedia({ topic }: TopicMediaProps) {
           ))}
         </div>
       );
+    case "article":
+      return null;
     default: {
       const _never: never = topic;
       return _never;

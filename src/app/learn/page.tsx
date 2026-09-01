@@ -4,14 +4,39 @@ import { TopicCard } from "@/components/learn/TopicCard";
 import { currentExam } from "@/config/exams";
 import {
   LEARN_SECTION_LABEL,
-  LEARN_SECTIONS,
+  getLearnSections,
   getLearnTopicsBySection,
 } from "@/lib/data/learn-content";
 
+function learnIndexDescription(): string {
+  switch (currentExam.id) {
+    case "boiler2":
+      return "ボイラーの構造・取扱い・燃料及び燃焼・関係法令の図解と表で、試験に出やすいポイントを効率よく学習できます。";
+    case "hygiene":
+      return "労働生理・労働衛生・関係法令の図解と表で、試験に出やすいポイントを効率よく学習できます。";
+    default: {
+      const _never: never = currentExam;
+      return _never;
+    }
+  }
+}
+
+function learnIndexLead(): string {
+  switch (currentExam.id) {
+    case "boiler2":
+      return "問題演習の前に、構造・取扱い・燃料及び燃焼の図解と、関係法令の一覧表で基本を確認できます。";
+    case "hygiene":
+      return "問題演習の前に、労働生理・労働衛生の図解と、関係法令の一覧表で基本を確認できます。";
+    default: {
+      const _never: never = currentExam;
+      return _never;
+    }
+  }
+}
+
 export const metadata: Metadata = {
   title: "学習コンテンツ一覧",
-  description:
-    "労働生理・労働衛生・関係法令の図解と表で、試験に出やすいポイントを効率よく学習できます。",
+  description: learnIndexDescription(),
   alternates: {
     canonical: "/learn",
   },
@@ -46,11 +71,9 @@ export default function LearnIndexPage() {
         </div>
       </div>
 
-      <p className="text-sm text-graphite">
-        問題演習の前に、労働生理・労働衛生の図解と、関係法令の一覧表で基本を確認できます。
-      </p>
+      <p className="text-sm text-graphite">{learnIndexLead()}</p>
 
-      {LEARN_SECTIONS.map((section) => (
+      {getLearnSections().map((section) => (
         <section key={section} className="flex flex-col gap-3">
           <h2 className="text-lg font-semibold">{LEARN_SECTION_LABEL[section]}</h2>
           <div className="grid gap-4 sm:grid-cols-2">

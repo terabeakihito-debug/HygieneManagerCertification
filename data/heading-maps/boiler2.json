@@ -7,6 +7,11 @@
       "path": "data/past-exams/boiler2_2025-10.txt",
       "kind": "common",
       "examLabel": "二級ボイラー技士試験"
+    },
+    {
+      "path": "data/past-exams/boiler2_2026-04.txt",
+      "kind": "common",
+      "examLabel": "二級ボイラー技士試験"
     }
   ],
   "headings": {

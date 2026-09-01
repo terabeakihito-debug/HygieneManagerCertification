@@ -1,11 +1,22 @@
 import { currentExam } from "@/config/exams";
+import {
+  BOILER2_ARTICLE_TOPIC_IDS,
+  BOILER2_DIAGRAM_TOPIC_IDS,
+  BOILER2_LEARN_SECTIONS,
+  BOILER2_LEARN_TOPICS,
+  BOILER2_TABLE_TOPIC_IDS,
+} from "@/lib/data/learn/boiler2-topics";
 import { createClient } from "@/lib/supabase/server";
 
-export const LEARN_SECTIONS = ["physiology", "hygiene", "law"] as const;
+export const HYGIENE_LEARN_SECTIONS = ["physiology", "hygiene", "law"] as const;
+export const LEARN_SECTIONS = HYGIENE_LEARN_SECTIONS;
+export const BOILER2_SECTIONS = BOILER2_LEARN_SECTIONS;
 
-export type LearnSection = (typeof LEARN_SECTIONS)[number];
+export type LearnSection =
+  | (typeof HYGIENE_LEARN_SECTIONS)[number]
+  | (typeof BOILER2_LEARN_SECTIONS)[number];
 
-export const LEARN_CONTENT_TYPES = ["diagram", "table"] as const;
+export const LEARN_CONTENT_TYPES = ["diagram", "table", "article"] as const;
 
 export type LearnContentType = (typeof LEARN_CONTENT_TYPES)[number];
 
@@ -44,10 +55,18 @@ export const TABLE_TOPIC_IDS = [
 export const LEARN_TOPIC_IDS = [
   ...DIAGRAM_TOPIC_IDS,
   ...TABLE_TOPIC_IDS,
+  ...BOILER2_DIAGRAM_TOPIC_IDS,
+  ...BOILER2_TABLE_TOPIC_IDS,
+  ...BOILER2_ARTICLE_TOPIC_IDS,
 ] as const;
 
-export type DiagramLearnTopicId = (typeof DIAGRAM_TOPIC_IDS)[number];
-export type TableLearnTopicId = (typeof TABLE_TOPIC_IDS)[number];
+export type DiagramLearnTopicId =
+  | (typeof DIAGRAM_TOPIC_IDS)[number]
+  | (typeof BOILER2_DIAGRAM_TOPIC_IDS)[number];
+export type TableLearnTopicId =
+  | (typeof TABLE_TOPIC_IDS)[number]
+  | (typeof BOILER2_TABLE_TOPIC_IDS)[number];
+export type ArticleLearnTopicId = (typeof BOILER2_ARTICLE_TOPIC_IDS)[number];
 export type LearnTopicId = (typeof LEARN_TOPIC_IDS)[number];
 
 export type LearnTable = {
@@ -76,12 +95,17 @@ export type TableLearnTopic = LearnTopicBase & {
   tables: LearnTable[];
 };
 
-export type LearnTopic = DiagramLearnTopic | TableLearnTopic;
+export type ArticleLearnTopic = LearnTopicBase & {
+  id: ArticleLearnTopicId;
+  contentType: "article";
+};
+
+export type LearnTopic = DiagramLearnTopic | TableLearnTopic | ArticleLearnTopic;
 
 export const LEARN_LAW_NOTE =
   "詳細は最新の法令を必ず確認してください。";
 
-export const LEARN_TOPICS: LearnTopic[] = [
+const HYGIENE_LEARN_TOPICS: LearnTopic[] = [
   {
     id: "heart-circulation",
     section: "physiology",
@@ -558,14 +582,24 @@ A測定は、作業場全体の濃度の分布を見る測定です。単位作�
   },
 ];
 
+export const LEARN_TOPICS: LearnTopic[] =
+  currentExam.id === "boiler2" ? BOILER2_LEARN_TOPICS : HYGIENE_LEARN_TOPICS;
+
 export const LEARN_SECTION_LABEL: Record<LearnSection, string> = {
   physiology: "労働生理",
   hygiene: "労働衛生",
   law: "関係法令",
+  structure: "ボイラーの構造に関する知識",
+  handling: "ボイラーの取扱いに関する知識",
+  fuel: "燃料及び燃焼に関する知識",
 };
 
+export function getLearnSections(): readonly LearnSection[] {
+  return currentExam.id === "boiler2" ? BOILER2_LEARN_SECTIONS : HYGIENE_LEARN_SECTIONS;
+}
+
 export function isLearnTopicId(value: string): value is LearnTopicId {
-  return LEARN_TOPIC_IDS.some((id) => id === value);
+  return LEARN_TOPICS.some((topic) => topic.id === value);
 }
 
 export function getLearnTopic(topicId: string): LearnTopic | null {
@@ -580,7 +614,12 @@ export function getLearnTopicsBySection(section: LearnSection): LearnTopic[] {
 }
 
 export function getDiagramFigureNumber(topicId: DiagramLearnTopicId): number {
-  return DIAGRAM_TOPIC_IDS.indexOf(topicId) + 1;
+  if (currentExam.id === "boiler2") {
+    const index = (BOILER2_DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
+    return index >= 0 ? index + 1 : 1;
+  }
+  const index = (DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
+  return index >= 0 ? index + 1 : 1;
 }
 
 export function getTablePlateNumber(

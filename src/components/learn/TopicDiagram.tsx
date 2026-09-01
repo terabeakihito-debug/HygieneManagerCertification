@@ -1,3 +1,4 @@
+import * as Boiler2Diagrams from "@/components/learn/diagrams/boiler2/Boiler2Diagrams";
 import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
 import { BloodCompositionDiagram } from "@/components/learn/diagrams/BloodCompositionDiagram";
 import { DigestiveSystemDiagram } from "@/components/learn/diagrams/DigestiveSystemDiagram";
@@ -20,17 +21,65 @@ import { ThermoregulationDiagram } from "@/components/learn/diagrams/Thermoregul
 import { WBGTDiagram } from "@/components/learn/diagrams/WBGTDiagram";
 import { WorkEnvironmentMeasurementDiagram } from "@/components/learn/diagrams/WorkEnvironmentMeasurementDiagram";
 import { PlateFrame } from "@/components/learn/PlateFrame";
+import { BOILER2_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/boiler2-topics";
 import {
+  DIAGRAM_TOPIC_IDS,
   getDiagramFigureNumber,
   getLearnTopic,
   type DiagramLearnTopicId,
 } from "@/lib/data/learn-content";
+
+const BOILER2_DIAGRAMS = {
+  WaterCirculationDiagram: Boiler2Diagrams.WaterCirculationDiagram,
+  HeatingSurfaceDiagram: Boiler2Diagrams.HeatingSurfaceDiagram,
+  FireTubeBoilerDiagram: Boiler2Diagrams.FireTubeBoilerDiagram,
+  WaterTubeOnceThroughDiagram: Boiler2Diagrams.WaterTubeOnceThroughDiagram,
+  CastIronHartfordDiagram: Boiler2Diagrams.CastIronHartfordDiagram,
+  ManholeFittingsDiagram: Boiler2Diagrams.ManholeFittingsDiagram,
+  SteamTrapDiagram: Boiler2Diagrams.SteamTrapDiagram,
+  TemperatureControllerDiagram: Boiler2Diagrams.TemperatureControllerDiagram,
+  StartupValvesDiagram: Boiler2Diagrams.StartupValvesDiagram,
+  GaugeGlassDiagram: Boiler2Diagrams.GaugeGlassDiagram,
+  SafetyValveLeakDiagram: Boiler2Diagrams.SafetyValveLeakDiagram,
+  SimpleSofteningDiagram: Boiler2Diagrams.SimpleSofteningDiagram,
+  LiquidFuelSupplyDiagram: Boiler2Diagrams.LiquidFuelSupplyDiagram,
+  OilBurnerDiagram: Boiler2Diagrams.OilBurnerDiagram,
+  GasCombustionDiagram: Boiler2Diagrams.GasCombustionDiagram,
+  PrimarySecondaryAirDiagram: Boiler2Diagrams.PrimarySecondaryAirDiagram,
+  DraftFanDiagram: Boiler2Diagrams.DraftFanDiagram,
+  BoilerRoomClearanceDiagram: Boiler2Diagrams.BoilerRoomClearanceDiagram,
+} as const;
+
+function isHygieneDiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof DIAGRAM_TOPIC_IDS)[number] {
+  return (DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
+
+function isBoiler2DiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof BOILER2_DIAGRAM_TOPIC_IDS)[number] {
+  return (BOILER2_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
 
 type TopicDiagramProps = {
   topicId: DiagramLearnTopicId;
 };
 
 function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
+  if (isBoiler2DiagramId(topicId)) {
+    const topic = getLearnTopic(topicId);
+    if (!topic || topic.contentType !== "diagram") {
+      return null;
+    }
+    const Diagram = BOILER2_DIAGRAMS[topic.diagram as keyof typeof BOILER2_DIAGRAMS];
+    return Diagram ? <Diagram /> : null;
+  }
+
+  if (!isHygieneDiagramId(topicId)) {
+    return null;
+  }
+
   switch (topicId) {
     case "heart-circulation":
       return <HeartCirculationDiagram />;
