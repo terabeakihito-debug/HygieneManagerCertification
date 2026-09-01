@@ -22,5 +22,11 @@ export const ink = "#14211A";
 export const safety = "#1F6E45";
 export const graphite = "#4B4F49";
 export const amber = "#C9932B";
+export const stamp = "#B23A2E";
 export const hairline = "#D8D6CB";
 export const paper = "#F1F1EC";
+
+export const strokeMain = 3.5;
+export const strokePart = 2;
+export const strokeGuide = 1.25;
+export const shadeOpacity = 0.12;
