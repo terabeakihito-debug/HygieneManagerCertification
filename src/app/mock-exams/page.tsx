@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { currentExam } from "@/config/exams";
+import { mockExamAudienceNote } from "@/lib/mock-exam";
 import { createClient } from "@/lib/supabase/server";
 
 type MockExamRow = {
@@ -8,6 +9,7 @@ type MockExamRow = {
   name: string;
   time_limit_minutes: number;
   question_count: number;
+  category_scope: string[] | null;
   exam_types: { name: string } | { name: string }[] | null;
 };
 
@@ -30,7 +32,7 @@ export default async function MockExamsPage() {
 
   const { data } = await supabase
     .from("mock_exams")
-    .select("id, name, time_limit_minutes, question_count, exam_types(name)")
+    .select("id, name, time_limit_minutes, question_count, category_scope, exam_types(name)")
     .eq("exam_id", currentExam.id)
     .order("name");
 
@@ -59,7 +61,12 @@ export default async function MockExamsPage() {
         </p>
       ) : (
         <ul className="flex flex-col gap-3">
-          {exams.map((exam) => (
+          {exams.map((exam) => {
+            const audienceNote = mockExamAudienceNote({
+              examId: currentExam.id,
+              categoryScope: exam.category_scope,
+            });
+            return (
             <li
               key={exam.id}
               className="card-surface p-4"
@@ -69,6 +76,9 @@ export default async function MockExamsPage() {
               <p className="mt-2 text-sm text-graphite">
                 制限時間 {exam.time_limit_minutes}分 / {exam.question_count}問
               </p>
+              {audienceNote ? (
+                <p className="mt-2 text-sm text-graphite">{audienceNote}</p>
+              ) : null}
               <Link
                 href={`/mock-exams/${exam.id}/start`}
                 className="btn-primary mt-4 text-sm"
@@ -76,7 +86,8 @@ export default async function MockExamsPage() {
                 この模試を受ける
               </Link>
             </li>
-          ))}
+            );
+          })}
         </ul>
       )}
     </main>

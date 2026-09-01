@@ -6,6 +6,11 @@ import { StampBadge } from "@/components/ui/StampBadge";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
 import { getRecommendedProductsForUser } from "@/lib/data/recommendations";
 import { currentExam } from "@/config/exams";
+import {
+  CATEGORY_PASS_PERCENT,
+  OVERALL_PASS_PERCENT,
+  didPassMockExam,
+} from "@/lib/mock-exam";
 import { createClient } from "@/lib/supabase/server";
 
 type ResultPageProps = {
@@ -17,7 +22,6 @@ type CategoryRow = {
   name: string;
 };
 
-const PASS_LINE_PERCENT = 60;
 const ACHIEVED_PERCENT = 80;
 
 function formatTakenAt(value: string): string {
@@ -99,9 +103,16 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
   const weakPercent = Math.round(WEAK_ACCURACY_THRESHOLD * 100);
   const recommendedProducts = await getRecommendedProductsForUser(user.id);
   const overallRate = questionTotal > 0 ? result.score / questionTotal : 0;
-  const passed = overallRate >= 0.6;
+  const passed = didPassMockExam({
+    score: result.score,
+    questionCount: questionTotal,
+    categoryPercents: breakdown,
+  });
   const thisPercent = Math.round(overallRate * 100);
-  const delta = thisPercent - PASS_LINE_PERCENT;
+  const delta = thisPercent - OVERALL_PASS_PERCENT;
+  const belowCategoryPass = categoryIds.some(
+    (categoryId) => (breakdown[categoryId] ?? 0) < CATEGORY_PASS_PERCENT
+  );
 
   return (
     <main className="mx-auto flex min-h-[100dvh] max-w-2xl flex-col gap-10 px-4 py-8">
@@ -132,8 +143,13 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
           </p>
           <p className="font-mono text-2xl tabular-nums">{thisPercent}%</p>
           <p className="font-mono text-sm tabular-nums text-graphite">
-            合格ライン {PASS_LINE_PERCENT}% / 今回 {thisPercent}%
+            合格ライン 合計{OVERALL_PASS_PERCENT}%・各科目{CATEGORY_PASS_PERCENT}% / 今回 {thisPercent}%
           </p>
+          {belowCategoryPass ? (
+            <p className="text-sm text-stamp">
+              科目ごとの合格ライン（{CATEGORY_PASS_PERCENT}%）を下回った科目があります。
+            </p>
+          ) : null}
           <p className={`font-mono text-sm tabular-nums ${deltaClassName(delta)}`}>
             {formatDelta(delta)}
           </p>
@@ -160,6 +176,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
               {categoryIds.map((categoryId) => {
                 const rate = breakdown[categoryId] ?? 0;
                 const weak = rate < weakPercent;
+                const belowSubjectPass = rate < CATEGORY_PASS_PERCENT;
                 const achieved = rate >= ACHIEVED_PERCENT;
 
                 return (
@@ -182,6 +199,11 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
                       <p className="font-medium">
                         {categoryNames.get(categoryId) ?? "不明な分野"}
                       </p>
+                      {belowSubjectPass ? (
+                        <p className="mt-1 text-xs text-stamp">
+                          科目合格ライン（{CATEGORY_PASS_PERCENT}%）未満
+                        </p>
+                      ) : null}
                       {weak ? (
                         <>
                           <p className="mt-1 text-xs text-stamp">苦手分野</p>

@@ -121,6 +121,7 @@ export interface MockExam {
   time_limit_minutes: number;
   question_count: number;
   source_filter: string;
+  category_scope: string[] | null;
 }
 
 export interface MockExamResult {

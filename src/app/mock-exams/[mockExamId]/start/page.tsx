@@ -28,7 +28,7 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
 
   const { data: mockExam } = await supabase
     .from("mock_exams")
-    .select("id, question_count, source_filter")
+    .select("id, question_count, source_filter, category_scope")
     .eq("id", mockExamId)
     .eq("exam_id", currentExam.id)
     .maybeSingle();
@@ -37,12 +37,29 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
     redirect("/mock-exams");
   }
 
-  const { data: questionRows } = await supabase
+  let questionQuery = supabase
     .from("questions")
     .select("id, source_note")
     .eq("exam_id", currentExam.id)
     .eq("source_type", "past_exam")
     .ilike("source_note", `%${mockExam.source_filter}%`);
+
+  const categoryScope = mockExam.category_scope;
+  if (categoryScope && categoryScope.length > 0) {
+    const { data: categories } = await supabase
+      .from("categories")
+      .select("id")
+      .eq("exam_id", currentExam.id)
+      .in("name", categoryScope);
+
+    const categoryIds = (categories ?? []).map((row) => row.id);
+    if (categoryIds.length !== categoryScope.length) {
+      redirect("/mock-exams");
+    }
+    questionQuery = questionQuery.in("category_id", categoryIds);
+  }
+
+  const { data: questionRows } = await questionQuery;
 
   const selected = [...(questionRows ?? [])].sort(
     (left, right) => questionNumber(left.source_note) - questionNumber(right.source_note)
