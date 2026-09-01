@@ -119,6 +119,7 @@ export interface MockExam {
   name: string;
   time_limit_minutes: number;
   question_count: number;
+  source_filter: string;
 }
 
 export interface MockExamResult {

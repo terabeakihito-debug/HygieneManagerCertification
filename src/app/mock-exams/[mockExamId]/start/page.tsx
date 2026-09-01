@@ -7,15 +7,12 @@ type StartPageProps = {
   params: Promise<{ mockExamId: string }>;
 };
 
-function shuffle<T>(items: T[]): T[] {
-  const next = [...items];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const current = next[i];
-    next[i] = next[j] as T;
-    next[j] = current as T;
+function questionNumber(sourceNote: string | null): number {
+  const match = sourceNote?.match(/問(\d+)\s*$/);
+  if (!match) {
+    return Number.MAX_SAFE_INTEGER;
   }
-  return next;
+  return Number(match[1]);
 }
 
 export default async function MockExamStartPage({ params }: StartPageProps) {
@@ -31,7 +28,7 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
 
   const { data: mockExam } = await supabase
     .from("mock_exams")
-    .select("id, exam_type_id, question_count")
+    .select("id, question_count, source_filter")
     .eq("id", mockExamId)
     .eq("exam_id", currentExam.id)
     .maybeSingle();
@@ -42,11 +39,19 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
 
   const { data: questionRows } = await supabase
     .from("questions")
-    .select("id")
+    .select("id, source_note")
     .eq("exam_id", currentExam.id)
-    .eq("exam_type_id", mockExam.exam_type_id);
+    .eq("source_type", "past_exam")
+    .ilike("source_note", `%${mockExam.source_filter}%`);
 
-  const selected = shuffle(questionRows ?? []).slice(0, mockExam.question_count);
+  const selected = [...(questionRows ?? [])].sort(
+    (left, right) => questionNumber(left.source_note) - questionNumber(right.source_note)
+  );
+
+  if (selected.length !== mockExam.question_count) {
+    redirect("/mock-exams");
+  }
+
   const ids = selected.map((row) => row.id).join(",");
 
   redirect(`/mock-exams/${mockExamId}/take?ids=${ids}`);

@@ -72,7 +72,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
 
   const { data: mockExam } = await supabase
     .from("mock_exams")
-    .select("id, name, question_count, exam_type_id")
+    .select("id, name, question_count")
     .eq("id", mockExamId)
     .eq("exam_id", currentExam.id)
     .maybeSingle();
@@ -81,13 +81,7 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
     redirect("/mock-exams");
   }
 
-  const { count: availableCount } = await supabase
-    .from("questions")
-    .select("id", { count: "exact", head: true })
-    .eq("exam_id", currentExam.id)
-    .eq("exam_type_id", mockExam.exam_type_id);
-
-  const questionTotal = Math.min(mockExam.question_count, availableCount ?? mockExam.question_count);
+  const questionTotal = mockExam.question_count;
   const breakdown = (result.category_breakdown ?? {}) as Record<string, number>;
   const categoryIds = Object.keys(breakdown);
 
