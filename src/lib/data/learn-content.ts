@@ -12,6 +12,12 @@ import {
   CRANE_ALL_LEARN_SECTIONS,
   CRANE_ALL_LEARN_TOPICS,
 } from "@/lib/data/learn/crane-all-topics";
+import {
+  MOBILE_CRANE_ARTICLE_TOPIC_IDS,
+  MOBILE_CRANE_DIAGRAM_TOPIC_IDS,
+  MOBILE_CRANE_LEARN_SECTIONS,
+  MOBILE_CRANE_LEARN_TOPICS,
+} from "@/lib/data/learn/mobile-crane-topics";
 import { createClient } from "@/lib/supabase/server";
 
 export const HYGIENE_LEARN_SECTIONS = ["physiology", "hygiene", "law"] as const;
@@ -19,11 +25,13 @@ export const LEARN_SECTIONS = HYGIENE_LEARN_SECTIONS;
 export const BOILER2_SECTIONS = BOILER2_LEARN_SECTIONS;
 
 export const CRANE_ALL_SECTIONS = CRANE_ALL_LEARN_SECTIONS;
+export const MOBILE_CRANE_SECTIONS = MOBILE_CRANE_LEARN_SECTIONS;
 
 export type LearnSection =
   | (typeof HYGIENE_LEARN_SECTIONS)[number]
   | (typeof BOILER2_LEARN_SECTIONS)[number]
-  | (typeof CRANE_ALL_LEARN_SECTIONS)[number];
+  | (typeof CRANE_ALL_LEARN_SECTIONS)[number]
+  | (typeof MOBILE_CRANE_LEARN_SECTIONS)[number];
 
 export const LEARN_CONTENT_TYPES = ["diagram", "table", "article"] as const;
 
@@ -69,18 +77,22 @@ export const LEARN_TOPIC_IDS = [
   ...BOILER2_ARTICLE_TOPIC_IDS,
   ...CRANE_ALL_DIAGRAM_TOPIC_IDS,
   ...CRANE_ALL_ARTICLE_TOPIC_IDS,
+  ...MOBILE_CRANE_DIAGRAM_TOPIC_IDS,
+  ...MOBILE_CRANE_ARTICLE_TOPIC_IDS,
 ] as const;
 
 export type DiagramLearnTopicId =
   | (typeof DIAGRAM_TOPIC_IDS)[number]
   | (typeof BOILER2_DIAGRAM_TOPIC_IDS)[number]
-  | (typeof CRANE_ALL_DIAGRAM_TOPIC_IDS)[number];
+  | (typeof CRANE_ALL_DIAGRAM_TOPIC_IDS)[number]
+  | (typeof MOBILE_CRANE_DIAGRAM_TOPIC_IDS)[number];
 export type TableLearnTopicId =
   | (typeof TABLE_TOPIC_IDS)[number]
   | (typeof BOILER2_TABLE_TOPIC_IDS)[number];
 export type ArticleLearnTopicId =
   | (typeof BOILER2_ARTICLE_TOPIC_IDS)[number]
-  | (typeof CRANE_ALL_ARTICLE_TOPIC_IDS)[number];
+  | (typeof CRANE_ALL_ARTICLE_TOPIC_IDS)[number]
+  | (typeof MOBILE_CRANE_ARTICLE_TOPIC_IDS)[number];
 export type LearnTopicId = (typeof LEARN_TOPIC_IDS)[number];
 
 export type LearnTable = {
@@ -603,7 +615,7 @@ function learnTopicsForCurrentExam(): LearnTopic[] {
     case "crane_all":
       return CRANE_ALL_LEARN_TOPICS;
     case "mobile_crane":
-      return [];
+      return MOBILE_CRANE_LEARN_TOPICS;
     case "hygiene":
       return HYGIENE_LEARN_TOPICS;
     default: {
@@ -625,6 +637,8 @@ export const LEARN_SECTION_LABEL: Record<LearnSection, string> = {
   crane: "クレーン及びデリックに関する知識",
   electricity: "原動機及び電気に関する知識",
   mechanics: "クレーンの運転のために必要な力学に関する知識",
+  mobile: "移動式クレーンに関する知識",
+  mobile_mechanics: "移動式クレーンの運転のために必要な力学に関する知識",
 };
 
 export function getLearnSections(): readonly LearnSection[] {
@@ -634,7 +648,7 @@ export function getLearnSections(): readonly LearnSection[] {
     case "crane_all":
       return CRANE_ALL_LEARN_SECTIONS;
     case "mobile_crane":
-      return [];
+      return MOBILE_CRANE_LEARN_SECTIONS;
     case "hygiene":
       return HYGIENE_LEARN_SECTIONS;
     default: {
@@ -666,6 +680,10 @@ export function getDiagramFigureNumber(topicId: DiagramLearnTopicId): number {
   }
   if (currentExam.id === "crane_all") {
     const index = (CRANE_ALL_DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
+    return index >= 0 ? index + 1 : 1;
+  }
+  if (currentExam.id === "mobile_crane") {
+    const index = (MOBILE_CRANE_DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
     return index >= 0 ? index + 1 : 1;
   }
   const index = (DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);

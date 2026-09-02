@@ -1,5 +1,6 @@
 import * as Boiler2Diagrams from "@/components/learn/diagrams/boiler2/Boiler2Diagrams";
 import * as CraneDiagrams from "@/components/learn/diagrams/crane/CraneDiagrams";
+import * as MobileCraneDiagrams from "@/components/learn/diagrams/mobile_crane/MobileCraneDiagrams";
 import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
 import { BloodCompositionDiagram } from "@/components/learn/diagrams/BloodCompositionDiagram";
 import { DigestiveSystemDiagram } from "@/components/learn/diagrams/DigestiveSystemDiagram";
@@ -24,6 +25,7 @@ import { WorkEnvironmentMeasurementDiagram } from "@/components/learn/diagrams/W
 import { PlateFrame } from "@/components/learn/PlateFrame";
 import { BOILER2_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/boiler2-topics";
 import { CRANE_ALL_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/crane-all-topics";
+import { MOBILE_CRANE_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/mobile-crane-topics";
 import {
   DIAGRAM_TOPIC_IDS,
   getDiagramFigureNumber,
@@ -74,6 +76,25 @@ const CRANE_DIAGRAMS = {
   StressStrainDiagram: CraneDiagrams.StressStrainDiagram,
 } as const;
 
+const MOBILE_CRANE_DIAGRAMS = {
+  MobileTypesModelsDiagram: MobileCraneDiagrams.MobileTypesModelsDiagram,
+  MobileTermsDimensionsDiagram: MobileCraneDiagrams.MobileTermsDimensionsDiagram,
+  MobileCrawlerUndercarriageDiagram: MobileCraneDiagrams.MobileCrawlerUndercarriageDiagram,
+  MobileUpperSlewDiagram: MobileCraneDiagrams.MobileUpperSlewDiagram,
+  MobileHoistClutchBrakeDiagram: MobileCraneDiagrams.MobileHoistClutchBrakeDiagram,
+  MobileWireRopeLayDiagram: MobileCraneDiagrams.MobileWireRopeLayDiagram,
+  MobileRatedLoadTableDiagram: MobileCraneDiagrams.MobileRatedLoadTableDiagram,
+  MobileWorkAreaStabilityDiagram: MobileCraneDiagrams.MobileWorkAreaStabilityDiagram,
+  MobilePascalPrincipleDiagram: MobileCraneDiagrams.MobilePascalPrincipleDiagram,
+  MobileHydraulicActuatorsDiagram: MobileCraneDiagrams.MobileHydraulicActuatorsDiagram,
+  MobileHydraulicValvesDiagram: MobileCraneDiagrams.MobileHydraulicValvesDiagram,
+  MobileForceCompositionMomentDiagram: MobileCraneDiagrams.MobileForceCompositionMomentDiagram,
+  MobileBalanceBeamDiagram: MobileCraneDiagrams.MobileBalanceBeamDiagram,
+  MobileCenterOfGravityStabilityDiagram: MobileCraneDiagrams.MobileCenterOfGravityStabilityDiagram,
+  MobileSlingAngleTensionDiagram: MobileCraneDiagrams.MobileSlingAngleTensionDiagram,
+  MobilePulleyPrincipleDiagram: MobileCraneDiagrams.MobilePulleyPrincipleDiagram,
+} as const;
+
 function isHygieneDiagramId(
   topicId: DiagramLearnTopicId
 ): topicId is (typeof DIAGRAM_TOPIC_IDS)[number] {
@@ -92,11 +113,26 @@ function isCraneDiagramId(
   return (CRANE_ALL_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
 }
 
+function isMobileCraneDiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof MOBILE_CRANE_DIAGRAM_TOPIC_IDS)[number] {
+  return (MOBILE_CRANE_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
+
 type TopicDiagramProps = {
   topicId: DiagramLearnTopicId;
 };
 
 function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
+  if (isMobileCraneDiagramId(topicId)) {
+    const topic = getLearnTopic(topicId);
+    if (!topic || topic.contentType !== "diagram") {
+      return null;
+    }
+    const Diagram = MOBILE_CRANE_DIAGRAMS[topic.diagram as keyof typeof MOBILE_CRANE_DIAGRAMS];
+    return Diagram ? <Diagram /> : null;
+  }
+
   if (isCraneDiagramId(topicId)) {
     const topic = getLearnTopic(topicId);
     if (!topic || topic.contentType !== "diagram") {

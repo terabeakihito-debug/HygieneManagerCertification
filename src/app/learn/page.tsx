@@ -17,7 +17,7 @@ function learnIndexDescription(): string {
     case "crane_all":
       return "クレーン及びデリックに関する知識・関係法令・原動機及び電気・力学の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     case "mobile_crane":
-      return "移動式クレーンに関する知識・原動機及び電気・関係法令・力学の学習コンテンツは、準備中です。";
+      return "移動式クレーンに関する知識・原動機及び電気・関係法令・力学の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     default: {
       const _never: never = currentExam;
       return _never;
@@ -34,7 +34,7 @@ function learnIndexLead(): string {
     case "crane_all":
       return "問題演習の前に、クレーンとデリックの構造、関係法令、電気、力学の図解で基本を確認できます。";
     case "mobile_crane":
-      return "この試験の学習コンテンツは、まだ公開していません。問題演習から始めてください。";
+      return "問題演習の前に、移動式クレーンの構造、油圧、関係法令、力学の図解で基本を確認できます。";
     default: {
       const _never: never = currentExam;
       return _never;

@@ -6,7 +6,7 @@ export const examConfig = {
   organization: "公益財団法人安全衛生技術試験協会",
   aboutNavLabel: "移動式クレーン運転士とは",
   hasPracticalExam: true,
-  hasLearnContent: false,
+  hasLearnContent: true,
   heroDescription: [
     "移動式クレーン運転士試験の",
     "合格を目指す学習・演習サービス。",
