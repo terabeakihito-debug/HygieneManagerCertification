@@ -1,4 +1,5 @@
 import * as Boiler2Diagrams from "@/components/learn/diagrams/boiler2/Boiler2Diagrams";
+import * as CraneDiagrams from "@/components/learn/diagrams/crane/CraneDiagrams";
 import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
 import { BloodCompositionDiagram } from "@/components/learn/diagrams/BloodCompositionDiagram";
 import { DigestiveSystemDiagram } from "@/components/learn/diagrams/DigestiveSystemDiagram";
@@ -22,6 +23,7 @@ import { WBGTDiagram } from "@/components/learn/diagrams/WBGTDiagram";
 import { WorkEnvironmentMeasurementDiagram } from "@/components/learn/diagrams/WorkEnvironmentMeasurementDiagram";
 import { PlateFrame } from "@/components/learn/PlateFrame";
 import { BOILER2_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/boiler2-topics";
+import { CRANE_ALL_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/crane-all-topics";
 import {
   DIAGRAM_TOPIC_IDS,
   getDiagramFigureNumber,
@@ -50,6 +52,28 @@ const BOILER2_DIAGRAMS = {
   BoilerRoomClearanceDiagram: Boiler2Diagrams.BoilerRoomClearanceDiagram,
 } as const;
 
+const CRANE_DIAGRAMS = {
+  CraneTypesStructureDiagram: CraneDiagrams.CraneTypesStructureDiagram,
+  DerrickTypesStructureDiagram: CraneDiagrams.DerrickTypesStructureDiagram,
+  WireRopeStructureDiagram: CraneDiagrams.WireRopeStructureDiagram,
+  LiftingGearFastenersDiagram: CraneDiagrams.LiftingGearFastenersDiagram,
+  HoistAndBrakeDiagram: CraneDiagrams.HoistAndBrakeDiagram,
+  CraneStabilityDiagram: CraneDiagrams.CraneStabilityDiagram,
+  TravelSlewLuffDiagram: CraneDiagrams.TravelSlewLuffDiagram,
+  AcDcWaveformDiagram: CraneDiagrams.AcDcWaveformDiagram,
+  MotorTypesDiagram: CraneDiagrams.MotorTypesDiagram,
+  OhmLawCircuitDiagram: CraneDiagrams.OhmLawCircuitDiagram,
+  GroundingDiagram: CraneDiagrams.GroundingDiagram,
+  PowerTransmissionDiagram: CraneDiagrams.PowerTransmissionDiagram,
+  ForceCompositionDiagram: CraneDiagrams.ForceCompositionDiagram,
+  MomentOfForceDiagram: CraneDiagrams.MomentOfForceDiagram,
+  CenterOfGravityDiagram: CraneDiagrams.CenterOfGravityDiagram,
+  FrictionDiagram: CraneDiagrams.FrictionDiagram,
+  PulleyPrincipleDiagram: CraneDiagrams.PulleyPrincipleDiagram,
+  LeverPrincipleDiagram: CraneDiagrams.LeverPrincipleDiagram,
+  StressStrainDiagram: CraneDiagrams.StressStrainDiagram,
+} as const;
+
 function isHygieneDiagramId(
   topicId: DiagramLearnTopicId
 ): topicId is (typeof DIAGRAM_TOPIC_IDS)[number] {
@@ -62,11 +86,26 @@ function isBoiler2DiagramId(
   return (BOILER2_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
 }
 
+function isCraneDiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof CRANE_ALL_DIAGRAM_TOPIC_IDS)[number] {
+  return (CRANE_ALL_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
+
 type TopicDiagramProps = {
   topicId: DiagramLearnTopicId;
 };
 
 function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
+  if (isCraneDiagramId(topicId)) {
+    const topic = getLearnTopic(topicId);
+    if (!topic || topic.contentType !== "diagram") {
+      return null;
+    }
+    const Diagram = CRANE_DIAGRAMS[topic.diagram as keyof typeof CRANE_DIAGRAMS];
+    return Diagram ? <Diagram /> : null;
+  }
+
   if (isBoiler2DiagramId(topicId)) {
     const topic = getLearnTopic(topicId);
     if (!topic || topic.contentType !== "diagram") {

@@ -15,7 +15,7 @@ function learnIndexDescription(): string {
     case "hygiene":
       return "労働生理・労働衛生・関係法令の図解と表で、試験に出やすいポイントを効率よく学習できます。";
     case "crane_all":
-      return `${currentExam.displayName}の学習コンテンツです。`;
+      return "クレーン及びデリックに関する知識・関係法令・原動機及び電気・力学の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     default: {
       const _never: never = currentExam;
       return _never;
@@ -30,7 +30,7 @@ function learnIndexLead(): string {
     case "hygiene":
       return "問題演習の前に、労働生理・労働衛生の図解と、関係法令の一覧表で基本を確認できます。";
     case "crane_all":
-      return "この試験の学習コンテンツは、まだ公開していません。";
+      return "問題演習の前に、クレーンとデリックの構造、関係法令、電気、力学の図解で基本を確認できます。";
     default: {
       const _never: never = currentExam;
       return _never;
