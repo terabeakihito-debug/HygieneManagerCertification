@@ -7,6 +7,11 @@
       "path": "data/past-exams/mobile_crane_2025-10.txt",
       "kind": "common",
       "examLabel": "移動式クレーン運転士試験"
+    },
+    {
+      "path": "data/past-exams/mobile_crane_2026-04.txt",
+      "kind": "common",
+      "examLabel": "移動式クレーン運転士試験"
     }
   ],
   "headings": {
