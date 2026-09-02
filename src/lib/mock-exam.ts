@@ -1,10 +1,16 @@
 export const OVERALL_PASS_PERCENT = 60;
 export const CATEGORY_PASS_PERCENT = 40;
 
-const KNOWLEDGE = "クレーン及びデリックに関する知識";
-const LAW = "関係法令";
-const MOTOR = "原動機及び電気に関する知識";
-const MECHANICS = "クレーンの運転のために必要な力学に関する知識";
+const CRANE_KNOWLEDGE = "クレーン及びデリックに関する知識";
+const CRANE_LAW = "関係法令";
+const CRANE_MOTOR = "原動機及び電気に関する知識";
+const CRANE_MECHANICS = "クレーンの運転のために必要な力学に関する知識";
+
+const MOBILE_KNOWLEDGE = "移動式クレーンに関する知識";
+const MOBILE_MOTOR = "原動機及び電気に関する知識";
+const MOBILE_LAW = "関係法令";
+const MOBILE_MECHANICS =
+  "移動式クレーンの運転のために必要な力学に関する知識";
 
 export function didPassMockExam(input: {
   score: number;
@@ -28,6 +34,21 @@ export function mockExamAudienceNote(input: {
   examId: string;
   categoryScope: string[] | null;
 }): string | null {
+  if (input.examId === "mobile_crane") {
+    const scope = input.categoryScope;
+    if (!scope || scope.length === 0) {
+      return "免除なしの方向け。4科目40問です。";
+    }
+    const names = new Set(scope);
+    const hasKnowledge = names.has(MOBILE_KNOWLEDGE);
+    const hasMotor = names.has(MOBILE_MOTOR);
+    const hasLaw = names.has(MOBILE_LAW);
+    const hasMechanics = names.has(MOBILE_MECHANICS);
+    if (hasKnowledge && hasMotor && hasLaw && !hasMechanics) {
+      return "実務経験により力学が免除される方向け。知識・原動機及び電気・法令の30問です。";
+    }
+    return "出題科目を絞り込んだ模試です。";
+  }
   if (input.examId !== "crane_all") {
     return null;
   }
@@ -36,10 +57,10 @@ export function mockExamAudienceNote(input: {
     return "免除なしの方向け。4科目40問です。";
   }
   const names = new Set(scope);
-  const hasKnowledge = names.has(KNOWLEDGE);
-  const hasLaw = names.has(LAW);
-  const hasMotor = names.has(MOTOR);
-  const hasMechanics = names.has(MECHANICS);
+  const hasKnowledge = names.has(CRANE_KNOWLEDGE);
+  const hasLaw = names.has(CRANE_LAW);
+  const hasMotor = names.has(CRANE_MOTOR);
+  const hasMechanics = names.has(CRANE_MECHANICS);
   if (hasKnowledge && hasLaw && hasMotor && !hasMechanics) {
     return "実務経験により力学が免除される方向け。知識・法令・原動機及び電気の30問です。";
   }

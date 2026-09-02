@@ -602,6 +602,8 @@ function learnTopicsForCurrentExam(): LearnTopic[] {
       return BOILER2_LEARN_TOPICS;
     case "crane_all":
       return CRANE_ALL_LEARN_TOPICS;
+    case "mobile_crane":
+      return [];
     case "hygiene":
       return HYGIENE_LEARN_TOPICS;
     default: {
@@ -631,6 +633,8 @@ export function getLearnSections(): readonly LearnSection[] {
       return BOILER2_LEARN_SECTIONS;
     case "crane_all":
       return CRANE_ALL_LEARN_SECTIONS;
+    case "mobile_crane":
+      return [];
     case "hygiene":
       return HYGIENE_LEARN_SECTIONS;
     default: {
