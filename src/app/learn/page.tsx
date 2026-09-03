@@ -20,7 +20,7 @@ function learnIndexDescription(): string {
     case "mobile_crane":
       return "移動式クレーンに関する知識・原動機及び電気・関係法令・力学の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     case "xray":
-      return "エックス線作業主任者試験の学習コンテンツは、準備中です。";
+      return "エックス線の発生と遮蔽、関係法令、測定、生体影響の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     default: {
       const _never: never = currentExam;
       return _never;
