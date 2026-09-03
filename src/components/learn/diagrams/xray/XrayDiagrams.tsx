@@ -229,14 +229,19 @@ export function XrayControlledAreaDistanceDiagram() {
 }
 
 export function XrayGasDetectorCurveDiagram() {
-  const points = "80,360 150,300 260,270 390,210 520,150 620,80";
   return (
     <SvgBoard alt="印加電圧と電離電流の特性曲線">
       <path d="M80 400 V80 M80 400 H660" fill="none" stroke={ink} strokeWidth={strokePart} />
-      <path d={points} fill="none" stroke={safety} strokeWidth="3" />
+      <path
+        d="M80 360 L150 300 L260 270 L390 210 L520 150 L620 80"
+        fill="none"
+        stroke={safety}
+        strokeWidth="3"
+      />
       <path d="M150 400 V300 M260 400 V270 M390 400 V210 M520 400 V150" stroke={hairline} strokeWidth={strokeGuide} />
       <Label x="370" y="430">印加電圧</Label>
       <Label x="46" y="90" size={12} anchor="start">電流</Label>
+      <Label x="115" y="455" size={12} fill={graphite}>再結合</Label>
       <Label x="205" y="455" size={12} fill={graphite}>電離箱</Label>
       <Label x="325" y="455" size={12} fill={graphite}>比例</Label>
       <Label x="455" y="455" size={12} fill={graphite}>GM</Label>
