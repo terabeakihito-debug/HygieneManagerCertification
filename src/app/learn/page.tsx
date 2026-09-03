@@ -22,7 +22,7 @@ function learnIndexDescription(): string {
     case "xray":
       return "エックス線の発生と遮蔽、関係法令、測定、生体影響の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     case "diver":
-      return "潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の解説で、試験に出やすいポイントを効率よく学習できます。";
+      return "潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     default: {
       const _never: never = currentExam;
       return _never;
@@ -43,7 +43,7 @@ function learnIndexLead(): string {
     case "xray":
       return "問題演習の前に、エックス線の発生と遮蔽、関係法令、測定、生体影響の解説で基本を確認できます。";
     case "diver":
-      return "問題演習の前に、潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の解説で基本を確認できます。";
+      return "問題演習の前に、潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の図解と解説で基本を確認できます。";
     default: {
       const _never: never = currentExam;
       return _never;
