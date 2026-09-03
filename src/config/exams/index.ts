@@ -2,12 +2,14 @@ import { examConfig as boiler2 } from "./boiler2";
 import { examConfig as crane_all } from "./crane_all";
 import { examConfig as hygiene } from "./hygiene";
 import { examConfig as mobile_crane } from "./mobile_crane";
+import { examConfig as xray } from "./xray";
 
 const configs = {
   hygiene,
   boiler2,
   crane_all,
   mobile_crane,
+  xray,
 } as const;
 
 type ExamId = keyof typeof configs;

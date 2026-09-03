@@ -107,6 +107,8 @@ function shouldSkipLine(trimmed) {
     trimmed.startsWith("二ボ") ||
     trimmed.startsWith("クレ・デリ") ||
     trimmed.startsWith("次の科目の免除者") ||
+    trimmed.startsWith("次の科目が免除") ||
+    trimmed.includes("は解答しないでください") ||
     trimmed === "○" ||
     trimmed.startsWith("（終")
   );
