@@ -38,7 +38,7 @@ function learnIndexLead(): string {
     case "mobile_crane":
       return "問題演習の前に、移動式クレーンの構造、油圧、関係法令、力学の図解で基本を確認できます。";
     case "xray":
-      return "この試験の学習コンテンツは、まだ公開していません。問題演習から始めてください。";
+      return "問題演習の前に、エックス線の発生と遮蔽、関係法令、測定、生体影響の解説で基本を確認できます。";
     default: {
       const _never: never = currentExam;
       return _never;

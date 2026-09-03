@@ -18,6 +18,12 @@ import {
   MOBILE_CRANE_LEARN_SECTIONS,
   MOBILE_CRANE_LEARN_TOPICS,
 } from "@/lib/data/learn/mobile-crane-topics";
+import {
+  XRAY_ARTICLE_TOPIC_IDS,
+  XRAY_DIAGRAM_TOPIC_IDS,
+  XRAY_LEARN_SECTIONS,
+  XRAY_LEARN_TOPICS,
+} from "@/lib/data/learn/xray-topics";
 import { createClient } from "@/lib/supabase/server";
 
 export const HYGIENE_LEARN_SECTIONS = ["physiology", "hygiene", "law"] as const;
@@ -26,12 +32,14 @@ export const BOILER2_SECTIONS = BOILER2_LEARN_SECTIONS;
 
 export const CRANE_ALL_SECTIONS = CRANE_ALL_LEARN_SECTIONS;
 export const MOBILE_CRANE_SECTIONS = MOBILE_CRANE_LEARN_SECTIONS;
+export const XRAY_SECTIONS = XRAY_LEARN_SECTIONS;
 
 export type LearnSection =
   | (typeof HYGIENE_LEARN_SECTIONS)[number]
   | (typeof BOILER2_LEARN_SECTIONS)[number]
   | (typeof CRANE_ALL_LEARN_SECTIONS)[number]
-  | (typeof MOBILE_CRANE_LEARN_SECTIONS)[number];
+  | (typeof MOBILE_CRANE_LEARN_SECTIONS)[number]
+  | (typeof XRAY_LEARN_SECTIONS)[number];
 
 export const LEARN_CONTENT_TYPES = ["diagram", "table", "article"] as const;
 
@@ -79,20 +87,24 @@ export const LEARN_TOPIC_IDS = [
   ...CRANE_ALL_ARTICLE_TOPIC_IDS,
   ...MOBILE_CRANE_DIAGRAM_TOPIC_IDS,
   ...MOBILE_CRANE_ARTICLE_TOPIC_IDS,
+  ...XRAY_DIAGRAM_TOPIC_IDS,
+  ...XRAY_ARTICLE_TOPIC_IDS,
 ] as const;
 
 export type DiagramLearnTopicId =
   | (typeof DIAGRAM_TOPIC_IDS)[number]
   | (typeof BOILER2_DIAGRAM_TOPIC_IDS)[number]
   | (typeof CRANE_ALL_DIAGRAM_TOPIC_IDS)[number]
-  | (typeof MOBILE_CRANE_DIAGRAM_TOPIC_IDS)[number];
+  | (typeof MOBILE_CRANE_DIAGRAM_TOPIC_IDS)[number]
+  | (typeof XRAY_DIAGRAM_TOPIC_IDS)[number];
 export type TableLearnTopicId =
   | (typeof TABLE_TOPIC_IDS)[number]
   | (typeof BOILER2_TABLE_TOPIC_IDS)[number];
 export type ArticleLearnTopicId =
   | (typeof BOILER2_ARTICLE_TOPIC_IDS)[number]
   | (typeof CRANE_ALL_ARTICLE_TOPIC_IDS)[number]
-  | (typeof MOBILE_CRANE_ARTICLE_TOPIC_IDS)[number];
+  | (typeof MOBILE_CRANE_ARTICLE_TOPIC_IDS)[number]
+  | (typeof XRAY_ARTICLE_TOPIC_IDS)[number];
 export type LearnTopicId = (typeof LEARN_TOPIC_IDS)[number];
 
 export type LearnTable = {
@@ -619,7 +631,7 @@ function learnTopicsForCurrentExam(): LearnTopic[] {
     case "hygiene":
       return HYGIENE_LEARN_TOPICS;
     case "xray":
-      return [];
+      return XRAY_LEARN_TOPICS;
     default: {
       const _never: never = currentExam;
       return _never;
@@ -641,6 +653,9 @@ export const LEARN_SECTION_LABEL: Record<LearnSection, string> = {
   mechanics: "クレーンの運転のために必要な力学に関する知識",
   mobile: "移動式クレーンに関する知識",
   mobile_mechanics: "移動式クレーンの運転のために必要な力学に関する知識",
+  xray_management: "エックス線の管理に関する知識",
+  xray_measurement: "エックス線の測定に関する知識",
+  xray_biology: "エックス線の生体に与える影響に関する知識",
 };
 
 export function getLearnSections(): readonly LearnSection[] {
@@ -654,7 +669,7 @@ export function getLearnSections(): readonly LearnSection[] {
     case "hygiene":
       return HYGIENE_LEARN_SECTIONS;
     case "xray":
-      return [];
+      return XRAY_LEARN_SECTIONS;
     default: {
       const _never: never = currentExam;
       return _never;
@@ -688,6 +703,10 @@ export function getDiagramFigureNumber(topicId: DiagramLearnTopicId): number {
   }
   if (currentExam.id === "mobile_crane") {
     const index = (MOBILE_CRANE_DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
+    return index >= 0 ? index + 1 : 1;
+  }
+  if (currentExam.id === "xray") {
+    const index = (XRAY_DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
     return index >= 0 ? index + 1 : 1;
   }
   const index = (DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
