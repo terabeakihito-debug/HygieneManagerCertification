@@ -1,6 +1,7 @@
 import * as Boiler2Diagrams from "@/components/learn/diagrams/boiler2/Boiler2Diagrams";
 import * as CraneDiagrams from "@/components/learn/diagrams/crane/CraneDiagrams";
 import * as MobileCraneDiagrams from "@/components/learn/diagrams/mobile_crane/MobileCraneDiagrams";
+import * as DiverDiagrams from "@/components/learn/diagrams/diver/DiverDiagrams";
 import * as XrayDiagrams from "@/components/learn/diagrams/xray/XrayDiagrams";
 import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
 import { BloodCompositionDiagram } from "@/components/learn/diagrams/BloodCompositionDiagram";
@@ -27,6 +28,7 @@ import { PlateFrame } from "@/components/learn/PlateFrame";
 import { BOILER2_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/boiler2-topics";
 import { CRANE_ALL_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/crane-all-topics";
 import { MOBILE_CRANE_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/mobile-crane-topics";
+import { DIVER_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/diver-topics";
 import { XRAY_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/xray-topics";
 import {
   DIAGRAM_TOPIC_IDS,
@@ -115,6 +117,20 @@ const XRAY_DIAGRAMS = {
   XrayBloodCellChangeDiagram: XrayDiagrams.XrayBloodCellChangeDiagram,
 } as const;
 
+const DIVER_DIAGRAMS = {
+  DiverBoyleBalloonDiagram: DiverDiagrams.DiverBoyleBalloonDiagram,
+  DiverDiveMethodsDiagram: DiverDiagrams.DiverDiveMethodsDiagram,
+  DiverBlowUpFallDiagram: DiverDiagrams.DiverBlowUpFallDiagram,
+  DiverBottomTimeDiagram: DiverDiagrams.DiverBottomTimeDiagram,
+  DiverMValueDiagram: DiverDiagrams.DiverMValueDiagram,
+  DiverHelmetPartsDiagram: DiverDiagrams.DiverHelmetPartsDiagram,
+  DiverLungPleuraDiagram: DiverDiagrams.DiverLungPleuraDiagram,
+  DiverHeartCirculationDiagram: DiverDiagrams.DiverHeartCirculationDiagram,
+  DiverBarotraumaDiagram: DiverDiagrams.DiverBarotraumaDiagram,
+  DiverEarSinusDiagram: DiverDiagrams.DiverEarSinusDiagram,
+  DiverAirSupplyDepthDiagram: DiverDiagrams.DiverAirSupplyDepthDiagram,
+} as const;
+
 function isHygieneDiagramId(
   topicId: DiagramLearnTopicId
 ): topicId is (typeof DIAGRAM_TOPIC_IDS)[number] {
@@ -139,6 +155,12 @@ function isMobileCraneDiagramId(
   return (MOBILE_CRANE_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
 }
 
+function isDiverDiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof DIVER_DIAGRAM_TOPIC_IDS)[number] {
+  return (DIVER_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
+
 function isXrayDiagramId(
   topicId: DiagramLearnTopicId
 ): topicId is (typeof XRAY_DIAGRAM_TOPIC_IDS)[number] {
@@ -150,6 +172,15 @@ type TopicDiagramProps = {
 };
 
 function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
+  if (isDiverDiagramId(topicId)) {
+    const topic = getLearnTopic(topicId);
+    if (!topic || topic.contentType !== "diagram") {
+      return null;
+    }
+    const Diagram = DIVER_DIAGRAMS[topic.diagram as keyof typeof DIVER_DIAGRAMS];
+    return Diagram ? <Diagram /> : null;
+  }
+
   if (isXrayDiagramId(topicId)) {
     const topic = getLearnTopic(topicId);
     if (!topic || topic.contentType !== "diagram") {
