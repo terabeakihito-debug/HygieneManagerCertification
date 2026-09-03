@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LearnContentDisclaimer } from "@/components/learn/LearnContentDisclaimer";
 import { TopicCard } from "@/components/learn/TopicCard";
 import { currentExam } from "@/config/exams";
 import {
@@ -83,7 +84,10 @@ export default function LearnIndexPage() {
         </div>
       </div>
 
-      <p className="text-sm text-graphite">{learnIndexLead()}</p>
+      <div className="flex flex-col gap-3">
+        <p className="text-sm text-graphite">{learnIndexLead()}</p>
+        <LearnContentDisclaimer />
+      </div>
 
       {getLearnSections().map((section) => (
         <section key={section} className="flex flex-col gap-3">
