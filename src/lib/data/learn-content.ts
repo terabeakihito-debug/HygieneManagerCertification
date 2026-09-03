@@ -618,6 +618,8 @@ function learnTopicsForCurrentExam(): LearnTopic[] {
       return MOBILE_CRANE_LEARN_TOPICS;
     case "hygiene":
       return HYGIENE_LEARN_TOPICS;
+    case "xray":
+      return [];
     default: {
       const _never: never = currentExam;
       return _never;
@@ -651,6 +653,8 @@ export function getLearnSections(): readonly LearnSection[] {
       return MOBILE_CRANE_LEARN_SECTIONS;
     case "hygiene":
       return HYGIENE_LEARN_SECTIONS;
+    case "xray":
+      return [];
     default: {
       const _never: never = currentExam;
       return _never;

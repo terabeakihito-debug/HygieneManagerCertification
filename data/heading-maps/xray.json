@@ -1,0 +1,59 @@
+{
+  "examId": "xray",
+  "defaultKind": "common",
+  "defaultExamTypeCode": "common",
+  "files": [
+    {
+      "path": "data/past-exams/xray_2025-10.txt",
+      "kind": "common",
+      "examLabel": "エックス線作業主任者試験"
+    },
+    {
+      "path": "data/past-exams/xray_2026-04.txt",
+      "kind": "common",
+      "examLabel": "エックス線作業主任者試験"
+    }
+  ],
+  "headings": {
+    "common": {
+      "エックス線の管理に関する知識": "エックス線の管理に関する知識",
+      "関係法令": "関係法令",
+      "エックス線の測定に関する知識": "エックス線の測定に関する知識",
+      "エックス線の生体に与える影響に関する知識": "エックス線の生体に与える影響に関する知識"
+    }
+  },
+  "masters": {
+    "exam": {
+      "id": "xray",
+      "name": "エックス線作業主任者",
+      "organization": "公益財団法人安全衛生技術試験協会",
+      "hasPracticalExam": false
+    },
+    "examTypes": [{ "code": "common", "name": "エックス線作業主任者" }],
+    "examCategories": [
+      {
+        "code": "common",
+        "label": "エックス線作業主任者",
+        "displayOrder": 1
+      }
+    ]
+  },
+  "seedCategories": [
+    {
+      "examTypeCode": "common",
+      "name": "エックス線の管理に関する知識",
+      "sortOrder": 1
+    },
+    { "examTypeCode": "common", "name": "関係法令", "sortOrder": 2 },
+    {
+      "examTypeCode": "common",
+      "name": "エックス線の測定に関する知識",
+      "sortOrder": 3
+    },
+    {
+      "examTypeCode": "common",
+      "name": "エックス線の生体に与える影響に関する知識",
+      "sortOrder": 4
+    }
+  ]
+}

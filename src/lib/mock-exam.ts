@@ -12,6 +12,11 @@ const MOBILE_LAW = "関係法令";
 const MOBILE_MECHANICS =
   "移動式クレーンの運転のために必要な力学に関する知識";
 
+const XRAY_MANAGEMENT = "エックス線の管理に関する知識";
+const XRAY_LAW = "関係法令";
+const XRAY_MEASUREMENT = "エックス線の測定に関する知識";
+const XRAY_BIOLOGY = "エックス線の生体に与える影響に関する知識";
+
 export function didPassMockExam(input: {
   score: number;
   questionCount: number;
@@ -34,6 +39,24 @@ export function mockExamAudienceNote(input: {
   examId: string;
   categoryScope: string[] | null;
 }): string | null {
+  if (input.examId === "xray") {
+    const scope = input.categoryScope;
+    if (!scope || scope.length === 0) {
+      return "免除なしの方向け。4科目40問です。";
+    }
+    const names = new Set(scope);
+    const hasManagement = names.has(XRAY_MANAGEMENT);
+    const hasLaw = names.has(XRAY_LAW);
+    const hasMeasurement = names.has(XRAY_MEASUREMENT);
+    const hasBiology = names.has(XRAY_BIOLOGY);
+    if (hasManagement && hasLaw && hasMeasurement && !hasBiology) {
+      return "ガンマ線透過写真撮影作業主任者試験の合格等により生体影響が免除される方向け。管理・法令・測定の30問です。";
+    }
+    if (hasManagement && hasLaw && !hasMeasurement && !hasBiology) {
+      return "第二種放射線取扱主任者免状により測定と生体影響が免除される方向け。管理・法令の20問です。";
+    }
+    return "出題科目を絞り込んだ模試です。";
+  }
   if (input.examId === "mobile_crane") {
     const scope = input.categoryScope;
     if (!scope || scope.length === 0) {
