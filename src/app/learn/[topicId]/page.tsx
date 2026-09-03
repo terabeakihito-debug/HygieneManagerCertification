@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { LearnContentDisclaimer } from "@/components/learn/LearnContentDisclaimer";
 import { TopicMedia } from "@/components/learn/TopicMedia";
 import { currentExam } from "@/config/exams";
 import {
@@ -55,6 +56,7 @@ export default async function LearnTopicPage({ params }: LearnTopicPageProps) {
 
   const practiceHref = await getPracticeHrefForCategory(topic.categoryName);
   const paragraphs = topic.body.split("\n\n");
+  const hasMedia = topic.contentType !== "article";
 
   return (
     <main className="mx-auto flex min-h-screen max-w-2xl flex-col gap-6 px-4 py-8">
@@ -73,6 +75,7 @@ export default async function LearnTopicPage({ params }: LearnTopicPageProps) {
       </header>
 
       <TopicMedia topic={topic} />
+      {hasMedia ? <LearnContentDisclaimer /> : null}
 
       <article className="flex flex-col gap-4 text-sm leading-7 text-ink">
         {paragraphs.map((paragraph) => (
@@ -88,6 +91,7 @@ export default async function LearnTopicPage({ params }: LearnTopicPageProps) {
           この分野の問題を演習する
         </Link>
       </div>
+      {hasMedia ? null : <LearnContentDisclaimer />}
     </main>
   );
 }

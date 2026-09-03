@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { LearnContentDisclaimer } from "@/components/learn/LearnContentDisclaimer";
 import { TopicCard } from "@/components/learn/TopicCard";
 import { currentExam } from "@/config/exams";
 import {
@@ -19,7 +20,7 @@ function learnIndexDescription(): string {
     case "mobile_crane":
       return "移動式クレーンに関する知識・原動機及び電気・関係法令・力学の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     case "xray":
-      return "エックス線作業主任者試験の学習コンテンツは、準備中です。";
+      return "エックス線の発生と遮蔽、関係法令、測定、生体影響の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     default: {
       const _never: never = currentExam;
       return _never;
@@ -38,7 +39,7 @@ function learnIndexLead(): string {
     case "mobile_crane":
       return "問題演習の前に、移動式クレーンの構造、油圧、関係法令、力学の図解で基本を確認できます。";
     case "xray":
-      return "この試験の学習コンテンツは、まだ公開していません。問題演習から始めてください。";
+      return "問題演習の前に、エックス線の発生と遮蔽、関係法令、測定、生体影響の解説で基本を確認できます。";
     default: {
       const _never: never = currentExam;
       return _never;
@@ -83,7 +84,10 @@ export default function LearnIndexPage() {
         </div>
       </div>
 
-      <p className="text-sm text-graphite">{learnIndexLead()}</p>
+      <div className="flex flex-col gap-3">
+        <p className="text-sm text-graphite">{learnIndexLead()}</p>
+        <LearnContentDisclaimer />
+      </div>
 
       {getLearnSections().map((section) => (
         <section key={section} className="flex flex-col gap-3">

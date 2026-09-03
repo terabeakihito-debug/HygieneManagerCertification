@@ -1,6 +1,7 @@
 import * as Boiler2Diagrams from "@/components/learn/diagrams/boiler2/Boiler2Diagrams";
 import * as CraneDiagrams from "@/components/learn/diagrams/crane/CraneDiagrams";
 import * as MobileCraneDiagrams from "@/components/learn/diagrams/mobile_crane/MobileCraneDiagrams";
+import * as XrayDiagrams from "@/components/learn/diagrams/xray/XrayDiagrams";
 import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
 import { BloodCompositionDiagram } from "@/components/learn/diagrams/BloodCompositionDiagram";
 import { DigestiveSystemDiagram } from "@/components/learn/diagrams/DigestiveSystemDiagram";
@@ -26,6 +27,7 @@ import { PlateFrame } from "@/components/learn/PlateFrame";
 import { BOILER2_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/boiler2-topics";
 import { CRANE_ALL_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/crane-all-topics";
 import { MOBILE_CRANE_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/mobile-crane-topics";
+import { XRAY_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/xray-topics";
 import {
   DIAGRAM_TOPIC_IDS,
   getDiagramFigureNumber,
@@ -95,6 +97,24 @@ const MOBILE_CRANE_DIAGRAMS = {
   MobilePulleyPrincipleDiagram: MobileCraneDiagrams.MobilePulleyPrincipleDiagram,
 } as const;
 
+const XRAY_DIAGRAMS = {
+  XrayTubeStructureDiagram: XrayDiagrams.XrayTubeStructureDiagram,
+  XrayCharacteristicKSeriesDiagram: XrayDiagrams.XrayCharacteristicKSeriesDiagram,
+  XrayInteractionsDiagram: XrayDiagrams.XrayInteractionsDiagram,
+  XrayScatterAnglesDiagram: XrayDiagrams.XrayScatterAnglesDiagram,
+  XrayShieldThicknessDiagram: XrayDiagrams.XrayShieldThicknessDiagram,
+  XrayControlledAreaDistanceDiagram: XrayDiagrams.XrayControlledAreaDistanceDiagram,
+  XrayGasDetectorCurveDiagram: XrayDiagrams.XrayGasDetectorCurveDiagram,
+  XrayGmPlateauDiagram: XrayDiagrams.XrayGmPlateauDiagram,
+  XrayScintillationDiagram: XrayDiagrams.XrayScintillationDiagram,
+  XrayEffectiveDosePlacementDiagram: XrayDiagrams.XrayEffectiveDosePlacementDiagram,
+  XrayCalibrationInterpolationDiagram: XrayDiagrams.XrayCalibrationInterpolationDiagram,
+  XrayTissueSensitivityDiagram: XrayDiagrams.XrayTissueSensitivityDiagram,
+  XrayArsDoseDiagram: XrayDiagrams.XrayArsDoseDiagram,
+  XrayRbeLetDiagram: XrayDiagrams.XrayRbeLetDiagram,
+  XrayBloodCellChangeDiagram: XrayDiagrams.XrayBloodCellChangeDiagram,
+} as const;
+
 function isHygieneDiagramId(
   topicId: DiagramLearnTopicId
 ): topicId is (typeof DIAGRAM_TOPIC_IDS)[number] {
@@ -119,11 +139,26 @@ function isMobileCraneDiagramId(
   return (MOBILE_CRANE_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
 }
 
+function isXrayDiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof XRAY_DIAGRAM_TOPIC_IDS)[number] {
+  return (XRAY_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
+
 type TopicDiagramProps = {
   topicId: DiagramLearnTopicId;
 };
 
 function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
+  if (isXrayDiagramId(topicId)) {
+    const topic = getLearnTopic(topicId);
+    if (!topic || topic.contentType !== "diagram") {
+      return null;
+    }
+    const Diagram = XRAY_DIAGRAMS[topic.diagram as keyof typeof XRAY_DIAGRAMS];
+    return Diagram ? <Diagram /> : null;
+  }
+
   if (isMobileCraneDiagramId(topicId)) {
     const topic = getLearnTopic(topicId);
     if (!topic || topic.contentType !== "diagram") {
