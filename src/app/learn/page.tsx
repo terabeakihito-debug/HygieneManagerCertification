@@ -21,6 +21,8 @@ function learnIndexDescription(): string {
       return "移動式クレーンに関する知識・原動機及び電気・関係法令・力学の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     case "xray":
       return "エックス線の発生と遮蔽、関係法令、測定、生体影響の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
+    case "diver":
+      return "潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の解説で、試験に出やすいポイントを効率よく学習できます。";
     default: {
       const _never: never = currentExam;
       return _never;
@@ -40,6 +42,8 @@ function learnIndexLead(): string {
       return "問題演習の前に、移動式クレーンの構造、油圧、関係法令、力学の図解で基本を確認できます。";
     case "xray":
       return "問題演習の前に、エックス線の発生と遮蔽、関係法令、測定、生体影響の解説で基本を確認できます。";
+    case "diver":
+      return "問題演習の前に、潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の解説で基本を確認できます。";
     default: {
       const _never: never = currentExam;
       return _never;

@@ -632,6 +632,8 @@ function learnTopicsForCurrentExam(): LearnTopic[] {
       return HYGIENE_LEARN_TOPICS;
     case "xray":
       return XRAY_LEARN_TOPICS;
+    case "diver":
+      return [];
     default: {
       const _never: never = currentExam;
       return _never;
@@ -670,6 +672,8 @@ export function getLearnSections(): readonly LearnSection[] {
       return HYGIENE_LEARN_SECTIONS;
     case "xray":
       return XRAY_LEARN_SECTIONS;
+    case "diver":
+      return [];
     default: {
       const _never: never = currentExam;
       return _never;
