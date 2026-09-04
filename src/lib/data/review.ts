@@ -1,4 +1,5 @@
 import { currentExam } from "@/config/exams";
+import { VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 import type { PracticeQuestion } from "@/components/practice/QuestionCard";
 
@@ -79,10 +80,11 @@ export async function getUnresolvedReviewCount(userId: string): Promise<number> 
   const supabase = await createClient();
   const { count, error } = await supabase
     .from("review_list")
-    .select("id", { count: "exact", head: true })
+    .select("id, questions!inner(source_type)", { count: "exact", head: true })
     .eq("user_id", userId)
     .eq("exam_id", currentExam.id)
-    .eq("resolved", false);
+    .eq("resolved", false)
+    .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE);
 
   if (error) {
     return 0;
@@ -97,11 +99,12 @@ export async function getUnresolvedReviewItems(
   const { data, error } = await supabase
     .from("review_list")
     .select(
-      "id, added_at, review_count, question_id, questions(question_text, categories(id, name))"
+      "id, added_at, review_count, question_id, questions!inner(question_text, categories(id, name))"
     )
     .eq("user_id", userId)
     .eq("exam_id", currentExam.id)
     .eq("resolved", false)
+    .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE)
     .order("added_at", { ascending: false });
 
   if (error) {
@@ -135,11 +138,12 @@ export async function getUnresolvedReviewQuestions(
   const { data, error } = await supabase
     .from("review_list")
     .select(
-      "question_id, questions(id, question_text, figure_url, explanation, choices(id, choice_text, is_correct, sort_order))"
+      "question_id, questions!inner(id, question_text, figure_url, explanation, choices(id, choice_text, is_correct, sort_order))"
     )
     .eq("user_id", userId)
     .eq("exam_id", currentExam.id)
-    .eq("resolved", false);
+    .eq("resolved", false)
+    .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE);
 
   if (error) {
     return [];

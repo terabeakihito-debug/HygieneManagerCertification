@@ -34,6 +34,7 @@ export default async function MockExamsPage() {
     .from("mock_exams")
     .select("id, name, time_limit_minutes, question_count, category_scope, exam_types(name)")
     .eq("exam_id", currentExam.id)
+    .not("source_filter", "ilike", "%公表%")
     .order("name");
 
   const exams = (data ?? []) as MockExamRow[];

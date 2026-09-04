@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { recordAnswer } from "@/lib/actions/record-answer";
 import { currentExam } from "@/config/exams";
+import { VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 
 export type MockExamAnswer = {
@@ -53,6 +54,7 @@ export async function gradeMockExamAction(input: {
     .from("questions")
     .select("id, category_id, choices(id, is_correct)")
     .eq("exam_id", currentExam.id)
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
     .in("id", questionIds);
 
   if (questionsError || !questionRows) {

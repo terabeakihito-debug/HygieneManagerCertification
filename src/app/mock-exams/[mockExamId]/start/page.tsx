@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { currentExam } from "@/config/exams";
+import { VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 
 type StartPageProps = {
@@ -41,7 +42,7 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
     .from("questions")
     .select("id, source_note")
     .eq("exam_id", currentExam.id)
-    .eq("source_type", "past_exam")
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
     .ilike("source_note", `%${mockExam.source_filter}%`);
 
   const categoryScope = mockExam.category_scope;

@@ -12,6 +12,7 @@ import {
   type PracticeQuestion,
 } from "@/components/practice/QuestionCard";
 import { currentExam } from "@/config/exams";
+import { VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 import type { Category, ExamType } from "@/types/database";
 
@@ -74,7 +75,8 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
     .select(
       "id, exam_type_id, category_id, question_text, figure_url, explanation, choices(id, choice_text, is_correct, sort_order)"
     )
-    .eq("exam_id", currentExam.id);
+    .eq("exam_id", currentExam.id)
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE);
 
   if (allowedExamTypeIds.length > 0) {
     questionsQuery = questionsQuery.in("exam_type_id", allowedExamTypeIds);
