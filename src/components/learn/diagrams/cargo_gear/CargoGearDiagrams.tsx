@@ -262,13 +262,13 @@ export function CgDerrickGooseNeckDiagram() {
         ブーム
       </Label>
       <Label x="280" y="220" size={12} fill={graphite}>
-        ピンテル
+        ピンテル（旋回・起伏の軸）
       </Label>
       <Label x="360" y="480">
         グースネックブラケットはグースネックをポストへ固定する
       </Label>
       <Label x="360" y="516" size={12} fill={graphite}>
-        ブロックブラケットはグースネック側。ブーム基部金具に連結して受ける、は誤り
+        ピンテルは旋回・起伏の軸。滑車受けとするのは誤り。ブロックブラケットをブーム基部金具としない
       </Label>
     </SvgBoard>
   );
@@ -437,7 +437,7 @@ export function CgSlingAngleTensionDiagram() {
         180kg
       </Label>
       <Label x="360" y="340">
-        つり角度は2本ロープのなす角。T＝mg／(2 sin(θ／2))
+        つり角度は2本ロープのなす角。T＝mg／(2 cos(θ／2))
       </Label>
       <Label x="360" y="376" size={12} fill={graphite}>
         角度が広がるほど張力は増える。質量が小さくても120°は60°より張力が大きい
