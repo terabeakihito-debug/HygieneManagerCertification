@@ -17,6 +17,12 @@ const XRAY_LAW = "関係法令";
 const XRAY_MEASUREMENT = "エックス線の測定に関する知識";
 const XRAY_BIOLOGY = "エックス線の生体に与える影響に関する知識";
 
+const CARGO_KNOWLEDGE = "揚貨装置に関する知識";
+const CARGO_LAW = "関係法令";
+const CARGO_MOTOR = "原動機及び電気に関する知識";
+const CARGO_MECHANICS =
+  "揚貨装置の運転のために必要な力学に関する知識";
+
 export function didPassMockExam(input: {
   score: number;
   questionCount: number;
@@ -39,6 +45,21 @@ export function mockExamAudienceNote(input: {
   examId: string;
   categoryScope: string[] | null;
 }): string | null {
+  if (input.examId === "cargo_gear") {
+    const scope = input.categoryScope;
+    if (!scope || scope.length === 0) {
+      return "免除なしの方向け。4科目40問です。";
+    }
+    const names = new Set(scope);
+    const hasKnowledge = names.has(CARGO_KNOWLEDGE);
+    const hasLaw = names.has(CARGO_LAW);
+    const hasMotor = names.has(CARGO_MOTOR);
+    const hasMechanics = names.has(CARGO_MECHANICS);
+    if (hasKnowledge && hasLaw && !hasMotor && !hasMechanics) {
+      return "実務経験により原動機及び電気と力学が免除される方向け。知識・法令の20問です。";
+    }
+    return "出題科目を絞り込んだ模試です。";
+  }
   if (input.examId === "xray") {
     const scope = input.categoryScope;
     if (!scope || scope.length === 0) {

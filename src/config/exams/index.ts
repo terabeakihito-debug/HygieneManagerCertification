@@ -1,4 +1,5 @@
 import { examConfig as boiler2 } from "./boiler2";
+import { examConfig as cargo_gear } from "./cargo_gear";
 import { examConfig as crane_all } from "./crane_all";
 import { examConfig as diver } from "./diver";
 import { examConfig as hygiene } from "./hygiene";
@@ -14,6 +15,7 @@ const configs = {
   xray,
   diver,
   pressure_chamber,
+  cargo_gear,
 } as const;
 
 type ExamId = keyof typeof configs;
