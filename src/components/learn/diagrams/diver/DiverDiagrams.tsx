@@ -191,7 +191,7 @@ export function DiverBlowUpFallDiagram() {
       </Label>
       <ellipse cx="530" cy="250" rx="40" ry="58" fill={paper} stroke={graphite} strokeWidth={strokeMain} />
       <circle cx="530" cy="198" r="18" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <path d="M530 320 V370" stroke={graphite} strokeWidth="3" markerEnd="url(#diver-fall)" />
+      <path d="M530 250 V300" stroke={graphite} strokeWidth="3" markerEnd="url(#diver-fall)" />
       <Label x="530" y="330" size={12} fill={graphite}>
         服内圧 ＜ 水圧
       </Label>
