@@ -704,6 +704,8 @@ export const LEARN_SECTION_LABEL: Record<LearnSection, string> = {
   pc_method: "圧気工法",
   pc_air: "送気及び排気",
   pc_disorder: "高気圧障害",
+  cargo: "揚貨装置に関する知識",
+  cargo_mechanics: "揚貨装置の運転のために必要な力学に関する知識",
 };
 
 export function getLearnSections(): readonly LearnSection[] {

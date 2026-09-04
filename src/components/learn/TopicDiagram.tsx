@@ -2,6 +2,7 @@ import * as Boiler2Diagrams from "@/components/learn/diagrams/boiler2/Boiler2Dia
 import * as CraneDiagrams from "@/components/learn/diagrams/crane/CraneDiagrams";
 import * as MobileCraneDiagrams from "@/components/learn/diagrams/mobile_crane/MobileCraneDiagrams";
 import * as DiverDiagrams from "@/components/learn/diagrams/diver/DiverDiagrams";
+import * as CargoGearDiagrams from "@/components/learn/diagrams/cargo_gear/CargoGearDiagrams";
 import * as PressureChamberDiagrams from "@/components/learn/diagrams/pressure_chamber/PressureChamberDiagrams";
 import * as XrayDiagrams from "@/components/learn/diagrams/xray/XrayDiagrams";
 import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
@@ -30,6 +31,7 @@ import { BOILER2_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/boiler2-topics";
 import { CRANE_ALL_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/crane-all-topics";
 import { MOBILE_CRANE_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/mobile-crane-topics";
 import { DIVER_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/diver-topics";
+import { CARGO_GEAR_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/cargo-gear-topics";
 import { PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/pressure-chamber-topics";
 import { XRAY_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/xray-topics";
 import {
@@ -133,6 +135,19 @@ const DIVER_DIAGRAMS = {
   DiverAirSupplyDepthDiagram: DiverDiagrams.DiverAirSupplyDepthDiagram,
 } as const;
 
+const CARGO_GEAR_DIAGRAMS = {
+  CgTypesStructureDiagram: CargoGearDiagrams.CgTypesStructureDiagram,
+  CgKenkaMakiDiagram: CargoGearDiagrams.CgKenkaMakiDiagram,
+  CgWireEndFittingsDiagram: CargoGearDiagrams.CgWireEndFittingsDiagram,
+  CgGearRatioDiagram: CargoGearDiagrams.CgGearRatioDiagram,
+  CgDerrickGooseNeckDiagram: CargoGearDiagrams.CgDerrickGooseNeckDiagram,
+  CgForceCompositionDiagram: CargoGearDiagrams.CgForceCompositionDiagram,
+  CgBalanceBeamDiagram: CargoGearDiagrams.CgBalanceBeamDiagram,
+  CgVelocityCompositionDiagram: CargoGearDiagrams.CgVelocityCompositionDiagram,
+  CgSlingAngleTensionDiagram: CargoGearDiagrams.CgSlingAngleTensionDiagram,
+  CgPulleyPrincipleDiagram: CargoGearDiagrams.CgPulleyPrincipleDiagram,
+} as const;
+
 const PRESSURE_CHAMBER_DIAGRAMS = {
   PcCaissonSectionDiagram: PressureChamberDiagrams.PcCaissonSectionDiagram,
   PcCentreDiagram: PressureChamberDiagrams.PcCentreDiagram,
@@ -185,11 +200,26 @@ function isPressureChamberDiagramId(
   return (PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
 }
 
+function isCargoGearDiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof CARGO_GEAR_DIAGRAM_TOPIC_IDS)[number] {
+  return (CARGO_GEAR_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
+
 type TopicDiagramProps = {
   topicId: DiagramLearnTopicId;
 };
 
 function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
+  if (isCargoGearDiagramId(topicId)) {
+    const topic = getLearnTopic(topicId);
+    if (!topic || topic.contentType !== "diagram") {
+      return null;
+    }
+    const Diagram = CARGO_GEAR_DIAGRAMS[topic.diagram as keyof typeof CARGO_GEAR_DIAGRAMS];
+    return Diagram ? <Diagram /> : null;
+  }
+
   if (isPressureChamberDiagramId(topicId)) {
     const topic = getLearnTopic(topicId);
     if (!topic || topic.contentType !== "diagram") {
