@@ -940,12 +940,12 @@ begin
   from questions
   where source_type = 'past_exam'
     and (
-      (source_note ~ '揚貨装置運転士試験 問7$' and source_note like '%令和8年4月公表%' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q07.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問10$' and source_note like '%令和8年4月公表%' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q10.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問23$' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q23.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問31$' and source_note like '%令和8年4月公表%' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q31.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問32$' and source_note like '%令和8年4月公表%' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q32.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問40$' and source_note like '%令和8年4月公表%' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q40.jpg')
+      (source_note like '%令和8年4月公表%' and source_note ~ '揚貨装置運転士試験 問7$' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q07.jpg')
+      or (source_note like '%令和8年4月公表%' and source_note ~ '揚貨装置運転士試験 問10$' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q10.jpg')
+      or (source_note like '%令和8年4月公表%' and source_note ~ '揚貨装置運転士試験 問23$' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q23.jpg')
+      or (source_note like '%令和8年4月公表%' and source_note ~ '揚貨装置運転士試験 問31$' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q31.jpg')
+      or (source_note like '%令和8年4月公表%' and source_note ~ '揚貨装置運転士試験 問32$' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q32.jpg')
+      or (source_note like '%令和8年4月公表%' and source_note ~ '揚貨装置運転士試験 問40$' and figure_url is distinct from '/exam-figures/cargo_gear/2026-04/q40.jpg')
     );
 
   if fig_missing <> 0 then

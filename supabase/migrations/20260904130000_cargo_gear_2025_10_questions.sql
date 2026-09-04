@@ -944,10 +944,10 @@ begin
   from questions
   where source_type = 'past_exam'
     and (
-      (source_note ~ '揚貨装置運転士試験 問3$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q03.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問7$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q07.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問31$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q31.jpg')
-      or (source_note ~ '揚貨装置運転士試験 問40$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q40.jpg')
+      (source_note like '%令和7年10月公表%' and source_note ~ '揚貨装置運転士試験 問3$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q03.jpg')
+      or (source_note like '%令和7年10月公表%' and source_note ~ '揚貨装置運転士試験 問7$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q07.jpg')
+      or (source_note like '%令和7年10月公表%' and source_note ~ '揚貨装置運転士試験 問31$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q31.jpg')
+      or (source_note like '%令和7年10月公表%' and source_note ~ '揚貨装置運転士試験 問40$' and figure_url is distinct from '/exam-figures/cargo_gear/2025-10/q40.jpg')
     );
 
   if fig_missing <> 0 then
