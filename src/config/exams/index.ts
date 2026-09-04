@@ -3,6 +3,7 @@ import { examConfig as crane_all } from "./crane_all";
 import { examConfig as diver } from "./diver";
 import { examConfig as hygiene } from "./hygiene";
 import { examConfig as mobile_crane } from "./mobile_crane";
+import { examConfig as pressure_chamber } from "./pressure_chamber";
 import { examConfig as xray } from "./xray";
 
 const configs = {
@@ -12,6 +13,7 @@ const configs = {
   mobile_crane,
   xray,
   diver,
+  pressure_chamber,
 } as const;
 
 type ExamId = keyof typeof configs;
