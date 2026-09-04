@@ -1,7 +1,7 @@
 export const VISIBLE_QUESTION_SOURCE_TYPE = "original" as const;
 export const VISIBLE_ORIGINAL_SOURCE_NOTE = "%オリジナル問題%";
 
-const LIVE_EXAM_IDS = new Set(["boiler2", "hygiene"]);
+const LIVE_EXAM_IDS = new Set(["boiler2", "hygiene", "crane_all"]);
 
 export function isLiveExam(examId: string | undefined): boolean {
   return examId !== undefined && LIVE_EXAM_IDS.has(examId);
