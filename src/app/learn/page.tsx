@@ -25,6 +25,8 @@ function learnIndexDescription(): string {
       return "潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     case "pressure_chamber":
       return "圧気工法、送気及び排気、高気圧障害、関係法令の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
+    case "cargo_gear":
+      return "揚貨装置の構造、関係法令、原動機及び電気、力学の図解と解説で、試験に出やすいポイントを効率よく学習できます。";
     default: {
       const _never: never = currentExam;
       return _never;
@@ -48,6 +50,8 @@ function learnIndexLead(): string {
       return "問題演習の前に、潜水業務、送気・潜降及び浮上、高気圧障害、関係法令の図解と解説で基本を確認できます。";
     case "pressure_chamber":
       return "問題演習の前に、圧気工法、送気及び排気、高気圧障害、関係法令の解説で基本を確認できます。";
+    case "cargo_gear":
+      return "問題演習の前に、揚貨装置の構造、関係法令、原動機及び電気、力学の解説で基本を確認できます。";
     default: {
       const _never: never = currentExam;
       return _never;
