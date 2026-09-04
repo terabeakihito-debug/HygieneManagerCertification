@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { currentExam } from "@/config/exams";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { SITE_MAINTENANCE } from "@/lib/site-maintenance";
 import "./globals.css";
 
 const zenKakuGothicNew = Zen_Kaku_Gothic_New({
@@ -31,30 +32,41 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: currentExam.seo.title,
+    default: SITE_MAINTENANCE
+      ? `${SITE_NAME}｜メンテナンス中`
+      : currentExam.seo.title,
     template: `%s｜${SITE_NAME}`,
   },
-  description: SITE_DESCRIPTION,
+  description: SITE_MAINTENANCE
+    ? "ただいまメンテナンス中です。再開までしばらくお待ちください。"
+    : SITE_DESCRIPTION,
   keywords: [...currentExam.seo.keywords],
   alternates: {
     canonical: "/",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: SITE_MAINTENANCE
+    ? { index: false, follow: false }
+    : { index: true, follow: true },
   openGraph: {
     type: "website",
     locale: "ja_JP",
     siteName: SITE_NAME,
-    title: currentExam.seo.title,
-    description: SITE_DESCRIPTION,
+    title: SITE_MAINTENANCE
+      ? `${SITE_NAME}｜メンテナンス中`
+      : currentExam.seo.title,
+    description: SITE_MAINTENANCE
+      ? "ただいまメンテナンス中です。再開までしばらくお待ちください。"
+      : SITE_DESCRIPTION,
     url: "/",
   },
   twitter: {
     card: "summary_large_image",
-    title: currentExam.seo.title,
-    description: SITE_DESCRIPTION,
+    title: SITE_MAINTENANCE
+      ? `${SITE_NAME}｜メンテナンス中`
+      : currentExam.seo.title,
+    description: SITE_MAINTENANCE
+      ? "ただいまメンテナンス中です。再開までしばらくお待ちください。"
+      : SITE_DESCRIPTION,
   },
   icons: {
     icon: "/icon.svg",
@@ -73,11 +85,18 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-paper font-body text-ink">
-        <AnonymousAuthProvider>
-          <SiteHeader />
-          {children}
-          <Footer />
-        </AnonymousAuthProvider>
+        {SITE_MAINTENANCE ? (
+          <>
+            {children}
+            <Footer />
+          </>
+        ) : (
+          <AnonymousAuthProvider>
+            <SiteHeader />
+            {children}
+            <Footer />
+          </AnonymousAuthProvider>
+        )}
       </body>
     </html>
   );

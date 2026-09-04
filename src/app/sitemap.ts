@@ -2,9 +2,21 @@ import type { MetadataRoute } from "next";
 import { currentExam } from "@/config/exams";
 import { LEARN_TOPICS } from "@/lib/data/learn-content";
 import { SITE_URL } from "@/lib/seo";
+import { SITE_MAINTENANCE } from "@/lib/site-maintenance";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
+
+  if (SITE_MAINTENANCE) {
+    return [
+      {
+        url: SITE_URL,
+        lastModified,
+        changeFrequency: "weekly",
+        priority: 1,
+      },
+    ];
+  }
   const learnEntries = currentExam.hasLearnContent
     ? [
         {

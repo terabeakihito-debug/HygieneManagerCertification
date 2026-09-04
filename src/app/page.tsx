@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { MaintenanceHome } from "@/components/layout/MaintenanceHome";
 import { CrossMark } from "@/components/ui/CrossMark";
 import { currentExam } from "@/config/exams";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { SITE_MAINTENANCE } from "@/lib/site-maintenance";
 
 const categoryLabels = currentExam.categories.map((category) => category.label);
 
@@ -82,6 +84,10 @@ const HERO_LINKS = [
 ] as const;
 
 export default function HomePage() {
+  if (SITE_MAINTENANCE) {
+    return <MaintenanceHome />;
+  }
+
   return (
     <>
       <script
