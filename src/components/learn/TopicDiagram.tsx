@@ -2,6 +2,7 @@ import * as Boiler2Diagrams from "@/components/learn/diagrams/boiler2/Boiler2Dia
 import * as CraneDiagrams from "@/components/learn/diagrams/crane/CraneDiagrams";
 import * as MobileCraneDiagrams from "@/components/learn/diagrams/mobile_crane/MobileCraneDiagrams";
 import * as DiverDiagrams from "@/components/learn/diagrams/diver/DiverDiagrams";
+import * as PressureChamberDiagrams from "@/components/learn/diagrams/pressure_chamber/PressureChamberDiagrams";
 import * as XrayDiagrams from "@/components/learn/diagrams/xray/XrayDiagrams";
 import { AgingChangesDiagram } from "@/components/learn/diagrams/AgingChangesDiagram";
 import { BloodCompositionDiagram } from "@/components/learn/diagrams/BloodCompositionDiagram";
@@ -29,6 +30,7 @@ import { BOILER2_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/boiler2-topics";
 import { CRANE_ALL_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/crane-all-topics";
 import { MOBILE_CRANE_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/mobile-crane-topics";
 import { DIVER_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/diver-topics";
+import { PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/pressure-chamber-topics";
 import { XRAY_DIAGRAM_TOPIC_IDS } from "@/lib/data/learn/xray-topics";
 import {
   DIAGRAM_TOPIC_IDS,
@@ -131,6 +133,16 @@ const DIVER_DIAGRAMS = {
   DiverAirSupplyDepthDiagram: DiverDiagrams.DiverAirSupplyDepthDiagram,
 } as const;
 
+const PRESSURE_CHAMBER_DIAGRAMS = {
+  PcCaissonSectionDiagram: PressureChamberDiagrams.PcCaissonSectionDiagram,
+  PcCentreDiagram: PressureChamberDiagrams.PcCentreDiagram,
+  PcTunnelShieldDiagram: PressureChamberDiagrams.PcTunnelShieldDiagram,
+  PcForceBalanceDiagram: PressureChamberDiagrams.PcForceBalanceDiagram,
+  PcAirExhaustLayoutDiagram: PressureChamberDiagrams.PcAirExhaustLayoutDiagram,
+  PcRecompressionDiagram: PressureChamberDiagrams.PcRecompressionDiagram,
+  PcAirlockStandardsDiagram: PressureChamberDiagrams.PcAirlockStandardsDiagram,
+} as const;
+
 function isHygieneDiagramId(
   topicId: DiagramLearnTopicId
 ): topicId is (typeof DIAGRAM_TOPIC_IDS)[number] {
@@ -167,11 +179,27 @@ function isXrayDiagramId(
   return (XRAY_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
 }
 
+function isPressureChamberDiagramId(
+  topicId: DiagramLearnTopicId
+): topicId is (typeof PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS)[number] {
+  return (PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS as readonly string[]).includes(topicId);
+}
+
 type TopicDiagramProps = {
   topicId: DiagramLearnTopicId;
 };
 
 function DiagramBody({ topicId }: { topicId: DiagramLearnTopicId }) {
+  if (isPressureChamberDiagramId(topicId)) {
+    const topic = getLearnTopic(topicId);
+    if (!topic || topic.contentType !== "diagram") {
+      return null;
+    }
+    const Diagram =
+      PRESSURE_CHAMBER_DIAGRAMS[topic.diagram as keyof typeof PRESSURE_CHAMBER_DIAGRAMS];
+    return Diagram ? <Diagram /> : null;
+  }
+
   if (isDiverDiagramId(topicId)) {
     const topic = getLearnTopic(topicId);
     if (!topic || topic.contentType !== "diagram") {
