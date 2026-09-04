@@ -1,2 +1,3 @@
-export const SITE_MAINTENANCE =
-  process.env.NEXT_PUBLIC_EXAM_ID !== "boiler2";
+import { isLiveExam } from "@/lib/question-visibility";
+
+export const SITE_MAINTENANCE = !isLiveExam(process.env.NEXT_PUBLIC_EXAM_ID);

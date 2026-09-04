@@ -1,6 +1,6 @@
 import { currentExam } from "@/config/exams";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
-import { VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
+import { VISIBLE_ORIGINAL_SOURCE_NOTE, VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import {
   addCalendarDays,
   calendarDate,
@@ -215,7 +215,8 @@ async function estimateRemainingQuestions(
     .from("questions")
     .select("id, category_id")
     .eq("exam_id", currentExam.id)
-    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE);
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("source_note", VISIBLE_ORIGINAL_SOURCE_NOTE);
   if (examTypeIds.length > 0) {
     questionsQuery = questionsQuery.in("exam_type_id", examTypeIds);
   }

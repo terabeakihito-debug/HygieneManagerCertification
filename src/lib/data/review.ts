@@ -1,5 +1,5 @@
 import { currentExam } from "@/config/exams";
-import { VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
+import { VISIBLE_ORIGINAL_SOURCE_NOTE, VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 import type { PracticeQuestion } from "@/components/practice/QuestionCard";
 
@@ -80,11 +80,12 @@ export async function getUnresolvedReviewCount(userId: string): Promise<number> 
   const supabase = await createClient();
   const { count, error } = await supabase
     .from("review_list")
-    .select("id, questions!inner(source_type)", { count: "exact", head: true })
+    .select("id, questions!inner(source_type, source_note)", { count: "exact", head: true })
     .eq("user_id", userId)
     .eq("exam_id", currentExam.id)
     .eq("resolved", false)
-    .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE);
+    .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("questions.source_note", VISIBLE_ORIGINAL_SOURCE_NOTE);
 
   if (error) {
     return 0;
@@ -105,6 +106,7 @@ export async function getUnresolvedReviewItems(
     .eq("exam_id", currentExam.id)
     .eq("resolved", false)
     .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("questions.source_note", VISIBLE_ORIGINAL_SOURCE_NOTE)
     .order("added_at", { ascending: false });
 
   if (error) {
@@ -143,7 +145,8 @@ export async function getUnresolvedReviewQuestions(
     .eq("user_id", userId)
     .eq("exam_id", currentExam.id)
     .eq("resolved", false)
-    .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE);
+    .eq("questions.source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("questions.source_note", VISIBLE_ORIGINAL_SOURCE_NOTE);
 
   if (error) {
     return [];

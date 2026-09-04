@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 import { recordAnswer } from "@/lib/actions/record-answer";
 import { currentExam } from "@/config/exams";
-import { VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
+import { VISIBLE_ORIGINAL_SOURCE_NOTE, VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 
 export type MockExamAnswer = {
@@ -55,6 +55,7 @@ export async function gradeMockExamAction(input: {
     .select("id, category_id, choices(id, is_correct)")
     .eq("exam_id", currentExam.id)
     .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("source_note", VISIBLE_ORIGINAL_SOURCE_NOTE)
     .in("id", questionIds);
 
   if (questionsError || !questionRows) {
