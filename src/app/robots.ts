@@ -1,7 +1,17 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
+import { SITE_MAINTENANCE } from "@/lib/site-maintenance";
 
 export default function robots(): MetadataRoute.Robots {
+  if (SITE_MAINTENANCE) {
+    return {
+      rules: {
+        userAgent: "*",
+        disallow: "/",
+      },
+    };
+  }
+
   return {
     rules: {
       userAgent: "*",

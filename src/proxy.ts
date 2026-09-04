@@ -1,11 +1,20 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { SITE_MAINTENANCE } from "@/lib/site-maintenance";
 
 /**
  * Supabaseのセッションをリクエストごとに更新するミドルウェア。
  * 認証状態が必要なページ全般に適用される。
  */
 export async function proxy(request: NextRequest) {
+  if (SITE_MAINTENANCE) {
+    const pathname = request.nextUrl.pathname;
+    if (pathname !== "/") {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
