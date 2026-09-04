@@ -6,7 +6,7 @@ export const examConfig = {
   organization: "公益財団法人安全衛生技術試験協会",
   aboutNavLabel: "高圧室内作業主任者とは",
   hasPracticalExam: false,
-  hasLearnContent: false,
+  hasLearnContent: true,
   heroDescription: [
     "高圧室内作業主任者試験の",
     "合格を目指す学習・演習サービス。",
