@@ -376,8 +376,8 @@ export function CgVelocityCompositionDiagram() {
       </defs>
       <path d="M120 360 H520" fill="none" stroke={ink} strokeWidth={strokeMain} />
       <path d="M120 360 V120" fill="none" stroke={ink} strokeWidth={strokeMain} />
-      <rect x="240" y="240" width="80" height="48" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <Label x="280" y="270" size={12}>
+      <rect x="392" y="164" width="64" height="36" fill={paper} stroke={ink} strokeWidth={strokePart} />
+      <Label x="424" y="188" size={12}>
         小車
       </Label>
       <path d="M160 360 H360" fill="none" stroke={safety} strokeWidth={strokeMain} markerEnd="url(#cg-vel-arrow)" />
@@ -395,7 +395,7 @@ export function CgVelocityCompositionDiagram() {
         strokeWidth="4"
         markerEnd="url(#cg-vel-arrow)"
       />
-      <Label x="300" y="250" size={12} fill={stamp}>
+      <Label x="236" y="318" size={12} fill={stamp}>
         合成
       </Label>
       <Label x="360" y="430">
