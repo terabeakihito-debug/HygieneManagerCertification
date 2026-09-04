@@ -1,0 +1,47 @@
+{
+  "examId": "pressure_chamber",
+  "defaultKind": "common",
+  "defaultExamTypeCode": "common",
+  "files": [
+    {
+      "path": "data/past-exams/pressure_chamber_2025-10.txt",
+      "kind": "common",
+      "examLabel": "高圧室内作業主任者試験"
+    },
+    {
+      "path": "data/past-exams/pressure_chamber_2026-04.txt",
+      "kind": "common",
+      "examLabel": "高圧室内作業主任者試験"
+    }
+  ],
+  "headings": {
+    "common": {
+      "圧気工法": "圧気工法",
+      "送気及び排気": "送気及び排気",
+      "高気圧障害": "高気圧障害",
+      "関係法令": "関係法令"
+    }
+  },
+  "masters": {
+    "exam": {
+      "id": "pressure_chamber",
+      "name": "高圧室内作業主任者",
+      "organization": "公益財団法人安全衛生技術試験協会",
+      "hasPracticalExam": false
+    },
+    "examTypes": [{ "code": "common", "name": "高圧室内作業主任者" }],
+    "examCategories": [
+      {
+        "code": "common",
+        "label": "高圧室内作業主任者",
+        "displayOrder": 1
+      }
+    ]
+  },
+  "seedCategories": [
+    { "examTypeCode": "common", "name": "圧気工法", "sortOrder": 1 },
+    { "examTypeCode": "common", "name": "送気及び排気", "sortOrder": 2 },
+    { "examTypeCode": "common", "name": "高気圧障害", "sortOrder": 3 },
+    { "examTypeCode": "common", "name": "関係法令", "sortOrder": 4 }
+  ]
+}
