@@ -190,11 +190,11 @@ export function PcForceBalanceDiagram() {
       <Label x="320" y="422" size={12} fill={amber}>
         作業室圧力 P
       </Label>
-      <path d="M320 70 V100" stroke={stamp} strokeWidth="3" markerEnd="url(#pc-force-down)" />
-      <path d="M320 470 V500" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
-      <path d="M180 200 H200" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
-      <path d="M460 200 H440" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
-      <Label x="120" y="204" size={12} fill={safety}>
+      <path d="M320 58 V88" stroke={stamp} strokeWidth="3" markerEnd="url(#pc-force-down)" />
+      <path d="M320 505 V455" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
+      <path d="M176 340 V210" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
+      <path d="M464 340 V210" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
+      <Label x="120" y="280" size={12} fill={safety}>
         周面摩擦
       </Label>
       <Label x="560" y="150" size={12} fill={stamp} anchor="start">
