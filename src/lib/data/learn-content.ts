@@ -30,6 +30,12 @@ import {
   XRAY_LEARN_SECTIONS,
   XRAY_LEARN_TOPICS,
 } from "@/lib/data/learn/xray-topics";
+import {
+  PRESSURE_CHAMBER_ARTICLE_TOPIC_IDS,
+  PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS,
+  PRESSURE_CHAMBER_LEARN_SECTIONS,
+  PRESSURE_CHAMBER_LEARN_TOPICS,
+} from "@/lib/data/learn/pressure-chamber-topics";
 import { createClient } from "@/lib/supabase/server";
 
 export const HYGIENE_LEARN_SECTIONS = ["physiology", "hygiene", "law"] as const;
@@ -40,6 +46,7 @@ export const CRANE_ALL_SECTIONS = CRANE_ALL_LEARN_SECTIONS;
 export const MOBILE_CRANE_SECTIONS = MOBILE_CRANE_LEARN_SECTIONS;
 export const XRAY_SECTIONS = XRAY_LEARN_SECTIONS;
 export const DIVER_SECTIONS = DIVER_LEARN_SECTIONS;
+export const PRESSURE_CHAMBER_SECTIONS = PRESSURE_CHAMBER_LEARN_SECTIONS;
 
 export type LearnSection =
   | (typeof HYGIENE_LEARN_SECTIONS)[number]
@@ -47,7 +54,8 @@ export type LearnSection =
   | (typeof CRANE_ALL_LEARN_SECTIONS)[number]
   | (typeof MOBILE_CRANE_LEARN_SECTIONS)[number]
   | (typeof XRAY_LEARN_SECTIONS)[number]
-  | (typeof DIVER_LEARN_SECTIONS)[number];
+  | (typeof DIVER_LEARN_SECTIONS)[number]
+  | (typeof PRESSURE_CHAMBER_LEARN_SECTIONS)[number];
 
 export const LEARN_CONTENT_TYPES = ["diagram", "table", "article"] as const;
 
@@ -99,6 +107,8 @@ export const LEARN_TOPIC_IDS = [
   ...XRAY_ARTICLE_TOPIC_IDS,
   ...DIVER_DIAGRAM_TOPIC_IDS,
   ...DIVER_ARTICLE_TOPIC_IDS,
+  ...PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS,
+  ...PRESSURE_CHAMBER_ARTICLE_TOPIC_IDS,
 ] as const;
 
 export type DiagramLearnTopicId =
@@ -107,7 +117,8 @@ export type DiagramLearnTopicId =
   | (typeof CRANE_ALL_DIAGRAM_TOPIC_IDS)[number]
   | (typeof MOBILE_CRANE_DIAGRAM_TOPIC_IDS)[number]
   | (typeof XRAY_DIAGRAM_TOPIC_IDS)[number]
-  | (typeof DIVER_DIAGRAM_TOPIC_IDS)[number];
+  | (typeof DIVER_DIAGRAM_TOPIC_IDS)[number]
+  | (typeof PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS)[number];
 export type TableLearnTopicId =
   | (typeof TABLE_TOPIC_IDS)[number]
   | (typeof BOILER2_TABLE_TOPIC_IDS)[number];
@@ -116,7 +127,8 @@ export type ArticleLearnTopicId =
   | (typeof CRANE_ALL_ARTICLE_TOPIC_IDS)[number]
   | (typeof MOBILE_CRANE_ARTICLE_TOPIC_IDS)[number]
   | (typeof XRAY_ARTICLE_TOPIC_IDS)[number]
-  | (typeof DIVER_ARTICLE_TOPIC_IDS)[number];
+  | (typeof DIVER_ARTICLE_TOPIC_IDS)[number]
+  | (typeof PRESSURE_CHAMBER_ARTICLE_TOPIC_IDS)[number];
 export type LearnTopicId = (typeof LEARN_TOPIC_IDS)[number];
 
 export type LearnTable = {
@@ -647,7 +659,7 @@ function learnTopicsForCurrentExam(): LearnTopic[] {
     case "diver":
       return DIVER_LEARN_TOPICS;
     case "pressure_chamber":
-      return [];
+      return PRESSURE_CHAMBER_LEARN_TOPICS;
     default: {
       const _never: never = currentExam;
       return _never;
@@ -675,6 +687,9 @@ export const LEARN_SECTION_LABEL: Record<LearnSection, string> = {
   diver_work: "潜水業務",
   diver_ascent: "送気、潜降及び浮上",
   diver_disorder: "高気圧障害",
+  pc_method: "圧気工法",
+  pc_air: "送気及び排気",
+  pc_disorder: "高気圧障害",
 };
 
 export function getLearnSections(): readonly LearnSection[] {
@@ -692,7 +707,7 @@ export function getLearnSections(): readonly LearnSection[] {
     case "diver":
       return DIVER_LEARN_SECTIONS;
     case "pressure_chamber":
-      return [];
+      return PRESSURE_CHAMBER_LEARN_SECTIONS;
     default: {
       const _never: never = currentExam;
       return _never;
@@ -734,6 +749,12 @@ export function getDiagramFigureNumber(topicId: DiagramLearnTopicId): number {
   }
   if (currentExam.id === "diver") {
     const index = (DIVER_DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
+    return index >= 0 ? index + 1 : 1;
+  }
+  if (currentExam.id === "pressure_chamber") {
+    const index = (PRESSURE_CHAMBER_DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(
+      topicId
+    );
     return index >= 0 ? index + 1 : 1;
   }
   const index = (DIAGRAM_TOPIC_IDS as readonly string[]).indexOf(topicId);
