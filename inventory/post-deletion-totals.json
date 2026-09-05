@@ -1,0 +1,58 @@
+{
+  "snapshot_kind": "post_source_deletion",
+  "generated_on": "2026-09-05",
+  "note": "現行リポジトリソースの集計。inventory/questions-inventory.json と totals.json は削除前スナップショットであり、ここの件数で上書きしない。",
+  "source": {
+    "insert_into_questions": 368,
+    "original": 368,
+    "past_exam_suspected": 0,
+    "in_use": 344,
+    "unused_original": 24,
+    "unused_original_note": "hygiene 0009 基礎問題のみ。source_note が「基礎問題(独自作成)」のため画面非表示。",
+    "five_choice": 344,
+    "four_choice": 24,
+    "learn_topics": 296,
+    "mock_exam_inserts": 15,
+    "unused_past_exam_mocks_in_source": 0,
+    "past_exam_txt_files": 0,
+    "heading_maps": 0
+  },
+  "by_exam_inserts": {
+    "hygiene": 88,
+    "boiler2": 40,
+    "crane_all": 40,
+    "mobile_crane": 40,
+    "xray": 40,
+    "diver": 40,
+    "pressure_chamber": 40,
+    "cargo_gear": 40
+  },
+  "hygiene_original_breakdown": {
+    "20260904081327_hygiene_original_questions.sql": 50,
+    "20260904083023_hygiene_type1_exclusive_questions.sql": 14,
+    "0009_original_questions_batch1.sql": 24
+  },
+  "remote_db": {
+    "status": "sample_5_deleted_past_exam_708_not_applied",
+    "original": 368,
+    "past_exam": 708,
+    "total": 1076,
+    "remaining_past_exam_suspected_expected": 708,
+    "migration": "supabase/migrations/20260905120000_delete_inventory_past_exam_suspected_questions.sql",
+    "sample_originals_deleted": 5,
+    "sample_archive": "inventory/deleted-sample-originals-20260905.json",
+    "requires_before_apply": [
+      "backup of production/shared questions, choices, user_answers, review_list, mock_exams, mock_exam_results",
+      "SQL review of the 708 UUID list and the 30 (exam_id, name) mock pairs"
+    ]
+  },
+  "count_checks": {
+    "inserts_equal_368": true,
+    "original_equals_inserts": true,
+    "in_use_plus_unused_original_equals_inserts": true,
+    "exam_sum_equals_inserts": true,
+    "five_plus_four_equals_inserts": true,
+    "learn_equals_296": true,
+    "mock_inserts_equal_15": true
+  }
+}

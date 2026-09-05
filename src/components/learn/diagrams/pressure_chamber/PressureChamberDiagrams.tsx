@@ -257,7 +257,7 @@ export function PcAirExhaustLayoutDiagram() {
 
 export function PcRecompressionDiagram() {
   return (
-    <SvgBoard alt="複室式再圧室。主室と副室を出入り以外は等圧に保つ">
+    <SvgBoard alt="複室式再圧室。主室と副室を出入り以外は等圧に保ち、酸素再圧は手技上0.18MPaで止めてエアブレイクを挟む">
       <rect x="80" y="140" width="280" height="220" rx="16" fill={paper} stroke={ink} strokeWidth={strokeMain} />
       <rect x="360" y="170" width="200" height="160" rx="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <rect x="548" y="210" width="50" height="80" rx="6" fill={hairline} stroke={ink} strokeWidth={strokeGuide} />
@@ -282,7 +282,7 @@ export function PcRecompressionDiagram() {
         酸素再圧は換気を十分に行う。控えすぎない
       </Label>
       <Label x="360" y="496" size={12} fill={graphite}>
-        加圧は0.18MPa(ゲージ)で止め、エアブレイクを挟む
+        手技: 0.18MPa(ゲージ)で止め、エアブレイクを挟む
       </Label>
     </SvgBoard>
   );
