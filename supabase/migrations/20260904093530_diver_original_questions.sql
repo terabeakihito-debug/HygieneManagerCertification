@@ -817,8 +817,8 @@ SELECT
   'diver',
   (SELECT id FROM exam_types WHERE exam_id = 'diver' AND code = 'common'),
   (SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = 'diver' AND e.code = 'common' AND c.name = '関係法令'),
-  $q$空気圧縮機により潜水業務従事者へ送気する場合の空気槽に関する記述として、正しいものはどれか。$q$,
-  $e$空気圧縮機による送気を受ける潜水業務従事者ごとに、送気調節用空気槽及び予備空気槽を設ける。予備空気槽の圧力は、常時、最高潜水深度における圧力の1.5倍以上でなければならない。一定の基準を満たす送気調節用空気槽又は携行予備ボンベがある場合は、予備空気槽を省略できる。根拠: 高気圧作業安全衛生規則第8条。$e$,
+  $q$空気圧縮機で送気する潜水で、予備空気槽を設けないことができる場合として、法令上正しいものはどれか。$q$,
+  $e$省略できるのは次のいずれかである。送気を調節する空気槽が予備空気槽の内容積等の基準に適合するとき。または、その基準に適合する予備ボンベを潜水業務従事者に携行させるとき。圧力を最高深度の1.5倍以上に保つことは、予備空気槽を設ける場合の下限であり、省略の条件ではない。根拠: 高気圧作業安全衛生規則第8条。$e$,
   'original',
   '潜水士 オリジナル問題 問31',
   NULL
@@ -828,11 +828,11 @@ WHERE NOT EXISTS (
 
 INSERT INTO choices (question_id, choice_text, is_correct, sort_order)
 SELECT * FROM (VALUES
-  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$空気槽は、潜水業務従事者の人数にかかわらず、事業場に1基あればよい。$c$, false, 1),
-  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$予備空気槽内の空気の圧力は、常時、最高の潜水深度における圧力の1.2倍以上でなければならない。$c$, false, 2),
-  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$予備空気槽内の空気の圧力は、常時、最高の潜水深度における圧力の1.5倍以上でなければならない。$c$, true, 3),
-  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$送気を調節する空気槽が予備空気槽の基準を満たしていても、別の予備空気槽を必ず設けなければならない。$c$, false, 4),
-  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$予備ボンベを潜水業務従事者に携行させても、予備空気槽の設置を省略できない。$c$, false, 5)
+  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$事業場に送気調節用の空気槽が1基あれば、従事者の人数に関係なく予備空気槽は不要である。$c$, false, 1),
+  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$予備空気槽内の圧力を最高潜水深度の圧力の1.2倍以上に保てば、予備空気槽自体を設けなくてよい。$c$, false, 2),
+  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$通話装置があるときは、予備空気槽を省略できる。$c$, false, 3),
+  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$予備空気槽の内容積等の基準に適合する予備ボンベを、潜水業務従事者に携行させるとき。$c$, true, 4),
+  ('68095589-d2f8-4f01-977c-ce477d25dd8b'::uuid, $c$最高潜水深度の圧力以上であれば、倍数を問わず予備空気槽を省略できる。$c$, false, 5)
 ) AS incoming(question_id, choice_text, is_correct, sort_order)
 WHERE NOT EXISTS (
   SELECT 1 FROM choices c WHERE c.question_id = incoming.question_id
@@ -871,8 +871,8 @@ SELECT
   'diver',
   (SELECT id FROM exam_types WHERE exam_id = 'diver' AND code = 'common'),
   (SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = 'diver' AND e.code = 'common' AND c.name = '関係法令'),
-  $q$圧力調整器を使用せず、空気圧縮機から潜水業務従事者1人へ送気する。空気圧縮機の水面換算送気能力が毎分240 Lである場合、法定の最低送気量を確保できる最大水深はいくらか。ただし、水面の絶対圧力を1気圧、水深10 m増すごとに絶対圧力が1気圧増すものとする。$q$,
-  $e$圧力調整器を使用しない場合、その水深の圧力下で1人につき毎分60 L以上が必要である。水深を \(D\) mとすると、必要な水面換算送気量は、\(60\times(D+10)÷10\ \mathrm{L/min}\)。したがって、\(60\times(D+10)÷10\leq240\)、\((D+10)÷10\leq4\)、\(D\leq30\ \mathrm{m}\)。よって最大水深は30 mである。根拠: 高気圧作業安全衛生規則第28条第1項。$e$,
+  $q$圧力調整器を用いず、水深25 mで潜水業務従事者1人へ空気圧縮機から送気する。法定の最低送気量を満たすために必要な、空気圧縮機の水面換算送気能力は毎分何 Lか。ただし、水面の絶対圧力を1気圧、水深10 m増すごとに絶対圧力が1気圧増すものとする。$q$,
+  $e$圧力調整器を使用しない場合、その水深の圧力下で1人につき毎分60 L以上が必要である。水深25 mの絶対圧力は3.5気圧なので、水面換算では \(60\times(25+10)÷10=210\ \mathrm{L/min}\) 以上となる。根拠: 高気圧作業安全衛生規則第28条第1項。$e$,
   'original',
   '潜水士 オリジナル問題 問33',
   NULL
@@ -882,11 +882,11 @@ WHERE NOT EXISTS (
 
 INSERT INTO choices (question_id, choice_text, is_correct, sort_order)
 SELECT * FROM (VALUES
-  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$10 m$c$, false, 1),
-  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$20 m$c$, false, 2),
-  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$30 m$c$, true, 3),
-  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$40 m$c$, false, 4),
-  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$50 m$c$, false, 5)
+  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$150 L$c$, false, 1),
+  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$180 L$c$, false, 2),
+  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$210 L$c$, true, 3),
+  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$240 L$c$, false, 4),
+  ('1ce601b3-74b7-428f-bffb-6230dfd84e05'::uuid, $c$300 L$c$, false, 5)
 ) AS incoming(question_id, choice_text, is_correct, sort_order)
 WHERE NOT EXISTS (
   SELECT 1 FROM choices c WHERE c.question_id = incoming.question_id
@@ -952,8 +952,8 @@ SELECT
   'diver',
   (SELECT id FROM exam_types WHERE exam_id = 'diver' AND code = 'common'),
   (SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = 'diver' AND e.code = 'common' AND c.name = '関係法令'),
-  $q$潜水作業者が携行するボンベから給気を受ける潜水業務において、携行又は着用させなければならないものの組合せとして、正しいものはどれか。$q$,
-  $e$携行ボンベから給気を受ける潜水作業者には、水中時計、水深計及び鋭利な刃物を携行させ、救命胴衣又は浮力調整具を着用させなければならない。根拠: 高気圧作業安全衛生規則第37条第3項。$e$,
+  $q$潜水作業者が携行するボンベから給気を受けるとき、法令上、必要とされていないものはどれか。$q$,
+  $e$この方式では、水中時計、水深計及び鋭利な刃物の携行と、救命胴衣又は浮力調整具の着用が必要である。コンパスは、この方式の必要品には含まれない。根拠: 高気圧作業安全衛生規則第37条第3項。$e$,
   'original',
   '潜水士 オリジナル問題 問36',
   NULL
@@ -963,11 +963,11 @@ WHERE NOT EXISTS (
 
 INSERT INTO choices (question_id, choice_text, is_correct, sort_order)
 SELECT * FROM (VALUES
-  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$信号旗、温度計、双眼鏡及び安全帯$c$, false, 1),
-  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$信号索、流量計、圧力計及び防毒マスク$c$, false, 2),
-  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$水中時計、水深計及び鋭利な刃物並びに救命胴衣又は浮力調整具$c$, true, 3),
-  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$水中時計、照度計及び救命索並びに耳栓$c$, false, 4),
-  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$水深計、気圧計及び流量計並びに防火服$c$, false, 5)
+  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$水中時計$c$, false, 1),
+  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$水深計$c$, false, 2),
+  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$コンパス$c$, true, 3),
+  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$鋭利な刃物$c$, false, 4),
+  ('e89d1e71-9917-402e-817a-f23e92a4b408'::uuid, $c$救命胴衣又は浮力調整具$c$, false, 5)
 ) AS incoming(question_id, choice_text, is_correct, sort_order)
 WHERE NOT EXISTS (
   SELECT 1 FROM choices c WHERE c.question_id = incoming.question_id

@@ -439,8 +439,8 @@ SELECT
   'cargo_gear',
   (SELECT id FROM exam_types WHERE exam_id = 'cargo_gear' AND code = 'common'),
   (SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = 'cargo_gear' AND e.code = 'common' AND c.name = '関係法令'),
-  $q$法令上使用が禁止される玉掛用具はどれか。$q$,
-  $e$キンクは使用禁止。素線切れ10％以上、直径減少7％超、鎖の伸び5％超、リンク径減少10％超も禁止。根拠: 労働安全衛生規則第471条・第472条。$e$,
+  $q$港湾荷役で玉掛けに用いる用具のうち、法令上まだ使用できるものはどれか。$q$,
+  $e$ワイヤロープは、一よりの間で素線（フィラ線を除く）の10％以上が切断したもの、公称径より7％を超えて直径が減ったもの、キンクしたものなどは使用禁止である。鎖は、製造時より5％を超えて伸びたもの、リンク断面が製造時より10％を超えて減ったものが禁止である。直径減少6％のワイヤロープは、7％超の禁止基準に達していない。根拠: 労働安全衛生規則第471条・第472条。$e$,
   'original',
   '揚貨装置運転士 オリジナル問題 問17',
   NULL
@@ -450,11 +450,11 @@ WHERE NOT EXISTS (
 
 INSERT INTO choices (question_id, choice_text, is_correct, sort_order)
 SELECT * FROM (VALUES
-  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$一より間で素線数の8％が切断したワイヤロープ$c$, false, 1),
-  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$直径減少が公称径の6％のワイヤロープ$c$, false, 2),
-  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$製造時より4％伸びた鎖$c$, false, 3),
-  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$リンク断面直径が製造時より9％減少した鎖$c$, false, 4),
-  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$キンクしたワイヤロープ$c$, true, 5)
+  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$著しく形崩れしたワイヤロープ$c$, false, 1),
+  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$直径減少が公称径の6％のワイヤロープ$c$, true, 2),
+  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$製造時より6％伸びた鎖$c$, false, 3),
+  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$リンク断面直径が製造時より12％減少した鎖$c$, false, 4),
+  ('27d942e3-03ea-40b1-9bcc-9a38c64ae299'::uuid, $c$キンクしたワイヤロープ$c$, false, 5)
 ) AS incoming(question_id, choice_text, is_correct, sort_order)
 WHERE NOT EXISTS (
   SELECT 1 FROM choices c WHERE c.question_id = incoming.question_id

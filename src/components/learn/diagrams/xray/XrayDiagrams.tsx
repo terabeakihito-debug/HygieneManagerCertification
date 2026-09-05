@@ -323,18 +323,18 @@ export function XrayCalibrationInterpolationDiagram() {
     <SvgBoard alt="校正定数の線形補間グラフ">
       <path d="M90 400 V80 M90 400 H640" fill="none" stroke={ink} strokeWidth={strokePart} />
       <circle cx="180" cy="300" r="6" fill={safety} />
-      <circle cx="360" cy="246" r="6" fill={stamp} />
+      <circle cx="270" cy="270" r="6" fill={stamp} />
       <circle cx="540" cy="180" r="6" fill={safety} />
       <path d="M180 300 L540 180" fill="none" stroke={safety} strokeWidth="2.6" />
-      <path d="M360 246 V400 M360 246 H90" stroke={hairline} strokeWidth={strokeGuide} />
-      <Label x="180" y="430" size={12}>120 keV</Label>
-      <Label x="360" y="430" size={12}>180</Label>
-      <Label x="540" y="430" size={12}>250 keV</Label>
-      <Label x="160" y="292" size={12} anchor="end">0.85</Label>
-      <Label x="78" y="246" size={12} anchor="end">0.91</Label>
-      <Label x="530" y="166" size={12}>0.98</Label>
+      <path d="M270 270 V400 M270 270 H90" stroke={hairline} strokeWidth={strokeGuide} />
+      <Label x="180" y="430" size={12}>80 keV</Label>
+      <Label x="270" y="430" size={12}>110</Label>
+      <Label x="540" y="430" size={12}>200 keV</Label>
+      <Label x="160" y="292" size={12} anchor="end">0.78</Label>
+      <Label x="78" y="270" size={12} anchor="end">0.82</Label>
+      <Label x="530" y="166" size={12}>0.94</Label>
       <Label x="370" y="70">校正定数 k</Label>
-      <Label x="360" y="470" size={12} fill={graphite}>指示 0.36 mSv/h × 0.91 ≒ 0.33 mSv/h</Label>
+      <Label x="360" y="470" size={12} fill={graphite}>指示 0.90 mSv/h × 0.82 ≒ 0.74 mSv/h</Label>
     </SvgBoard>
   );
 }

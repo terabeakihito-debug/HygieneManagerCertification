@@ -177,7 +177,7 @@ export function PcTunnelShieldDiagram() {
 
 export function PcForceBalanceDiagram() {
   return (
-    <SvgBoard alt="ケーソン沈下の力のつり合い。自重と載荷が下向き、周面摩擦と作業室圧力が上向き">
+    <SvgBoard alt="ケーソン沈下の力のつり合い。周面摩擦は外周の沈下深さ全長に上向き。刃口反力は無視">
       <defs>
         <ArrowMarker id="pc-force-down" fill={stamp} />
         <ArrowMarker id="pc-force-up" fill={safety} />
@@ -191,11 +191,11 @@ export function PcForceBalanceDiagram() {
         作業室圧力 P
       </Label>
       <path d="M320 58 V88" stroke={stamp} strokeWidth="3" markerEnd="url(#pc-force-down)" />
-      <path d="M320 505 V455" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
+      <path d="M320 468 V430" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
       <path d="M176 340 V210" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
       <path d="M464 340 V210" stroke={safety} strokeWidth="3" markerEnd="url(#pc-force-up)" />
       <Label x="120" y="280" size={12} fill={safety}>
-        周面摩擦
+        周面摩擦（外周・上向き）
       </Label>
       <Label x="560" y="150" size={12} fill={stamp} anchor="start">
         下向き: W1 + W2
@@ -203,8 +203,11 @@ export function PcForceBalanceDiagram() {
       <Label x="560" y="180" size={12} fill={safety} anchor="start">
         上向き: 摩擦 + P×底面積
       </Label>
-      <Label x="360" y="530" size={12} fill={graphite}>
-        刃口抵抗を無視すると、W1+W2＝摩擦＋P×面積
+      <Label x="360" y="498" size={12} fill={graphite}>
+        外径9m・深さ16m。W1＝850t、W2＝430t、摩擦力度8kN/m²
+      </Label>
+      <Label x="360" y="522" size={12} fill={graphite}>
+        刃口反力・浮力は無視。P≒0.14MPa（ゲージ）
       </Label>
     </SvgBoard>
   );
@@ -307,7 +310,7 @@ export function PcAirlockStandardsDiagram() {
         作業室の気積は1人あたり 4 m³ 以上。3 m³ ではない
       </Label>
       <Label x="360" y="462" size={12} fill={graphite}>
-        例: 床 4 m²・気積 7.9 m³ なら最大13人。15人は不可
+        例: 床 3.6 m²・気積 6.5 m³ なら最大10人。12人は気積不足
       </Label>
       <Label x="360" y="494" size={12} fill={graphite}>
         潜函の減圧用排気管は内径 53 mm 以下

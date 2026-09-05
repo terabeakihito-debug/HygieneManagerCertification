@@ -496,23 +496,23 @@ export function MotorTypesDiagram() {
 
 export function OhmLawCircuitDiagram() {
   return (
-    <SvgBoard alt="直列8オームと並列3オーム、6オームの回路">
+    <SvgBoard alt="直列12オームと並列4オーム、12オームの回路">
       <path d="M80 160 H200" fill="none" stroke={ink} strokeWidth={strokeMain} />
       <rect x="200" y="140" width="90" height="40" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="245" y="166">
-        8Ω
+        12Ω
       </Label>
       <path d="M290 160 H360" fill="none" stroke={ink} strokeWidth={strokeMain} />
       <path d="M360 160 V90 H470" fill="none" stroke={ink} strokeWidth={strokeMain} />
       <rect x="470" y="70" width="80" height="40" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="510" y="96">
-        3Ω
+        4Ω
       </Label>
       <path d="M550 90 H620 V230 H550" fill="none" stroke={ink} strokeWidth={strokeMain} />
       <path d="M360 160 V230 H470" fill="none" stroke={ink} strokeWidth={strokeMain} />
       <rect x="470" y="210" width="80" height="40" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="510" y="236">
-        6Ω
+        12Ω
       </Label>
       <circle cx="80" cy="160" r="5" fill={ink} />
       <circle cx="360" cy="160" r="5" fill={ink} />
@@ -520,29 +520,29 @@ export function OhmLawCircuitDiagram() {
       <circle cx="360" cy="230" r="5" fill={ink} />
       <circle cx="620" cy="160" r="5" fill={ink} />
       <Label x="80" y="140">
-        A
+        P
       </Label>
       <Label x="360" y="140">
-        B
+        Q
       </Label>
       <Label x="360" y="74">
-        C
+        S
       </Label>
       <Label x="360" y="260">
-        D
+        T
       </Label>
       <Label x="636" y="164" anchor="start">
-        E
+        R
       </Label>
       <path d="M80 300 H620" fill="none" stroke={safety} strokeWidth={strokePart} />
       <Label x="350" y="324">
-        AE＝60V
+        PR＝45V
       </Label>
       <Label x="360" y="380">
-        並列2Ω、全体10Ω、電流6A
+        並列3Ω、全体15Ω、電流3A
       </Label>
       <Label x="360" y="416" fill={graphite} size={12}>
-        AB＝48V、BE＝12V、D側2A、C側4A
+        PQ＝36V、QR＝9V、T側0.75A、S側2.25A
       </Label>
       <Label x="360" y="456" fill={graphite} size={12}>
         I＝E／R、P＝E×I、直径2倍で抵抗は4分の1
@@ -636,7 +636,7 @@ export function PowerTransmissionDiagram() {
 
 export function ForceCompositionDiagram() {
   return (
-    <SvgBoard alt="一点に働く力の合力と、鉛直線に対し30度で支える2本ロープ">
+    <SvgBoard alt="一点に働く力の合力と、鉛直線に対し20度で支える2本スリング">
       <defs>
         <ArrowMarker id="cr-force-arrow" />
       </defs>
@@ -668,15 +668,15 @@ export function ForceCompositionDiagram() {
       <path d="M500 220 L610 90" fill="none" stroke={safety} strokeWidth={strokeMain} />
       <rect x="476" y="220" width="48" height="32" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
       <Label x="500" y="242" size={12}>
-        10kg
+        14kg
       </Label>
       <path d="M500 160 A40 40 0 0 0 478 124" fill="none" stroke={ink} strokeWidth={strokeGuide} />
       <path d="M500 160 A40 40 0 0 1 522 124" fill="none" stroke={ink} strokeWidth={strokeGuide} />
       <Label x="456" y="150" size={12}>
-        30°
+        20°
       </Label>
       <Label x="544" y="150" size={12}>
-        30°
+        20°
       </Label>
       <Label x="390" y="76" size={12} fill={graphite}>
         T
@@ -685,10 +685,10 @@ export function ForceCompositionDiagram() {
         T
       </Label>
       <Label x="360" y="320">
-        30°は鉛直線とロープのなす角。2本の間は60°
+        20°は鉛直線とスリングのなす角。2本の間は40°
       </Label>
       <Label x="360" y="356" fill={graphite} size={12}>
-        鉛直成分は T×cos30°。2本で 2T×cos30°＝98N、T≒57N
+        鉛直成分は T×cos20°。2本で 2T×cos20°＝137.2N、T≒73N
       </Label>
       <Label x="360" y="396" fill={graphite} size={12}>
         力の三要素は大きさ、向き、作用点。つり合うとき合力は0
@@ -702,7 +702,7 @@ export function ForceCompositionDiagram() {
 
 export function MomentOfForceDiagram() {
   return (
-    <SvgBoard alt="天びん棒の支点、左右の荷、支持力F">
+    <SvgBoard alt="点検用スプレッダの支点、左右の荷、支持力F">
       <defs>
         <ArrowMarker id="cr-moment-arrow" />
       </defs>
@@ -715,26 +715,26 @@ export function MomentOfForceDiagram() {
       <path d="M160 220 V300" fill="none" stroke={graphite} strokeWidth={strokePart} />
       <rect x="132" y="300" width="56" height="36" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
       <Label x="160" y="324">
-        30kg
+        22kg
       </Label>
       <path d="M540 220 V300" fill="none" stroke={graphite} strokeWidth={strokePart} />
       <rect x="512" y="300" width="56" height="36" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="540" y="324">
-        20kg
+        18kg
       </Label>
       <path d="M160 200 H300" fill="none" stroke={safety} strokeWidth={strokeGuide} />
       <Label x="230" y="188">
-        1m
+        0.9m
       </Label>
       <path d="M300 200 H540" fill="none" stroke={safety} strokeWidth={strokeGuide} />
       <Label x="420" y="188">
-        1.5m
+        1.1m
       </Label>
       <Label x="360" y="400">
-        左294N・m＝右294N・m、支持力 F＝490N
+        左194.04N・m＝右194.04N・m、支持力 F＝392N
       </Label>
       <Label x="360" y="436" fill={graphite} size={12}>
-        Fは両方の荷の和。片方のモーメント294Nと混同しない
+        Fは両方の荷の和。片方のモーメント194Nと混同しない
       </Label>
       <Label x="360" y="472" fill={graphite} size={12}>
         M＝F×L。Lは作用線への垂線
@@ -860,46 +860,52 @@ export function PulleyPrincipleDiagram() {
 
 export function LeverPrincipleDiagram() {
   return (
-    <SvgBoard alt="てこの支点、力点、作用点と腕の長さ">
+    <SvgBoard alt="点検架台の脚P・Qと、脚Pから1.2ｍの位置にある2.4ｔの減速機。近い脚が大きい支持力を受ける">
       <defs>
-        <ArrowMarker id="cr-lever-arrow" />
+        <ArrowMarker id="cr-lever-up" />
+        <ArrowMarker id="cr-lever-down" />
       </defs>
-      <path d="M120 240 H600" fill="none" stroke={ink} strokeWidth="10" />
-      <path d="M360 240 L330 300 H390 Z" fill={ink} />
-      <Label x="360" y="328">
-        支点
+      <path d="M120 220 H600" fill="none" stroke={ink} strokeWidth="10" />
+      <path d="M140 220 L110 290 H170 Z" fill={ink} />
+      <path d="M580 220 L550 290 H610 Z" fill={ink} />
+      <Label x="86" y="276" anchor="end">
+        脚P
       </Label>
-      <path d="M160 240 V170" fill="none" stroke={safety} strokeWidth="4" markerEnd="url(#cr-lever-arrow)" />
-      <Label x="160" y="154">
-        F1
+      <Label x="634" y="276" anchor="start">
+        脚Q
       </Label>
-      <Label x="160" y="216" size={12} fill={graphite}>
-        力点
+      <rect x="258" y="168" width="56" height="40" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
+      <path d="M286 168 V140" fill="none" stroke={stamp} strokeWidth="3" markerEnd="url(#cr-lever-down)" />
+      <Label x="286" y="132" size={12} fill={stamp}>
+        2.4ｔ
       </Label>
-      <path d="M560 240 V300" fill="none" stroke={amber} strokeWidth="4" />
-      <rect x="532" y="300" width="56" height="32" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
-      <Label x="560" y="322">
-        F2
+      <Label x="286" y="196" size={12}>
+        減速機
       </Label>
-      <Label x="600" y="280" anchor="start" size={12} fill={graphite}>
-        作用点
+      <path d="M140 200 H286" fill="none" stroke={safety} strokeWidth={strokeGuide} />
+      <Label x="213" y="188" size={12} fill={safety}>
+        1.2ｍ
       </Label>
-      <path d="M160 200 H360" fill="none" stroke={safety} strokeWidth={strokeGuide} />
-      <Label x="260" y="188">
-        L1
+      <path d="M286 200 H580" fill="none" stroke={safety} strokeWidth={strokeGuide} />
+      <Label x="433" y="188" size={12} fill={safety}>
+        2.4ｍ
       </Label>
-      <path d="M360 200 H560" fill="none" stroke={safety} strokeWidth={strokeGuide} />
-      <Label x="460" y="188">
-        L2
+      <path d="M140 400 V304" fill="none" stroke={safety} strokeWidth="3" markerEnd="url(#cr-lever-up)" />
+      <path d="M580 400 V304" fill="none" stroke={safety} strokeWidth="3" markerEnd="url(#cr-lever-up)" />
+      <Label x="140" y="424" size={12} fill={safety}>
+        15.68ｋＮ
       </Label>
-      <Label x="360" y="400">
-        F1×L1＝F2×L2
+      <Label x="580" y="424" size={12} fill={safety}>
+        7.84ｋＮ
       </Label>
-      <Label x="360" y="436" fill={graphite} size={12}>
-        短い腕の側が大きな力を受ける
+      <Label x="360" y="450">
+        23.52×1.2／3.6＝7.84ｋＮ。近い脚Pは15.68ｋＮ
       </Label>
-      <Label x="360" y="472" fill={graphite} size={12}>
-        ガーダの支持力も同じ逆比で分配する
+      <Label x="360" y="486" fill={graphite} size={12}>
+        F1×L1＝F2×L2。短い腕の側が大きい力を受ける
+      </Label>
+      <Label x="360" y="518" fill={graphite} size={12}>
+        均等の11.76ｋＮや、比を逆にした脚P＝7.84ｋＮは誤り
       </Label>
     </SvgBoard>
   );

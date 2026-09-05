@@ -403,25 +403,25 @@ export function MobileRatedLoadTableDiagram() {
         ジブ＼半径
       </Label>
       <Label x="250" y="92" size={12}>
-        6.5m
+        5.0m
       </Label>
       <Label x="360" y="92" size={12}>
-        8.0m
+        7.5m
       </Label>
       <Label x="470" y="92" size={12}>
-        10.0m
+        9.0m
       </Label>
       <Label x="580" y="92" size={12}>
-        12.0m
+        11.5m
       </Label>
       <Label x="130" y="148" size={12}>
-        9.35m
+        8.5m
       </Label>
       <Label x="250" y="148" size={12}>
-        18.0
+        20.0
       </Label>
       <Label x="360" y="148" size={12}>
-        12.5
+        14.0
       </Label>
       <Label x="470" y="148" size={12} fill={graphite}>
         —
@@ -430,37 +430,37 @@ export function MobileRatedLoadTableDiagram() {
         —
       </Label>
       <Label x="130" y="214" size={12}>
-        16.4m
+        14.2m
       </Label>
       <Label x="250" y="214" size={12}>
-        11.0
+        12.0
       </Label>
       <Label x="360" y="214" size={12}>
-        8.4
+        9.0
       </Label>
       <Label x="470" y="214" size={12}>
-        6.2
+        7.0
       </Label>
       <Label x="580" y="214" size={12}>
-        4.8
+        5.5
       </Label>
       <Label x="130" y="280" size={12}>
-        23.45m
+        21.8m
       </Label>
       <Label x="250" y="280" size={12} fill={graphite}>
         —
       </Label>
       <Label x="360" y="280" size={12}>
-        6.0
+        6.5
       </Label>
       <Label x="470" y="280" size={12}>
-        4.7
+        5.0
       </Label>
       <Label x="580" y="280" size={12}>
-        3.6
+        3.8
       </Label>
       <Label x="130" y="346" size={12}>
-        30.5m
+        28.0m
       </Label>
       <Label x="250" y="346" size={12} fill={graphite}>
         —
@@ -469,10 +469,10 @@ export function MobileRatedLoadTableDiagram() {
         —
       </Label>
       <Label x="470" y="346" size={12}>
-        3.4
+        3.2
       </Label>
       <Label x="580" y="346" size={12}>
-        2.6
+        2.4
       </Label>
       <path d="M190 180 H310 V246 H650" fill="none" stroke={stamp} strokeWidth="5" />
       <Label x="250" y="176" size={11} fill={stamp}>
@@ -485,7 +485,7 @@ export function MobileRatedLoadTableDiagram() {
         太線の左上（短いジブ・小さい半径）が機体の強度で決まる側
       </Label>
       <Label x="360" y="456" fill={graphite} size={12}>
-        例: ジブ9.35m・半径6.5mは強度側。長いジブの外周は安定側
+        例: ジブ8.5m・半径5.0mは強度側。長いジブの外周は安定側
       </Label>
       <Label x="360" y="492" fill={graphite} size={12}>
         数値は試験対策用の簡略値。実機の表そのものではない
@@ -539,36 +539,36 @@ export function MobilePascalPrincipleDiagram() {
       <rect x="122" y="210" width="66" height="28" fill={amber} fillOpacity="0.35" stroke={ink} strokeWidth={strokePart} />
       <path d="M155 210 V140" fill="none" stroke={ink} strokeWidth={strokePart} />
       <Label x="155" y="120">
-        9N
+        15N
       </Label>
       <Label x="155" y="316">
         Ａ
       </Label>
       <Label x="155" y="384" size={12} fill={graphite}>
-        直径1cm
+        直径2cm
       </Label>
       <rect x="420" y="80" width="180" height="280" fill={paper} stroke={ink} strokeWidth={strokeMain} />
       <rect x="432" y="220" width="156" height="132" fill={safety} fillOpacity="0.18" />
       <rect x="444" y="150" width="132" height="40" fill={amber} fillOpacity="0.35" stroke={ink} strokeWidth={strokePart} />
       <path d="M510 150 V70" fill="none" stroke={ink} strokeWidth={strokePart} />
       <Label x="510" y="56">
-        81N
+        93.75N
       </Label>
       <Label x="510" y="290">
         Ｂ
       </Label>
       <Label x="510" y="384" size={12} fill={graphite}>
-        直径3cm
+        直径5cm
       </Label>
       <path d="M200 340 H420" fill="none" stroke={ink} strokeWidth="10" />
       <Label x="360" y="430">
-        圧力は等しい。面積比は直径比の2乗で9倍
+        圧力は等しい。面積比は直径比の2乗で6.25倍
       </Label>
       <Label x="360" y="466" fill={graphite} size={12}>
-        Ｐ＝Ｆ／Ａ。9Ｎ×（3／1）²＝81Ｎ
+        Ｐ＝Ｆ／Ａ。15Ｎ×（5／2）²＝93.75Ｎ
       </Label>
       <Label x="360" y="502" fill={graphite} size={12}>
-        直径比3倍をそのまま掛けて27Ｎとする誤りに注意
+        直径比2.5倍をそのまま掛けて37.5Ｎとする誤りに注意
       </Label>
     </SvgBoard>
   );
@@ -660,7 +660,7 @@ export function MobileHydraulicValvesDiagram() {
 
 export function MobileForceCompositionMomentDiagram() {
   return (
-    <SvgBoard alt="一点に働く力の合力と、鉛直線に対し30度で支える2本ロープ">
+    <SvgBoard alt="一点に働く力の合力と、鉛直線に対し20度で支える2本スリング">
       <defs>
         <ArrowMarker id="mc-force-arrow" />
       </defs>
@@ -692,15 +692,15 @@ export function MobileForceCompositionMomentDiagram() {
       <path d="M500 220 L610 90" fill="none" stroke={safety} strokeWidth={strokeMain} />
       <rect x="476" y="220" width="48" height="32" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
       <Label x="500" y="242" size={12}>
-        10kg
+        14kg
       </Label>
       <path d="M500 160 A40 40 0 0 0 478 124" fill="none" stroke={ink} strokeWidth={strokeGuide} />
       <path d="M500 160 A40 40 0 0 1 522 124" fill="none" stroke={ink} strokeWidth={strokeGuide} />
       <Label x="456" y="150" size={12}>
-        30°
+        20°
       </Label>
       <Label x="544" y="150" size={12}>
-        30°
+        20°
       </Label>
       <Label x="390" y="76" size={12} fill={graphite}>
         T
@@ -709,10 +709,10 @@ export function MobileForceCompositionMomentDiagram() {
         T
       </Label>
       <Label x="360" y="320">
-        30°は鉛直線とロープのなす角。2本の間は60°
+        20°は鉛直線とスリングのなす角。2本の間は40°
       </Label>
       <Label x="360" y="356" fill={graphite} size={12}>
-        2T×cos30°＝98N、T≒57N。一直線上にない2力は大きい方へは動かない
+        2T×cos20°＝137.2N、T≒73N。一直線上にない2力は大きい方へは動かない
       </Label>
       <Label x="360" y="396" fill={graphite} size={12}>
         力の三要素は大きさ、向き、作用点。つり合うとき合力は0
@@ -726,14 +726,14 @@ export function MobileForceCompositionMomentDiagram() {
 
 export function MobileBalanceBeamDiagram() {
   return (
-    <SvgBoard alt="天びん棒の点A、支点O、点B、点Cとつり合う質量P">
+    <SvgBoard alt="仮設梁の点D、支点S、点E、点Fとつり合う質量m">
       <defs>
         <ArrowMarker id="mc-beam-arrow" />
       </defs>
       <path d="M80 220 H640" fill="none" stroke={ink} strokeWidth="10" />
       <path d="M260 220 L230 270 H290 Z" fill={ink} />
       <Label x="260" y="292">
-        O
+        S
       </Label>
       <path d="M260 220 V160" fill="none" stroke={safety} strokeWidth="4" markerEnd="url(#mc-beam-arrow)" />
       <Label x="276" y="150" anchor="start">
@@ -742,47 +742,47 @@ export function MobileBalanceBeamDiagram() {
       <path d="M140 220 V300" fill="none" stroke={graphite} strokeWidth={strokePart} />
       <rect x="112" y="300" width="56" height="36" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
       <Label x="140" y="208">
-        A
+        D
       </Label>
       <Label x="140" y="324">
-        40kg
+        32kg
       </Label>
       <path d="M380 220 V300" fill="none" stroke={graphite} strokeWidth={strokePart} />
       <rect x="352" y="300" width="56" height="36" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="380" y="208">
-        B
+        E
       </Label>
       <Label x="380" y="324">
-        P
+        m
       </Label>
       <path d="M500 220 V300" fill="none" stroke={graphite} strokeWidth={strokePart} />
       <rect x="472" y="300" width="56" height="36" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="500" y="208">
-        C
+        F
       </Label>
       <Label x="500" y="324">
-        10kg
+        12kg
       </Label>
       <path d="M140 196 H260" fill="none" stroke={safety} strokeWidth={strokeGuide} />
       <Label x="200" y="184">
-        30cm
+        50cm
       </Label>
       <path d="M260 196 H380" fill="none" stroke={safety} strokeWidth={strokeGuide} />
       <Label x="320" y="184">
-        20cm
+        40cm
       </Label>
       <path d="M380 196 H500" fill="none" stroke={safety} strokeWidth={strokeGuide} />
       <Label x="440" y="184">
-        20cm
+        40cm
       </Label>
       <Label x="360" y="400">
-        40×30＝P×20＋10×40。よって P＝40kg
+        32×50＝m×40＋12×80。よって m＝16kg
       </Label>
       <Label x="360" y="436" fill={graphite} size={12}>
-        棒の全長は70cm。棒とロープの質量は無視する
+        梁の全長は130cm。梁とワイヤの質量は無視する
       </Label>
       <Label x="360" y="472" fill={graphite} size={12}>
-        Cの腕はOから40cm。B-Cの20cmだけを腕にしない
+        Fの腕はSから80cm。E-Fの40cmだけを腕にしない
       </Label>
     </SvgBoard>
   );
@@ -827,34 +827,48 @@ export function MobileCenterOfGravityStabilityDiagram() {
 
 export function MobileSlingAngleTensionDiagram() {
   return (
-    <SvgBoard alt="つり角度60度でつる円柱の1本あたり張力">
-      <path d="M360 70 V140" fill="none" stroke={ink} strokeWidth="6" />
-      <path d="M360 140 L220 280" fill="none" stroke={safety} strokeWidth={strokeMain} />
-      <path d="M360 140 L500 280" fill="none" stroke={safety} strokeWidth={strokeMain} />
-      <path d="M300 170 A70 70 0 0 1 420 170" fill="none" stroke={ink} strokeWidth={strokeGuide} />
-      <Label x="360" y="158">
-        60°
+    <SvgBoard alt="鉛直から25度の4本ワイヤでつるコンクリートブロックの1本あたり張力">
+      <path d="M360 56 V120" fill="none" stroke={hairline} strokeWidth={strokeGuide} strokeDasharray="6 6" />
+      <Label x="376" y="72" anchor="start" size={12} fill={graphite}>
+        鉛直線
       </Label>
-      <Label x="230" y="220" size={12}>
+      <path d="M360 70 V130" fill="none" stroke={ink} strokeWidth="6" />
+      <path d="M360 130 L250 270" fill="none" stroke={graphite} strokeWidth={strokePart} strokeDasharray="7 5" />
+      <path d="M360 130 L470 270" fill="none" stroke={graphite} strokeWidth={strokePart} strokeDasharray="7 5" />
+      <path d="M360 130 L220 280" fill="none" stroke={safety} strokeWidth={strokeMain} />
+      <path d="M360 130 L500 280" fill="none" stroke={safety} strokeWidth={strokeMain} />
+      <path d="M360 180 A50 50 0 0 0 338 148" fill="none" stroke={ink} strokeWidth={strokeGuide} />
+      <path d="M360 180 A50 50 0 0 1 382 148" fill="none" stroke={ink} strokeWidth={strokeGuide} />
+      <Label x="318" y="168" size={12}>
+        25°
+      </Label>
+      <Label x="402" y="168" size={12}>
+        25°
+      </Label>
+      <Label x="226" y="220" size={12}>
         T
       </Label>
-      <Label x="490" y="220" size={12}>
+      <Label x="494" y="220" size={12}>
         T
       </Label>
-      <ellipse cx="360" cy="330" rx="90" ry="28" fill={paper} stroke={ink} strokeWidth={strokeMain} />
-      <rect x="270" y="330" width="180" height="80" fill={paper} stroke={ink} strokeWidth={strokeMain} />
-      <ellipse cx="360" cy="410" rx="90" ry="28" fill={graphite} fillOpacity="0.12" stroke={ink} strokeWidth={strokeMain} />
-      <Label x="360" y="376">
-        鋳鉄円柱
+      <rect x="250" y="278" width="220" height="90" fill={paper} stroke={ink} strokeWidth={strokeMain} />
+      <Label x="360" y="316">
+        コンクリート
+      </Label>
+      <Label x="360" y="344" size={12} fill={graphite}>
+        0.8×0.6×0.5m
       </Label>
       <Label x="360" y="40">
-        直径1m、高さ0.5m、つり角度60°
+        4本、各索と鉛直線のなす角25°
       </Label>
-      <Label x="360" y="460">
-        V＝π×0.5²×0.5。質量＝7.2t/m³×V≒2.83t
+      <Label x="360" y="416">
+        V＝0.24m³。質量＝2.3t/m³×0.24＝0.552t
       </Label>
-      <Label x="360" y="496" size={12} fill={graphite}>
-        各ロープは鉛直から30°。2T×cos30°＝Wg、T≒16kN
+      <Label x="360" y="456" size={12} fill={graphite}>
+        4T×cos25°＝Wg、T≒1492N（約1.49kN）
+      </Label>
+      <Label x="360" y="492" size={12} fill={graphite}>
+        破線は奥の2本。2本づりの式のまま割らない
       </Label>
     </SvgBoard>
   );

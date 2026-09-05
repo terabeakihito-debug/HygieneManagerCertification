@@ -547,8 +547,9 @@ SELECT
   'pressure_chamber',
   (SELECT id FROM exam_types WHERE exam_id = 'pressure_chamber' AND code = 'common'),
   (SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = 'pressure_chamber' AND e.code = 'common' AND c.name = '高気圧障害'),
-  $q$絶対圧力0.36 MPaで酸素濃度25%の混合ガスを呼吸するとき、酸素分圧はいくらか。$q$,
-  $e$0.36×25/100=0.090 MPa。分圧計算には絶対圧力を用いる。$e$,
+  $q$函内の呼吸訓練で使う混合ガスの絶対圧力が0.40 MPa、酸素の体積分率が18%である。酸素分圧はいくらか。$q$,
+  $e$分圧は絶対圧力に体積分率を掛ける。0.40×0.18＝0.072 MPa。
+体積分率そのものや絶対圧力を分圧と読み替えると誤る。ゲージ圧への換算は不要である。$e$,
   'original',
   '高圧室内作業主任者 オリジナル問題 問21',
   NULL
@@ -558,11 +559,11 @@ WHERE NOT EXISTS (
 
 INSERT INTO choices (question_id, choice_text, is_correct, sort_order)
 SELECT * FROM (VALUES
-  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.025 MPa$c$, false, 1),
-  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.072 MPa$c$, false, 2),
-  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.090 MPa$c$, true, 3),
-  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.144 MPa$c$, false, 4),
-  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.250 MPa$c$, false, 5)
+  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.018 MPa$c$, false, 1),
+  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.072 MPa$c$, true, 2),
+  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.180 MPa$c$, false, 3),
+  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.220 MPa$c$, false, 4),
+  ('1936630c-5be9-44ac-9b77-dfc525552dd0'::uuid, $c$0.400 MPa$c$, false, 5)
 ) AS incoming(question_id, choice_text, is_correct, sort_order)
 WHERE NOT EXISTS (
   SELECT 1 FROM choices c WHERE c.question_id = incoming.question_id

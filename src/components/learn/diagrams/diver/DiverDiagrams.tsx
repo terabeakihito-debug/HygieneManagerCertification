@@ -52,12 +52,12 @@ function ArrowMarker({ id, fill = safety }: { id: string; fill?: string }) {
 
 export function DiverBoyleBalloonDiagram() {
   return (
-    <SvgBoard alt="水深10ｍの風船と水面まで浮上したときの体積変化">
+    <SvgBoard alt="水深20ｍの測量用フロート。水の密度1.0kg/L、殻と空気の質量は無視し、錘体積は不変">
       <rect x="40" y="70" width="300" height="400" rx="8" fill="#d7e4ea" stroke={ink} strokeWidth={strokePart} />
       <rect x="380" y="70" width="300" height="400" rx="8" fill="#e7eef1" stroke={ink} strokeWidth={strokePart} />
       <path d="M40 118 H340" stroke={safety} strokeWidth={strokeGuide} />
       <path d="M380 118 H680" stroke={safety} strokeWidth={strokeGuide} />
-      <Label x="190" y="58">水深 10ｍ（2気圧）</Label>
+      <Label x="190" y="58">水深 20ｍ（3気圧）</Label>
       <Label x="530" y="58">水面（1気圧）</Label>
       <Label x="70" y="108" size={12} fill={graphite} anchor="start">
         水面
@@ -66,26 +66,26 @@ export function DiverBoyleBalloonDiagram() {
       <rect x="168" y="300" width="44" height="52" rx="4" fill={graphite} />
       <path d="M190 298 V300" stroke={ink} strokeWidth={strokePart} />
       <Label x="190" y="248" size={12}>
-        3.5 L
+        2.4 L
       </Label>
       <Label x="190" y="372" size={12} fill={graphite}>
-        重り 4 kg / 0.5 L
+        錘 2.7 kg / 0.3 L
       </Label>
       <Label x="190" y="394" size={12} fill={safety}>
-        排除体積 4 L（中性浮力）
+        排除 2.7kg÷1.0kg/L＝2.7 L
       </Label>
       <ellipse cx="530" cy="220" rx="70" ry="82" fill={paper} stroke={ink} strokeWidth={strokeMain} />
       <rect x="508" y="304" width="44" height="52" rx="4" fill={graphite} />
       <path d="M530 302 V304" stroke={ink} strokeWidth={strokePart} />
-      <Label x="530" y="216">7 L</Label>
+      <Label x="530" y="216">7.2 L</Label>
       <Label x="530" y="380" size={12} fill={graphite}>
         P₁V₁＝P₂V₂
       </Label>
       <Label x="530" y="402" size={12} fill={safety}>
-        3.5 L × 2 ＝ 7 L
+        2.4 L × 3 ＝ 7.2 L
       </Label>
       <Label x="360" y="500" size={12} fill={graphite}>
-        風船の空気体積だけが約2倍。重りの体積は変わらない
+        密度1.0kg/L。殻・空気・索の質量は無視。錘体積は不変
       </Label>
     </SvgBoard>
   );
@@ -210,26 +210,26 @@ export function DiverBlowUpFallDiagram() {
 
 export function DiverBottomTimeDiagram() {
   return (
-    <SvgBoard alt="スクーバ式潜水の潜水可能時間の計算過程">
+    <SvgBoard alt="ゲージ圧の初圧と残圧、水深20ｍを3気圧として扱う潜水可能時間の計算">
       <defs>
         <ArrowMarker id="diver-time-flow" />
       </defs>
       <rect x="50" y="70" width="620" height="70" rx="8" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <Label x="360" y="100">使用空気量 ＝ 12 L ×（19 − 5）MPa ＝ 168 L・MPa</Label>
+      <Label x="360" y="100">使用空気量 ＝ 10 L ×（16 − 4）MPa（ゲージ）＝ 120 L・MPa</Label>
       <Label x="360" y="124" size={12} fill={graphite}>
-        大気圧 0.1 MPa 換算で 1680 L
+        大気圧 0.1 MPa 換算で 1200 L
       </Label>
       <path d="M360 140 V170" stroke={safety} strokeWidth={strokePart} markerEnd="url(#diver-time-flow)" />
       <rect x="50" y="175" width="620" height="70" rx="8" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <Label x="360" y="205">水深 10ｍの絶対圧力 ＝ 2 気圧（0.2 MPa）</Label>
+      <Label x="360" y="205">水深 20ｍは絶対 3 気圧として扱う（ゲージ2＋大気1）</Label>
       <Label x="360" y="229" size={12} fill={graphite}>
-        呼吸 20 L/min は肺の体積。消費は大気換算 40 L/min
+        肺換気 16 L/min に絶対気圧を掛け、大気換算 48 L/min
       </Label>
       <path d="M360 245 V275" stroke={safety} strokeWidth={strokePart} markerEnd="url(#diver-time-flow)" />
       <rect x="50" y="280" width="620" height="90" rx="8" fill={paper} stroke={safety} strokeWidth={strokeMain} />
-      <Label x="360" y="316">潜水可能時間 ＝ 1680 L ÷ 40 L/min ＝ 42 分</Label>
+      <Label x="360" y="316">潜水可能時間 ＝ 1200 L ÷ 48 L/min ＝ 25 分</Label>
       <Label x="360" y="348" size={12} fill={graphite}>
-        残圧 5 MPa で浮上する約束を忘れない
+        残圧 4 MPa で浮上する約束を忘れない
       </Label>
       <Label x="360" y="430" size={12} fill={graphite}>
         ゲージ圧をそのまま掛けない。使うのは（初圧 − 残圧）
@@ -373,7 +373,7 @@ export function DiverLungPleuraDiagram() {
 
 export function DiverHeartCirculationDiagram() {
   return (
-    <SvgBoard alt="心臓の四つの部屋と肺循環・体循環。過去問問22のA〜E・a・bに対応">
+    <SvgBoard alt="心臓の四つの部屋と肺循環・体循環。矢印A〜Eと流れa・bの対応">
       <defs>
         <ArrowMarker id="diver-heart-a" fill={graphite} />
         <ArrowMarker id="diver-heart-b" fill={safety} />
@@ -523,18 +523,18 @@ export function DiverEarSinusDiagram() {
 
 export function DiverAirSupplyDepthDiagram() {
   return (
-    <SvgBoard alt="圧力調整器を使わない送気で、大気圧換算240L毎分のときの最高水深">
+    <SvgBoard alt="圧力調整器を使わない送気で、大気圧換算300L毎分のときの最高水深">
       <rect x="50" y="70" width="620" height="64" rx="8" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="360" y="110">法令：圧力調整器を使わないときは、その水深の圧力下で毎分 60 L 以上</Label>
       <rect x="50" y="160" width="620" height="90" rx="8" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <Label x="360" y="196">大気圧下の送気量 240 L/min ＝ 深度での 60 L/min × 絶対気圧</Label>
+      <Label x="360" y="196">大気圧下の送気量 300 L/min ＝ 深度での 60 L/min × 絶対気圧</Label>
       <Label x="360" y="228" size={12} fill={graphite}>
-        絶対気圧 ＝ 240 ÷ 60 ＝ 4
+        絶対気圧 ＝ 300 ÷ 60 ＝ 5
       </Label>
       <rect x="50" y="276" width="620" height="90" rx="8" fill={paper} stroke={safety} strokeWidth={strokeMain} />
-      <Label x="360" y="312">4 気圧 ＝ 水深 30ｍ ＋ 大気 1 気圧</Label>
+      <Label x="360" y="312">5 気圧 ＝ 水深 40ｍ ＋ 大気 1 気圧</Label>
       <Label x="360" y="344" size={12} fill={safety}>
-        潜水できる最高の水深 ≒ 30ｍ
+        潜水できる最高の水深 ≒ 40ｍ
       </Label>
       <Label x="360" y="410" size={12} fill={graphite}>
         圧力調整器あり（全面マスク等）は、水深の圧力下で毎分 40 L 以上の能力
@@ -543,7 +543,7 @@ export function DiverAirSupplyDepthDiagram() {
         その場合の送気圧は、水深の圧力 ＋ 0.7 MPa 以上
       </Label>
       <Label x="360" y="474" size={12} fill={stamp}>
-        240 L をそのまま 60 で割らず、気圧換算を落とすと 10ｍや 40ｍになる
+        300 L をそのまま 60 で割らず、気圧換算を落とすと 20ｍや 50ｍになる
       </Label>
     </SvgBoard>
   );
