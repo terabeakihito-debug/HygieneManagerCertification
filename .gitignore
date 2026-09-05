@@ -36,3 +36,6 @@ next-env.d.ts
 .supabase/
 .vercel
 .env*
+
+# production table dumps (may contain past-exam text)
+inventory/prod-backups*/
