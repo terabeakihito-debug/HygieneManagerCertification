@@ -1,1 +1,4 @@
-export const SITE_MAINTENANCE = true;
+import { currentExam } from "@/config/exams";
+import { isLiveExam } from "@/lib/question-visibility";
+
+export const SITE_MAINTENANCE = !isLiveExam(currentExam.id);

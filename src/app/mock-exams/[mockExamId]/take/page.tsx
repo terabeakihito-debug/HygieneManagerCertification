@@ -6,6 +6,7 @@ import {
   type MockExamQuestion,
 } from "@/components/mock-exam/MockExamTaker";
 import { currentExam } from "@/config/exams";
+import { VISIBLE_ORIGINAL_SOURCE_NOTE, VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 
 type TakePageProps = {
@@ -60,6 +61,8 @@ export default async function MockExamTakePage({
     .from("questions")
     .select("id, question_text, figure_url, choices(id, choice_text, sort_order)")
     .eq("exam_id", currentExam.id)
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("source_note", VISIBLE_ORIGINAL_SOURCE_NOTE)
     .in("id", questionIds);
 
   const byId = new Map(((questionRows ?? []) as QuestionRow[]).map((row) => [row.id, row]));

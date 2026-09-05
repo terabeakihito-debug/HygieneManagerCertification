@@ -1,6 +1,11 @@
 import { redirect } from "next/navigation";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { currentExam } from "@/config/exams";
+import {
+  examTypeIdsForMock,
+  VISIBLE_ORIGINAL_SOURCE_NOTE,
+  VISIBLE_QUESTION_SOURCE_TYPE,
+} from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 
 type StartPageProps = {
@@ -28,7 +33,7 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
 
   const { data: mockExam } = await supabase
     .from("mock_exams")
-    .select("id, question_count, source_filter, category_scope")
+    .select("id, question_count, source_filter, category_scope, exam_type_id")
     .eq("id", mockExamId)
     .eq("exam_id", currentExam.id)
     .maybeSingle();
@@ -37,12 +42,25 @@ export default async function MockExamStartPage({ params }: StartPageProps) {
     redirect("/mock-exams");
   }
 
+  const { data: examTypes } = await supabase
+    .from("exam_types")
+    .select("id, code")
+    .eq("exam_id", currentExam.id);
+
+  const examTypeIds = examTypeIdsForMock({
+    mockExamTypeId: mockExam.exam_type_id,
+    examTypes: examTypes ?? [],
+    sharedCategoryCode: currentExam.sharedCategoryCode,
+  });
+
   let questionQuery = supabase
     .from("questions")
     .select("id, source_note")
     .eq("exam_id", currentExam.id)
-    .eq("source_type", "past_exam")
-    .ilike("source_note", `%${mockExam.source_filter}%`);
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("source_note", VISIBLE_ORIGINAL_SOURCE_NOTE)
+    .ilike("source_note", `%${mockExam.source_filter}%`)
+    .in("exam_type_id", examTypeIds);
 
   const categoryScope = mockExam.category_scope;
   if (categoryScope && categoryScope.length > 0) {

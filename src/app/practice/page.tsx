@@ -12,6 +12,7 @@ import {
   type PracticeQuestion,
 } from "@/components/practice/QuestionCard";
 import { currentExam } from "@/config/exams";
+import { VISIBLE_ORIGINAL_SOURCE_NOTE, VISIBLE_QUESTION_SOURCE_TYPE } from "@/lib/question-visibility";
 import { createClient } from "@/lib/supabase/server";
 import type { Category, ExamType } from "@/types/database";
 
@@ -61,8 +62,28 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
   const examTypes = (examTypesResult.data ?? []) as Pick<ExamType, "id" | "code" | "name">[];
   const categories = (categoriesResult.data ?? []) as Category[];
   const allowedExamTypeIds = examTypeIdsForFilter(examTypes, examType);
-  const visibleCategories = categories.filter((category) =>
-    allowedExamTypeIds.includes(category.exam_type_id)
+
+  let populatedCategoriesQuery = supabase
+    .from("questions")
+    .select("category_id")
+    .eq("exam_id", currentExam.id)
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("source_note", VISIBLE_ORIGINAL_SOURCE_NOTE);
+  if (allowedExamTypeIds.length > 0) {
+    populatedCategoriesQuery = populatedCategoriesQuery.in(
+      "exam_type_id",
+      allowedExamTypeIds
+    );
+  }
+  const { data: populatedCategoryRows } = await populatedCategoriesQuery;
+  const populatedCategoryIds = new Set(
+    (populatedCategoryRows ?? []).map((row) => row.category_id as string)
+  );
+
+  const visibleCategories = categories.filter(
+    (category) =>
+      allowedExamTypeIds.includes(category.exam_type_id) &&
+      populatedCategoryIds.has(category.id)
   );
   const selectedCategoryId =
     params.category_id && visibleCategories.some((category) => category.id === params.category_id)
@@ -74,7 +95,9 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
     .select(
       "id, exam_type_id, category_id, question_text, figure_url, explanation, choices(id, choice_text, is_correct, sort_order)"
     )
-    .eq("exam_id", currentExam.id);
+    .eq("exam_id", currentExam.id)
+    .eq("source_type", VISIBLE_QUESTION_SOURCE_TYPE)
+    .ilike("source_note", VISIBLE_ORIGINAL_SOURCE_NOTE);
 
   if (allowedExamTypeIds.length > 0) {
     questionsQuery = questionsQuery.in("exam_type_id", allowedExamTypeIds);
