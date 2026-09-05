@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
+import { OriginalQuestionNotice } from "@/components/questions/OriginalQuestionNotice";
 import { ProductRecommendation } from "@/components/recommendations/ProductRecommendation";
 import { StampBadge } from "@/components/ui/StampBadge";
 import { WEAK_ACCURACY_THRESHOLD } from "@/lib/data/progress";
@@ -116,7 +117,10 @@ export default async function MockExamResultPage({ params }: ResultPageProps) {
 
   return (
     <main className="mx-auto flex min-h-[100dvh] max-w-2xl flex-col gap-10 px-4 py-8">
-      <h1 className="font-display text-2xl font-bold">模試結果</h1>
+      <div className="flex flex-col gap-3">
+        <h1 className="font-display text-2xl font-bold">模試結果</h1>
+        <OriginalQuestionNotice compact />
+      </div>
 
       <section className="plate-frame">
         <span className="plate-frame-inner" aria-hidden="true" />

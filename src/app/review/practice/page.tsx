@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { QuestionCard } from "@/components/practice/QuestionCard";
+import { OriginalQuestionNotice } from "@/components/questions/OriginalQuestionNotice";
 import { getUnresolvedReviewQuestions } from "@/lib/data/review";
 import { createClient } from "@/lib/supabase/server";
 
@@ -29,6 +30,8 @@ export default async function ReviewPracticePage() {
           </Link>
         </div>
       </div>
+
+      <OriginalQuestionNotice />
 
       <QuestionCard
         questions={questions}
