@@ -189,7 +189,7 @@ export function CgWireEndFittingsDiagram() {
         アイスプライスは全ストランドを3回以上編み込む
       </Label>
       <Label x="360" y="440" size={12} fill={stamp}>
-        見た目は過去問問3と揃えず、名称と止め方の関係だけ一致させる
+        名称と止め方の関係だけを図で押さえる
       </Label>
     </SvgBoard>
   );
@@ -225,16 +225,16 @@ export function CgGearRatioDiagram() {
         nD／nA ＝ (NA／NB) × (NC／ND)。同軸のBとCは同じ回転数
       </Label>
       <Label x="360" y="360" size={12} fill={graphite}>
-        令和7年10月：A16・C24・D120、1600→80rpm なら B＝64枚
+        A18・C20・D90、1350→75rpm なら B＝72枚
       </Label>
       <Label x="360" y="396" size={12} fill={graphite}>
-        令和8年4月：A12・C30・D150、1200→60rpm なら B＝48枚
+        75／1350＝(18／NB)×(20／90) より 1／18＝4／NB
       </Label>
       <Label x="360" y="440" size={12} fill={stamp}>
-        64と48は両方選択肢に出る。歯数と回転数を入れ替えない
+        歯数と回転数を入れ替えない。同軸のCはかみ合い側ではない
       </Label>
       <Label x="360" y="480" size={12} fill={graphite}>
-        80／1600＝16／(5·NB) より NB＝64。60／1200＝12／(5·NB) より NB＝48
+        岸壁ウインチの減速列。公式を先に書いてから代入する
       </Label>
     </SvgBoard>
   );
@@ -313,7 +313,7 @@ export function CgForceCompositionDiagram() {
         力の三要素は大きさ、向き、作用点。モーメントは M＝F×L
       </Label>
       <Label x="360" y="456" size={12} fill={graphite}>
-        過去問問31は回によって合力選択と分力選択が入れ替わる
+        3力の合力図と、1力の分力図は別物として矢印を追う
       </Label>
     </SvgBoard>
   );
@@ -321,7 +321,7 @@ export function CgForceCompositionDiagram() {
 
 export function CgBalanceBeamDiagram() {
   return (
-    <SvgBoard alt="天びん棒の支点Fと左右の荷重">
+    <SvgBoard alt="岸壁仮設ビームの支点と左右の荷重">
       <defs>
         <ArrowMarker id="cg-beam-arrow" />
       </defs>
@@ -337,32 +337,32 @@ export function CgBalanceBeamDiagram() {
       <path d="M200 200 V280" fill="none" stroke={graphite} strokeWidth={strokePart} />
       <rect x="172" y="280" width="56" height="36" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
       <Label x="200" y="186">
-        W
+        15kg
       </Label>
       <path d="M520 200 V280" fill="none" stroke={graphite} strokeWidth={strokePart} />
       <rect x="492" y="280" width="56" height="36" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="520" y="186">
-        20kg
+        21kg
       </Label>
       <path d="M200 176 H360" fill="none" stroke={safety} strokeWidth={strokeGuide} />
       <Label x="280" y="164">
-        1m
+        1.4m
       </Label>
       <path d="M360 176 H520" fill="none" stroke={safety} strokeWidth={strokeGuide} />
       <Label x="440" y="164">
-        1.5m
+        1.0m
       </Label>
       <Label x="360" y="360">
-        令和7年10月：W×1＝20×9.8×1.5 より W＝294N。F＝294＋196＝490N
+        F＝(15＋21)×9.8＝352.8N。左右モーメントはともに205.8N・m
       </Label>
       <Label x="360" y="396" size={12} fill={graphite}>
-        Fは端の力ではなく、支点の支反力。棒とワイヤの質量は無視する
+        Fは端の力ではなく、支点の支反力。ビームとワイヤの質量は無視する
       </Label>
       <Label x="360" y="432" size={12} fill={graphite}>
-        令和8年4月は図の腕で未知質量Pを求め、P＝35kg
+        15×9.8×1.4＝21×9.8×1.0。腕は支点から各荷まで取る
       </Label>
       <Label x="360" y="476" size={12} fill={stamp}>
-        同じ問32でも回によって490Nと35kgが入れ替わる
+        片方のモーメント205.8Nを支持力と読まない
       </Label>
     </SvgBoard>
   );
@@ -419,34 +419,34 @@ export function CgSlingAngleTensionDiagram() {
       <path d="M200 130 L270 250" fill="none" stroke={safety} strokeWidth={strokeMain} />
       <path d="M168 160 A40 40 0 0 1 232 160" fill="none" stroke={ink} strokeWidth={strokeGuide} />
       <Label x="200" y="150">
-        60°
+        50°
       </Label>
       <rect x="160" y="250" width="80" height="40" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
       <Label x="200" y="276" size={12}>
-        200kg
+        150kg
       </Label>
       <path d="M520 70 V130" fill="none" stroke={ink} strokeWidth="6" />
       <path d="M520 130 L400 250" fill="none" stroke={stamp} strokeWidth={strokeMain} />
       <path d="M520 130 L640 250" fill="none" stroke={stamp} strokeWidth={strokeMain} />
       <path d="M460 160 A70 70 0 0 1 580 160" fill="none" stroke={ink} strokeWidth={strokeGuide} />
       <Label x="520" y="150">
-        120°
+        110°
       </Label>
       <rect x="480" y="250" width="80" height="40" fill={paper} stroke={ink} strokeWidth={strokePart} />
       <Label x="520" y="276" size={12}>
-        180kg
+        130kg
       </Label>
       <Label x="360" y="340">
-        つり角度は2本ロープのなす角。T＝mg／(2 cos(θ／2))
+        つり角度は2本の索がなす角。T＝mg／(2 cos(θ／2))
       </Label>
       <Label x="360" y="376" size={12} fill={graphite}>
-        角度が広がるほど張力は増える。質量が小さくても120°は60°より張力が大きい
+        角度が広がるほど張力は増える。130kg・110°は150kg・50°より張力が大きい
       </Label>
       <Label x="360" y="412" size={12} fill={graphite}>
-        令和7年10月は大きい順 C＞B＞A。令和8年4月は小さい順を問う
+        150kg・50°≒811N、140kg・80°≒896N、130kg・110°≒1111N
       </Label>
       <Label x="360" y="456" size={12} fill={stamp}>
-        質量だけで並べると失点する
+        質量だけで並べると順が逆になる
       </Label>
     </SvgBoard>
   );
@@ -464,7 +464,7 @@ export function CgPulleyPrincipleDiagram() {
         定滑車 n＝1
       </Label>
       <Label x="130" y="230" size={12}>
-        F＝W
+        F＝Wg
       </Label>
       <path d="M250 70 H410" fill="none" stroke={ink} strokeWidth={strokeMain} />
       <path d="M290 70 V130" fill="none" stroke={safety} strokeWidth={strokePart} />
@@ -476,34 +476,36 @@ export function CgPulleyPrincipleDiagram() {
         動滑車 n＝2
       </Label>
       <Label x="330" y="240" size={12}>
-        F＝W／2
+        F＝Wg／2
       </Label>
       <path d="M450 70 H680" fill="none" stroke={ink} strokeWidth={strokeMain} />
-      <circle cx="520" cy="110" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <circle cx="570" cy="110" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <circle cx="620" cy="110" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <circle cx="545" cy="200" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <circle cx="595" cy="200" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
-      <path d="M504 110 V200 H636 V110" fill="none" stroke={safety} strokeWidth={strokePart} />
-      <path d="M636 110 V70" fill="none" stroke={safety} strokeWidth={strokePart} />
-      <rect x="548" y="230" width="70" height="28" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
-      <Label x="583" y="250" size={12}>
-        175kg×2
+      <circle cx="520" cy="112" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
+      <circle cx="590" cy="112" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
+      <circle cx="520" cy="204" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
+      <circle cx="590" cy="204" r="16" fill={paper} stroke={ink} strokeWidth={strokePart} />
+      <path d="M504 112 V204" fill="none" stroke={safety} strokeWidth={strokePart} />
+      <path d="M536 112 V204" fill="none" stroke={safety} strokeWidth={strokePart} />
+      <path d="M574 112 V204" fill="none" stroke={safety} strokeWidth={strokePart} />
+      <path d="M606 112 V204" fill="none" stroke={safety} strokeWidth={strokePart} />
+      <path d="M606 112 V70" fill="none" stroke={safety} strokeWidth={strokePart} />
+      <rect x="538" y="232" width="70" height="28" fill={amber} fillOpacity="0.3" stroke={ink} strokeWidth={strokePart} />
+      <Label x="573" y="252" size={12}>
+        85kg×2
       </Label>
-      <Label x="580" y="54">
-        8本支持
+      <Label x="570" y="54">
+        4本支持
       </Label>
       <Label x="360" y="320">
-        理想条件では F＝W／n。nは荷を支えるロープの本数
+        理想条件では F＝Wg／n。nは荷を支えるロープの本数
       </Label>
       <Label x="360" y="356" size={12} fill={graphite}>
-        令和8年4月：175×2×9.8＝3430N、8本なら F≒429N
+        85×2×9.8＝1666N、4本なら F＝416.5N
       </Label>
       <Label x="360" y="392" size={12} fill={graphite}>
-        令和7年10月は5パターンの式の正誤。自由端を本数に入れない
+        自由端を本数に入れない。5本に数えると333Nになる
       </Label>
       <Label x="360" y="436" size={12} fill={stamp}>
-        同じ問40でも回によって式選択と数値計算が入れ替わる
+        式の正誤は、図の支える索の本数と分母を突合する
       </Label>
       <Label x="360" y="476" size={12} fill={graphite}>
         滑車とロープの質量、摩擦は問題文で無視することが多い

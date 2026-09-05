@@ -7,9 +7,10 @@ SELECT
   'boiler2',
   (SELECT id FROM exam_types WHERE exam_id = 'boiler2' AND code = 'common'),
   (SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = 'boiler2' AND e.code = 'common' AND c.name = 'ボイラーの構造に関する知識'),
-  $q$ある圧力計が示すゲージ圧力が0.42 MPaで、その場所の大気圧が0.10 MPaである。このとき、ボイラー内部の絶対圧力として正しいものはどれか。$q$,
-  $e$絶対圧力は、ゲージ圧力に大気圧を加えて求める。
-絶対圧力＝0.42＋0.10＝0.52 MPa$e$,
+  $q$試運転前の点検で、立てボイラーの胴に付けたブルドン管圧力計がゲージ圧力0.37 MPaを示した。その朝の現地気圧は0.098 MPaである。胴内の絶対圧力として正しいものはどれか。$q$,
+  $e$ゲージ圧力は大気圧をゼロとした差圧である。胴内の絶対圧力は、指示値にその場の大気圧を足して求める。
+0.37＋0.098＝0.468 MPa。
+引き算すると大気分を捨てた値になり、指示値だけを答えるとゲージのままである。$e$,
   'original',
   '二級ボイラー技士 オリジナル問題 問1',
   NULL
@@ -20,11 +21,11 @@ WHERE NOT EXISTS (
 
 INSERT INTO choices (question_id, choice_text, is_correct, sort_order)
 SELECT * FROM (VALUES
-  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$0.32 MPa$c$, false, 1),
-  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$0.42 MPa$c$, false, 2),
-  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$0.52 MPa$c$, true, 3),
-  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$4.2 MPa$c$, false, 4),
-  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$5.2 MPa$c$, false, 5)
+  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$0.272 MPa$c$, false, 1),
+  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$0.370 MPa$c$, false, 2),
+  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$0.098 MPa$c$, false, 3),
+  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$0.468 MPa$c$, true, 4),
+  ('9c860c9a-f24f-4be7-a0cf-9e8ba2689b88'::uuid, $c$4.68 MPa$c$, false, 5)
 ) AS incoming(question_id, choice_text, is_correct, sort_order)
 WHERE NOT EXISTS (
   SELECT 1 FROM choices c WHERE c.question_id = incoming.question_id
@@ -1075,8 +1076,8 @@ SELECT
   'boiler2',
   (SELECT id FROM exam_types WHERE exam_id = 'boiler2' AND code = 'common'),
   (SELECT c.id FROM categories c JOIN exam_types e ON e.id = c.exam_type_id WHERE e.exam_id = 'boiler2' AND e.code = 'common' AND c.name = '関係法令'),
-  $q$貫流ボイラーの附属品に関する説明として、適切なものはどれか。$q$,
-  $e$貫流ボイラーには、水不足時に燃料供給を自動的に遮断する装置又は代替安全装置が必要である。ガラス水面計については、多管式を除く貫流ボイラーは一般の蒸気ボイラーに対する設置規定から除かれている。$e$,
+  $q$貫流ボイラー（小型ボイラーを除く。）の水位と燃焼の連動について、法令上適切なものはどれか。$q$,
+  $e$貫流ボイラーでは、水位が確保できない起動時や運転時に、燃焼用燃料の供給を自動遮断する装置又はこれに代わる安全装置が求められる。多管式を除く貫流ボイラーは、一般の蒸気ボイラーに対するガラス水面計の設置規定からは除かれている。根拠: ボイラー及び圧力容器安全規則。$e$,
   'original',
   '二級ボイラー技士 オリジナル問題 問39',
   NULL
@@ -1087,11 +1088,11 @@ WHERE NOT EXISTS (
 
 INSERT INTO choices (question_id, choice_text, is_correct, sort_order)
 SELECT * FROM (VALUES
-  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$起動時又は運転時にボイラー水が不足した場合、燃料供給を自動的に遮断する装置又はこれに代わる安全装置を設ける。$c$, true, 1),
-  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$貫流ボイラーには、水不足を検出する安全装置を設けてはならない。$c$, false, 2),
-  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$すべての貫流ボイラーに、常に2個以上のガラス水面計を設ける。$c$, false, 3),
-  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$貫流ボイラーの給水管には、給水弁を取り付けてはならない。$c$, false, 4),
-  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$燃焼用空気が停止しても燃料供給を継続する装置を設ける。$c$, false, 5)
+  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$水位が確認できない起動時や、運転中に水位が失われたときに燃焼を止めるインターロック（または同等の安全装置）を備える。$c$, true, 1),
+  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$貫流ボイラーでは水位を監視する必要がないので、燃焼遮断と水位を連動させてはならない。$c$, false, 2),
+  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$多管式かどうかにかかわらず、貫流ボイラーにもガラス水面計を2個以上付けなければならない。$c$, false, 3),
+  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$給水は手動弁だけで行い、自動給水や水位連動は禁止されている。$c$, false, 4),
+  ('c50d6f57-3b80-4402-ba57-d949664bb3ef'::uuid, $c$送風機が止まっても燃料だけを流し続ければ安全である。$c$, false, 5)
 ) AS incoming(question_id, choice_text, is_correct, sort_order)
 WHERE NOT EXISTS (
   SELECT 1 FROM choices c WHERE c.question_id = incoming.question_id
