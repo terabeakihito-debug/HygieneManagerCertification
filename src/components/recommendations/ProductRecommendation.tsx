@@ -30,12 +30,15 @@ export function ProductRecommendation({
   return (
     <section className="border-t border-hairline pt-6">
       <p className="inline-block border border-ink px-2 py-0.5 text-xs font-semibold tracking-wide">
-        広告
+        広告・PR
       </p>
       {heading ? (
         <h2 className="mt-2 text-sm font-medium text-ink">{heading}</h2>
       ) : null}
-      <p className="mt-1 text-sm text-graphite">学習の参考にどうぞ</p>
+      <p className="mt-1 text-sm leading-6 text-graphite">
+        本欄にはアフィリエイトリンクが含まれます。リンク経由の購入等により、
+        運営者が報酬を受け取る場合があります。
+      </p>
       <ul className="mt-3 flex flex-col gap-2">
         {products.map((product) => (
           <li
