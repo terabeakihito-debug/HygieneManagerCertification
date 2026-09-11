@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { OriginalQuestionNotice } from "@/components/questions/OriginalQuestionNotice";
 import { ChoiceMark } from "@/components/ui/ChoiceMark";
 import { gradeMockExamAction } from "@/lib/actions/mock-exam";
 
@@ -125,7 +126,8 @@ export function MockExamTaker({
       </div>
 
       <article className="card-surface p-5 sm:p-6">
-        <div className="flex items-center gap-3">
+        <OriginalQuestionNotice compact />
+        <div className="mt-3 flex items-center gap-3">
           <span className="q-number">{String(index + 1).padStart(2, "0")}</span>
           <p className="font-mono text-sm text-graphite">
             {index + 1} / {questions.length}

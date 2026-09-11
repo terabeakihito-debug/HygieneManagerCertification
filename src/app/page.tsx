@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MaintenanceHome } from "@/components/layout/MaintenanceHome";
 import { CrossMark } from "@/components/ui/CrossMark";
 import { currentExam } from "@/config/exams";
+import { EXAM_ORG_HREF, EXAM_ORG_PUBLISHED_QUESTIONS_HREF } from "@/lib/exam-org";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 import { SITE_MAINTENANCE } from "@/lib/site-maintenance";
 
@@ -31,16 +32,14 @@ const courseJsonLd = {
   isAccessibleForFree: true,
 };
 
-const EXAM_ORG_HREF = "https://www.exam.or.jp/";
-
 const FEATURES = [
   {
     title: "問題演習",
     href: "/practice",
     body:
       currentExam.practiceFilters.length > 1
-        ? "出題形式に沿った問題を、マークシート形式で演習できます。資格区分・分野で絞り込んで、効率よく学習できます。"
-        : "出題形式に沿った問題をマークシート形式で演習できます。分野で絞り込んで、効率よく学習できます。",
+        ? "試験範囲と関係法令をもとに独自作成した学習用問題を、マークシート形式で演習できます。資格区分・分野で絞り込んで、効率よく学習できます。"
+        : "試験範囲と関係法令をもとに独自作成した学習用問題をマークシート形式で演習できます。分野で絞り込んで、効率よく学習できます。",
   },
   ...(currentExam.hasLearnContent
     ? [
@@ -54,7 +53,7 @@ const FEATURES = [
   {
     title: "模試",
     href: "/mock-exams",
-    body: "本番同様の形式・制限時間で実力を試せます。合格ラインとの比較や、分野別の弱点も確認できます。",
+    body: "本番同様の形式・制限時間で、独自作成した学習用問題の実力を試せます。合格ラインとの比較や、分野別の弱点も確認できます。",
   },
   {
     title: "進捗管理",
@@ -236,16 +235,32 @@ export default function HomePage() {
                 <p key={paragraph}>{paragraph}</p>
               ))}
               {section.title === "受験資格" || section.title === "最新情報について" ? (
-                <p>
-                  <a
-                    href={EXAM_ORG_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-safety underline"
-                  >
-                    https://www.exam.or.jp/
-                  </a>
-                </p>
+                <div className="flex flex-col gap-2">
+                  <p>
+                    <a
+                      href={EXAM_ORG_HREF}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-safety underline"
+                    >
+                      {EXAM_ORG_HREF}
+                    </a>
+                  </p>
+                  {section.title === "最新情報について" ? (
+                    <p>
+                      公式の公表問題は
+                      <a
+                        href={EXAM_ORG_PUBLISHED_QUESTIONS_HREF}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="ml-1 text-safety underline"
+                      >
+                        協会の公表試験問題ページ
+                      </a>
+                      でご確認ください。
+                    </p>
+                  ) : null}
+                </div>
               ) : null}
             </div>
           ))}

@@ -13,22 +13,28 @@ export default function robots(): MetadataRoute.Robots {
   }
 
   return {
-    rules: {
-      userAgent: "*",
-      allow: ["/", "/learn", "/learn/", "/privacy"],
-      disallow: [
-        "/practice",
-        "/progress",
-        "/review",
-        "/mock-exams",
-        "/login",
-        "/signup",
-        "/mypage",
-        "/upgrade-account",
-        "/calendar",
-        "/auth",
-      ],
-    },
+    rules: [
+      {
+        userAgent: "Mediapartners-Google",
+        allow: "/",
+      },
+      {
+        userAgent: "*",
+        allow: ["/", "/learn", "/learn/", "/privacy", "/contact", "/ads.txt"],
+        disallow: [
+          "/practice",
+          "/progress",
+          "/review",
+          "/mock-exams",
+          "/login",
+          "/signup",
+          "/mypage",
+          "/upgrade-account",
+          "/calendar",
+          "/auth",
+        ],
+      },
+    ],
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

@@ -42,6 +42,40 @@ function isAspType(value: string): value is AspType {
   }
 }
 
+const PLACEHOLDER_HOSTS = new Set([
+  "example.com",
+  "example.net",
+  "example.org",
+  "localhost",
+]);
+
+function isSafeAffiliateUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
+
+    if (url.protocol !== "https:" || url.username || url.password) {
+      return false;
+    }
+
+    if (
+      PLACEHOLDER_HOSTS.has(hostname) ||
+      hostname.endsWith(".example.com") ||
+      hostname.endsWith(".example.net") ||
+      hostname.endsWith(".example.org") ||
+      hostname.endsWith(".test") ||
+      hostname.endsWith(".invalid") ||
+      hostname.endsWith(".localhost")
+    ) {
+      return false;
+    }
+
+    return !/(?:dummy|placeholder|replace[-_]?me|your[-_]?affiliate)/i.test(value);
+  } catch {
+    return false;
+  }
+}
+
 async function fetchActiveProductsForCategories(
   categoryIds: string[],
   limit: number
@@ -80,7 +114,10 @@ async function fetchActiveProductsForCategories(
   }
 
   return ((products ?? []) as ProductRow[])
-    .filter((product) => isAspType(product.asp))
+    .filter(
+      (product) =>
+        isAspType(product.asp) && isSafeAffiliateUrl(product.affiliate_url)
+    )
     .slice(0, limit)
     .map((product) => ({
       id: product.id,

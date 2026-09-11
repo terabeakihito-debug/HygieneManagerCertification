@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
+import { OriginalQuestionNotice } from "@/components/questions/OriginalQuestionNotice";
 import { currentExam } from "@/config/exams";
 import { mockExamAudienceNote } from "@/lib/mock-exam";
 import { createClient } from "@/lib/supabase/server";
@@ -55,6 +56,8 @@ export default async function MockExamsPage() {
           </Link>
         </div>
       </div>
+
+      <OriginalQuestionNotice />
 
       {exams.length === 0 ? (
         <p className="card-surface p-6 text-graphite">

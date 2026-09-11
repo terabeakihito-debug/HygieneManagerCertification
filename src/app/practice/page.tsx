@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AnonymousSessionGate } from "@/components/auth/AnonymousSessionGate";
 import { CategoryFilter } from "@/components/practice/CategoryFilter";
+import { OriginalQuestionNotice } from "@/components/questions/OriginalQuestionNotice";
 import {
   defaultPracticeFilter,
   examTypeIdsForFilter,
@@ -142,6 +143,8 @@ export default async function PracticePage({ searchParams }: PracticePageProps) 
           </Link>
         </div>
       </div>
+
+      <OriginalQuestionNotice />
 
       {currentExam.hasLearnContent ? (
         <p className="text-sm text-graphite">

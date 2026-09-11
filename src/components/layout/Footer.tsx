@@ -20,6 +20,10 @@ export function Footer() {
           {currentExam.aboutNavLabel}
         </Link>
         {" · "}
+        <Link href="/contact" className="underline">
+          お問い合わせ
+        </Link>
+        {" · "}
         <Link href="/privacy" className="underline">
           プライバシーポリシー
         </Link>
