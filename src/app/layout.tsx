@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JetBrains_Mono, Noto_Sans_JP, Zen_Kaku_Gothic_New } from "next/font/google";
 import { AnonymousAuthProvider } from "@/components/auth/AnonymousAuthProvider";
+import { GoogleAdsense } from "@/components/GoogleAdsense";
 import { Footer } from "@/components/layout/Footer";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { currentExam } from "@/config/exams";
@@ -85,6 +86,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-paper font-body text-ink">
+        <GoogleAdsense />
         {SITE_MAINTENANCE ? (
           <>
             {children}
